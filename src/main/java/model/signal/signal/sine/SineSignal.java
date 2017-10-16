@@ -2,9 +2,13 @@ package model.signal.signal.sine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.math.complex.Complex;
 
+import com.google.common.collect.Sets;
+
+import exception.InvalidSignalParametersException;
 import model.behaviour.ParameterType;
 import model.signal.AbstractSignal;
 
@@ -13,6 +17,8 @@ import model.signal.AbstractSignal;
  */
 public class SineSignal extends AbstractSignal
 {
+	private Set<ParameterType> applicableParameters;
+
 	public SineSignal(
 			double amplitude,
 			double initialTime,
@@ -24,11 +30,23 @@ public class SineSignal extends AbstractSignal
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
+		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.PERIOD, ParameterType.INITIAL_TIME, ParameterType.DURATION);
 	}
 
 	@Override
 	public double calculate(Map<ParameterType, Double> values)
 	{
-		return 0;
+		if (!isCalculationValidForSignal(values.keySet(), this.applicableParameters))
+		{
+			throw new InvalidSignalParametersException(
+					"Applicable signal parameters: " + this.applicableParameters + " does not match with given: " + values.keySet());
+		}
+
+		double amplitude = values.get(ParameterType.AMPLITUDE);
+		double period = values.get(ParameterType.PERIOD);
+		double initialTime = values.get(ParameterType.INITIAL_TIME);
+		double duration = values.get(ParameterType.DURATION);
+
+		return amplitude * Math.sin(((2 * Math.PI) / period) * (duration - initialTime));
 	}
 }
