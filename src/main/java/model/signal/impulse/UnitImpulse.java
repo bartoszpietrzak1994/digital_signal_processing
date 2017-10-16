@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 
+import com.google.common.collect.Sets;
+
+import exception.InvalidSignalParametersException;
 import model.behaviour.ParameterType;
 import model.signal.AbstractSignal;
 
@@ -24,11 +27,42 @@ public class UnitImpulse extends AbstractSignal
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
+		this.applicableParameters = Sets.newHashSet(
+				ParameterType.AMPLITUDE,
+				ParameterType.INITIAL_TIME,
+				ParameterType.DURATION,
+				ParameterType.AMPLITUDE_RISE_TIME);
 	}
 
 	@Override
-	public double calculate(Map<ParameterType, Double> values)
+	public Complex calculate(Map<ParameterType, Complex> values)
 	{
-		return 0;
+		// TODO Rewrite using aspectJ
+		if (!isCalculationValidForSignal(values.keySet(), this.applicableParameters))
+		{
+			throw new InvalidSignalParametersException(
+					"Applicable signal parameters: " + this.applicableParameters + " does not match with given: " + values.keySet());
+		}
+
+		Complex amplitude = values.get(ParameterType.AMPLITUDE);
+		Complex initialTime = values.get(ParameterType.INITIAL_TIME);
+		Complex duration = values.get(ParameterType.DURATION);
+		Complex amplitudeRiseTime = values.get(ParameterType.AMPLITUDE_RISE_TIME);
+
+		// TODO
+//		if (duration > amplitudeRiseTime)
+//		{
+//			return amplitude;
+//		}
+//		else if (duration == amplitudeRiseTime)
+//		{
+//			return amplitude / 2.0;
+//		}
+//		else
+//		{
+//			return 0;
+//		}
+
+		return null;
 	}
 }

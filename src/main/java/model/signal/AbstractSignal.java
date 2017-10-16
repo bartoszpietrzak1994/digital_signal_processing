@@ -43,6 +43,8 @@ public abstract class AbstractSignal
 
 	protected List<Complex> values;
 
+	protected Set<ParameterType> applicableParameters;
+
 	public AbstractSignal(
 			double amplitude,
 			double initialTime,
@@ -65,7 +67,7 @@ public abstract class AbstractSignal
 		this.endTime = initialTime + duration;
 	}
 
-	public abstract double calculate(Map<ParameterType, Double> values);
+	public abstract Complex calculate(Map<ParameterType, Complex> values);
 
 	protected boolean isCalculationValidForSignal(Set<ParameterType> signalParameters, Set<ParameterType> applicableParameters)
 	{

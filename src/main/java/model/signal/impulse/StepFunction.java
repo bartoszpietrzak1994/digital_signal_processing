@@ -26,9 +26,8 @@ public class StepFunction extends AbstractSignal
 		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
 	}
 
-	@Override
-	public double calculate(Map<ParameterType, Double> values)
+	public Complex calculate(Map<ParameterType, Complex> values)
 	{
-		return 0;
+		return null;
 	}
 }

@@ -2,23 +2,17 @@ package model.signal.signal.sine;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.math.complex.Complex;
 
-import com.google.common.collect.Sets;
-
 import exception.InvalidSignalParametersException;
 import model.behaviour.ParameterType;
-import model.signal.AbstractSignal;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-public class SineSignal extends AbstractSignal
+public class SineSignal extends AbstractSineSignal
 {
-	private Set<ParameterType> applicableParameters;
-
 	public SineSignal(
 			double amplitude,
 			double initialTime,
@@ -30,23 +24,27 @@ public class SineSignal extends AbstractSignal
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
-		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.PERIOD, ParameterType.INITIAL_TIME, ParameterType.DURATION);
 	}
 
 	@Override
-	public double calculate(Map<ParameterType, Double> values)
+	public Complex calculate(Map<ParameterType, Complex> values)
 	{
+		// TODO Rewrite using aspectJ
 		if (!isCalculationValidForSignal(values.keySet(), this.applicableParameters))
 		{
 			throw new InvalidSignalParametersException(
 					"Applicable signal parameters: " + this.applicableParameters + " does not match with given: " + values.keySet());
 		}
 
-		double amplitude = values.get(ParameterType.AMPLITUDE);
-		double period = values.get(ParameterType.PERIOD);
-		double initialTime = values.get(ParameterType.INITIAL_TIME);
-		double duration = values.get(ParameterType.DURATION);
+		Complex amplitude = values.get(ParameterType.AMPLITUDE);
+		Complex period = values.get(ParameterType.PERIOD);
+		Complex initialTime = values.get(ParameterType.INITIAL_TIME);
+		Complex duration = values.get(ParameterType.DURATION);
 
-		return amplitude * Math.sin(((2 * Math.PI) / period) * (duration - initialTime));
+		double real = amplitude.getReal() * Math.sin(((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal()));
+		double imaginary =
+				amplitude.getImaginary() * Math.sin(((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary()));
+
+		return new Complex(real, imaginary);
 	}
 }

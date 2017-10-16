@@ -5,13 +5,13 @@ import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 
+import exception.InvalidSignalParametersException;
 import model.behaviour.ParameterType;
-import model.signal.AbstractSignal;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-public class SineSignalHalfRectified extends AbstractSignal
+public class SineSignalHalfRectified extends AbstractSineSignal
 {
 	public SineSignalHalfRectified(
 			double amplitude,
@@ -27,8 +27,24 @@ public class SineSignalHalfRectified extends AbstractSignal
 	}
 
 	@Override
-	public double calculate(Map<ParameterType, Double> values)
+	public Complex calculate(Map<ParameterType, Complex> values)
 	{
-		return 0;
+		// TODO Rewrite using aspectJ
+		if (!isCalculationValidForSignal(values.keySet(), this.applicableParameters))
+		{
+			throw new InvalidSignalParametersException(
+					"Applicable signal parameters: " + this.applicableParameters + " does not match with given: " + values.keySet());
+		}
+
+		Complex amplitude = values.get(ParameterType.AMPLITUDE);
+		Complex period = values.get(ParameterType.PERIOD);
+		Complex initialTime = values.get(ParameterType.INITIAL_TIME);
+		Complex duration = values.get(ParameterType.DURATION);
+
+		double real = amplitude.getReal() * Math.abs(Math.sin(((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal())));
+		double imaginary = amplitude.getImaginary() * Math.abs(Math.sin(
+				((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary())));
+
+		return new Complex(real, imaginary);
 	}
 }

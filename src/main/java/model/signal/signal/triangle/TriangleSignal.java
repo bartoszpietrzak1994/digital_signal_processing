@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 
+import com.google.common.collect.Sets;
+
 import model.behaviour.ParameterType;
 import model.signal.AbstractSignal;
 
@@ -24,11 +26,17 @@ public class TriangleSignal extends AbstractSignal
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
+		this.applicableParameters = Sets.newHashSet(
+				ParameterType.AMPLITUDE,
+				ParameterType.PERIOD,
+				ParameterType.INITIAL_TIME,
+				ParameterType.DURATION,
+				ParameterType.DUTY_CYCLE);
 	}
 
 	@Override
-	public double calculate(Map<ParameterType, Double> values)
+	public Complex calculate(Map<ParameterType, Complex> values)
 	{
-		return 0;
+		return null;
 	}
 }
