@@ -18,23 +18,18 @@ public class SineSignalHalfRectified extends AbstractSineSignal
 			double initialTime,
 			double duration,
 			double period,
-			Boolean isPeriodic,
 			double dutyCycle,
 			Integer samplingRate,
 			List<Complex> values)
 	{
-		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
+		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
 	}
 
 	@Override
 	public Complex calculate(Map<ParameterType, Complex> values)
 	{
 		// TODO Rewrite using aspectJ
-		if (!isCalculationValidForSignal(values.keySet(), this.applicableParameters))
-		{
-			throw new InvalidSignalParametersException(
-					"Applicable signal parameters: " + this.applicableParameters + " does not match with given: " + values.keySet());
-		}
+		isCalculationValidForSignal(values.keySet(), this.applicableParameters);
 
 		Complex amplitude = values.get(ParameterType.AMPLITUDE);
 		Complex period = values.get(ParameterType.PERIOD);

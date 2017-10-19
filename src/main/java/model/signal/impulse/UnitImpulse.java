@@ -7,28 +7,19 @@ import org.apache.commons.math.complex.Complex;
 
 import com.google.common.collect.Sets;
 
-import exception.InvalidSignalParametersException;
 import model.behaviour.ParameterType;
-import model.signal.AbstractSignal;
+import model.signal.base.periodic.NonPeriodicSignal;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-public class UnitImpulse extends AbstractSignal
+public class UnitImpulse extends NonPeriodicSignal
 {
 	public UnitImpulse(
-			double amplitude,
-			double initialTime,
-			double duration,
-			double period,
-			Boolean isPeriodic,
-			double dutyCycle,
-			Integer samplingRate,
-			List<Complex> values)
+			double amplitude, double initialTime, double duration, double dutyCycle, Integer samplingRate, List<Complex> values)
 	{
-		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
-		this.applicableParameters = Sets.newHashSet(
-				ParameterType.AMPLITUDE,
+		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
+		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE,
 				ParameterType.INITIAL_TIME,
 				ParameterType.DURATION,
 				ParameterType.AMPLITUDE_RISE_TIME);
@@ -38,11 +29,7 @@ public class UnitImpulse extends AbstractSignal
 	public Complex calculate(Map<ParameterType, Complex> values)
 	{
 		// TODO Rewrite using aspectJ
-		if (!isCalculationValidForSignal(values.keySet(), this.applicableParameters))
-		{
-			throw new InvalidSignalParametersException(
-					"Applicable signal parameters: " + this.applicableParameters + " does not match with given: " + values.keySet());
-		}
+		isCalculationValidForSignal(values.keySet(), this.applicableParameters);
 
 		Complex amplitude = values.get(ParameterType.AMPLITUDE);
 		Complex initialTime = values.get(ParameterType.INITIAL_TIME);
@@ -50,18 +37,18 @@ public class UnitImpulse extends AbstractSignal
 		Complex amplitudeRiseTime = values.get(ParameterType.AMPLITUDE_RISE_TIME);
 
 		// TODO
-//		if (duration > amplitudeRiseTime)
-//		{
-//			return amplitude;
-//		}
-//		else if (duration == amplitudeRiseTime)
-//		{
-//			return amplitude / 2.0;
-//		}
-//		else
-//		{
-//			return 0;
-//		}
+		//		if (duration > amplitudeRiseTime)
+		//		{
+		//			return amplitude;
+		//		}
+		//		else if (duration == amplitudeRiseTime)
+		//		{
+		//			return amplitude / 2.0;
+		//		}
+		//		else
+		//		{
+		//			return 0;
+		//		}
 
 		return null;
 	}

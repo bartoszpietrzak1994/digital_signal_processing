@@ -8,24 +8,23 @@ import org.apache.commons.math.complex.Complex;
 import com.google.common.collect.Sets;
 
 import model.behaviour.ParameterType;
-import model.signal.AbstractSignal;
+import model.signal.base.AbstractSignal;
+import model.signal.base.periodic.NonPeriodicSignal;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-public class DiscreteUniformDistributionNoise extends AbstractSignal
+public class DiscreteUniformDistributionNoise extends NonPeriodicSignal
 {
 	public DiscreteUniformDistributionNoise(
 			double amplitude,
 			double initialTime,
 			double duration,
-			double period,
-			Boolean isPeriodic,
 			double dutyCycle,
 			Integer samplingRate,
 			List<Complex> values)
 	{
-		super(amplitude, initialTime, duration, period, isPeriodic, dutyCycle, samplingRate, values);
+		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION);
 	}
 

@@ -1,7 +1,6 @@
-package model.signal;
+package model.signal.base;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.math.complex.Complex;
@@ -13,7 +12,7 @@ import model.behaviour.ParameterType;
  * Created by bartoszpietrzak on 06/10/2017.
  */
 @Getter
-public abstract class AbstractSignal
+public abstract class AbstractSignal implements Signal
 {
 	protected double amplitude;
 
@@ -49,8 +48,6 @@ public abstract class AbstractSignal
 			double amplitude,
 			double initialTime,
 			double duration,
-			double period,
-			Boolean isPeriodic,
 			double dutyCycle,
 			Integer samplingRate,
 			List<Complex> values)
@@ -58,19 +55,10 @@ public abstract class AbstractSignal
 		this.amplitude = amplitude;
 		this.initialTime = (initialTime < 0) ? initialTime = 0 : initialTime;
 		this.duration = duration;
-		this.period = period;
-		this.isPeriodic = isPeriodic;
 		this.dutyCycle = dutyCycle;
 		this.samplingRate = (samplingRate == null || samplingRate  <= 0) ? 1 : samplingRate;
 		this.values = values;
 
 		this.endTime = initialTime + duration;
-	}
-
-	public abstract Complex calculate(Map<ParameterType, Complex> values);
-
-	protected boolean isCalculationValidForSignal(Set<ParameterType> signalParameters, Set<ParameterType> applicableParameters)
-	{
-		return signalParameters.containsAll(applicableParameters);
 	}
 }

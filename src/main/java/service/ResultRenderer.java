@@ -1,4 +1,4 @@
-package main.java.service;
+package service;
 
 /**
  * Created by bartoszpietrzak on 06/10/2017.
