@@ -1,9 +1,9 @@
-package model.behaviour;
+package model.signal;
 
 /**
  * Created by bartoszpietrzak on 06/10/2017.
  */
-public enum GenerationMode
+public enum SignalType
 {
 	/**
 	 * NOISE

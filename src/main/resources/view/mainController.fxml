@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.MainController">
+    <children>
+        <ComboBox fx:id="signalTypeComboBox" layoutX="403.0" layoutY="136.0" prefWidth="150.0" promptText="Signal Type" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="209.0" prefHeight="35.0" prefWidth="96.0" text="Amplitude" textAlignment="CENTER" />
+        <Label alignment="CENTER" layoutX="263.0" layoutY="209.0" prefHeight="35.0" prefWidth="96.0" text="Initial Time" />
+        <Label alignment="CENTER" layoutX="479.0" layoutY="209.0" prefHeight="35.0" prefWidth="67.0" text="Duration" />
+        <Label alignment="CENTER" layoutX="683.0" layoutY="209.0" prefHeight="35.0" prefWidth="67.0" text="Period" />
+        <Label alignment="CENTER" layoutX="861.0" layoutY="209.0" prefHeight="35.0" prefWidth="96.0" text="Duty Cycle" />
+        <TextField fx:id="amplitudeTextField" layoutX="15.0" layoutY="265.0" />
+        <TextField fx:id="initialTimeTextField" layoutX="227.0" layoutY="265.0" />
+        <TextField fx:id="durationTextField" layoutX="429.0" layoutY="265.0" />
+        <TextField fx:id="periodTextField" layoutX="633.0" layoutY="265.0" />
+        <TextField fx:id="dutyCycleTextField" layoutX="825.0" layoutY="265.0" />
+        <LineChart fx:id="lineChart" layoutX="275.0" layoutY="336.0">
+            <xAxis>
+                <CategoryAxis side="BOTTOM" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis side="LEFT" />
+            </yAxis>
+        </LineChart>
+    </children>
+</AnchorPane>

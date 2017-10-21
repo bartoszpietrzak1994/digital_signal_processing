@@ -1,4 +1,4 @@
-package model.signal.base.periodic;
+package model.signal.base.type;
 
 import java.util.List;
 

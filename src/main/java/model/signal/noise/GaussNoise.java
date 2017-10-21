@@ -8,7 +8,7 @@ import org.apache.commons.math.complex.Complex;
 import com.google.common.collect.Sets;
 
 import model.behaviour.ParameterType;
-import model.signal.base.periodic.NonPeriodicSignal;
+import model.signal.base.type.NonPeriodicSignal;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.

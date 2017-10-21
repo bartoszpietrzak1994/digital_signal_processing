@@ -7,7 +7,7 @@ import org.apache.commons.math.complex.Complex;
 import com.google.common.collect.Sets;
 
 import model.behaviour.ParameterType;
-import model.signal.base.periodic.PeriodicSignal;
+import model.signal.base.type.PeriodicSignal;
 
 /**
  * Created by bartoszpietrzak on 16/10/2017.

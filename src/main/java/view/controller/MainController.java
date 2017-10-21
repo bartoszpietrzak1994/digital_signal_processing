@@ -1,0 +1,53 @@
+package view.controller;
+
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import model.signal.SignalType;
+
+/**
+ * Created by bartoszpietrzak on 21/10/2017.
+ */
+public class MainController implements Initializable
+{
+	@FXML
+	private ComboBox<String> signalTypeComboBox;
+
+	@FXML
+	private TextField durationTextField;
+
+	@FXML
+	private LineChart<?, ?> lineChart;
+
+	@FXML
+	private TextField initialTimeTextField;
+
+	@FXML
+	private TextField amplitudeTextField;
+
+	@FXML
+	private TextField dutyCycleTextField;
+
+	@FXML
+	private TextField periodTextField;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources)
+	{
+		// Put every signal type defined in SignalType enumeration to signalTypeComboBoxValues
+		List<String> stringSignalTypes = Arrays.stream(SignalType.values()).map(Enum::toString).collect(Collectors.toList());
+		ObservableList<String> signalTypes = FXCollections.observableList(stringSignalTypes);
+		signalTypeComboBox.setItems(signalTypes);
+	}
+}
+
