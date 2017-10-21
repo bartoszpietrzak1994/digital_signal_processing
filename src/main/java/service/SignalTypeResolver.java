@@ -3,7 +3,6 @@ package service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import exception.SignalTypeNotSupportedException;
@@ -16,7 +15,7 @@ import model.signal.base.Signal;
 @Component
 public class SignalTypeResolver
 {
-	@Autowired
+//	@Autowired
 	private List<Signal> signals;
 
 	public Signal resolveSignalByType(SignalType signalType)

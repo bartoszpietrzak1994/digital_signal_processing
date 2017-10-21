@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
-import org.springframework.stereotype.Component;
 
 import model.behaviour.ParameterType;
 
@@ -14,7 +13,7 @@ import model.behaviour.ParameterType;
 public class RectangularSymmetricSignal extends AbstractRectangularSignal
 {
 	public RectangularSymmetricSignal(
-			double amplitude, double initialTime, double duration, double period, double dutyCycle, Integer samplingRate, List<Complex> values)
+			Complex amplitude, Complex initialTime, Complex duration, Complex period, Complex dutyCycle, Integer samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
 	}

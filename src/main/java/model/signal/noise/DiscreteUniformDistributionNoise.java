@@ -17,10 +17,10 @@ import model.signal.base.type.NonPeriodicSignal;
 public class DiscreteUniformDistributionNoise extends NonPeriodicSignal
 {
 	public DiscreteUniformDistributionNoise(
-			double amplitude,
-			double initialTime,
-			double duration,
-			double dutyCycle,
+			Complex amplitude,
+			Complex initialTime,
+			Complex duration,
+			Complex dutyCycle,
 			Integer samplingRate,
 			List<Complex> values)
 	{

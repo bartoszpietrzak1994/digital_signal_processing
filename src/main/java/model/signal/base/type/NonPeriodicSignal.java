@@ -12,10 +12,10 @@ import model.signal.base.Signal;
 public abstract class NonPeriodicSignal extends Signal
 {
 	public NonPeriodicSignal(
-			double amplitude, double initialTime, double duration, double dutyCycle, Integer samplingRate, List<Complex> values)
+			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Integer samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
 		this.isPeriodic = Boolean.FALSE;
-		this.period = 0;
+		this.period = new Complex(0, 0);
 	}
 }

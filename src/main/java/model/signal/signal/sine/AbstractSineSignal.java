@@ -3,7 +3,6 @@ package model.signal.signal.sine;
 import java.util.List;
 
 import org.apache.commons.math.complex.Complex;
-import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 
@@ -16,7 +15,7 @@ import model.signal.base.type.PeriodicSignal;
 public abstract class AbstractSineSignal extends PeriodicSignal
 {
 	public AbstractSineSignal(
-			double amplitude, double initialTime, double duration, double period, double dutyCycle, Integer samplingRate, List<Complex> values)
+			Complex amplitude, Complex initialTime, Complex duration, Complex period, Complex dutyCycle, Integer samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.PERIOD, ParameterType.INITIAL_TIME, ParameterType.DURATION);

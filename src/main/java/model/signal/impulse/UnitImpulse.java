@@ -17,7 +17,7 @@ import model.signal.base.type.NonPeriodicSignal;
 public class UnitImpulse extends NonPeriodicSignal
 {
 	public UnitImpulse(
-			double amplitude, double initialTime, double duration, double dutyCycle, Integer samplingRate, List<Complex> values)
+			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Integer samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE,

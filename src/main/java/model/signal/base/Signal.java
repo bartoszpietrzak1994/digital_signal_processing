@@ -22,26 +22,26 @@ public abstract class Signal
 {
 	protected SignalType signalType;
 
-	protected double amplitude;
+	protected Complex amplitude;
 
 	/**
 	 * Miliseconds
 	 */
-	protected double initialTime;
-	protected double duration;
+	protected Complex initialTime;
+	protected Complex duration;
 	/**
 	 * endTime = initialTime + duration
 	 */
-	protected double endTime;
+	protected Complex endTime;
 
 	/**
 	 * If isPeriodic == false, period should bo equal to 0
 	 * If isPeriodic == null, we assume that it should be false
 	 */
-	protected double period;
+	protected Complex period;
 	protected Boolean isPeriodic;
 
-	protected double dutyCycle;
+	protected Complex dutyCycle;
 
 	/**
 	 * Measured in Hz
@@ -64,20 +64,20 @@ public abstract class Signal
 	}
 
 	public Signal(
-			double amplitude,
-			double initialTime,
-			double duration,
-			double dutyCycle,
+			Complex amplitude,
+			Complex initialTime,
+			Complex duration,
+			Complex dutyCycle,
 			Integer samplingRate,
 			List<Complex> values)
 	{
 		this.amplitude = amplitude;
-		this.initialTime = (initialTime < 0) ? initialTime = 0 : initialTime;
+		this.initialTime = (initialTime.getReal() < 0) ? new Complex(0, 0) : initialTime;
 		this.duration = duration;
 		this.dutyCycle = dutyCycle;
 		this.samplingRate = (samplingRate == null || samplingRate  <= 0) ? 1 : samplingRate;
 		this.values = values;
 
-		this.endTime = initialTime + duration;
+		this.endTime = initialTime.add(duration);
 	}
 }

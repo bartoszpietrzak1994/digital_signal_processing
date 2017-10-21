@@ -16,11 +16,11 @@ import model.signal.base.type.PeriodicSignal;
 public abstract class AbstractRectangularSignal extends PeriodicSignal
 {
 	public AbstractRectangularSignal(
-			double amplitude,
-			double initialTime,
-			double duration,
-			double period,
-			double dutyCycle,
+			Complex amplitude,
+			Complex initialTime,
+			Complex duration,
+			Complex period,
+			Complex dutyCycle,
 			Integer samplingRate,
 			List<Complex> values)
 	{
