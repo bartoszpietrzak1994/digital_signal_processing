@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
-
-import com.google.common.collect.Sets;
+import org.springframework.stereotype.Component;
 
 import model.behaviour.ParameterType;
-import model.signal.base.AbstractSignal;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.

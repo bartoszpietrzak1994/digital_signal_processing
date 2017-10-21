@@ -3,6 +3,7 @@ package model.signal.signal.rectangular;
 import java.util.List;
 
 import org.apache.commons.math.complex.Complex;
+import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
+import org.springframework.stereotype.Component;
 
 import model.behaviour.ParameterType;
 
