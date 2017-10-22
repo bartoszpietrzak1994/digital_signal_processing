@@ -14,6 +14,7 @@ import model.signal.base.type.NonPeriodicSignal;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
+@Component
 public class ImpulseNoise extends NonPeriodicSignal
 {
 	public ImpulseNoise(

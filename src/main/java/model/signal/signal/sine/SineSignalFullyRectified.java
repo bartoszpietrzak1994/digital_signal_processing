@@ -11,6 +11,7 @@ import model.behaviour.ParameterType;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
+@Component
 public class SineSignalFullyRectified extends AbstractSineSignal
 {
 	public SineSignalFullyRectified(

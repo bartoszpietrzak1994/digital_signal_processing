@@ -17,7 +17,6 @@ import model.signal.SignalType;
  * Created by bartoszpietrzak on 06/10/2017.
  */
 @Getter
-@Component
 public abstract class Signal
 {
 	protected SignalType signalType;

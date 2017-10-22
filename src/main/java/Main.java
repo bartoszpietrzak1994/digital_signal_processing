@@ -1,14 +1,19 @@
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import config.DigitalSignalProcessingConfiguration;
+import config.SpringContextBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-@ComponentScan({"model", "service"})
 public class Main extends Application
 {
 	public static final String RELATIVE_CONTROLLER_PATH = "view/mainController.fxml";
@@ -24,7 +29,7 @@ public class Main extends Application
 
 	public static void main(String[] args)
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+		SpringContextBuilder springContext = new SpringContextBuilder().start(DigitalSignalProcessingConfiguration.class);
 		launch(args);
 	}
 }

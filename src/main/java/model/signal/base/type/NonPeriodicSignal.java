@@ -3,12 +3,14 @@ package model.signal.base.type;
 import java.util.List;
 
 import org.apache.commons.math.complex.Complex;
+import org.springframework.stereotype.Component;
 
 import model.signal.base.Signal;
 
 /**
  * Created by bartoszpietrzak on 19/10/2017.
  */
+@Component
 public abstract class NonPeriodicSignal extends Signal
 {
 	public NonPeriodicSignal(

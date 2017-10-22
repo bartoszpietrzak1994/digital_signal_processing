@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
+import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 
@@ -13,6 +14,7 @@ import model.signal.base.type.PeriodicSignal;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
+@Component
 public class TriangleSignal extends PeriodicSignal
 {
 	public TriangleSignal(
