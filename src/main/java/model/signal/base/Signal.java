@@ -1,13 +1,11 @@
 package model.signal.base;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.math.complex.Complex;
 
 import exception.SignalParametersException;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -84,7 +82,7 @@ public abstract class Signal
 		this.endTime = initialTime.add(duration);
 	}
 
-	public abstract Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException;
+	public abstract Complex calculate(Complex sample) throws SignalParametersException;
 
 	protected void isCalculationValidForSignal(Set<ParameterType> signalParameters, Set<ParameterType> applicableParameters) throws SignalParametersException
 	{

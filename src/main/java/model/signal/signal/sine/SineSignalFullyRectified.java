@@ -1,7 +1,6 @@
 package model.signal.signal.sine;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -32,21 +31,23 @@ public class SineSignalFullyRectified extends AbstractSineSignal
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException
+	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-		isCalculationValidForSignal(values.keySet(), this.applicableParameters);
+//		isCalculationValidForSignal(sample.keySet(), this.applicableParameters);
+//
+//		Complex amplitude = sample.get(ParameterType.AMPLITUDE);
+//		Complex period = sample.get(ParameterType.PERIOD);
+//		Complex initialTime = sample.get(ParameterType.INITIAL_TIME);
+//		Complex duration = sample.get(ParameterType.DURATION);
+//
+//		double commonRealValue = ((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal());
+//		double real = (1.0 / 2.0) * amplitude.getReal() * (commonRealValue + Math.abs(commonRealValue));
+//
+//		double commonImaginaryValue = ((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary());
+//		double imaginary =  (1.0 / 2.0) * amplitude.getImaginary() * (commonImaginaryValue + Math.abs(commonImaginaryValue));
+//
+//		return new Complex(real, imaginary);
 
-		Complex amplitude = values.get(ParameterType.AMPLITUDE);
-		Complex period = values.get(ParameterType.PERIOD);
-		Complex initialTime = values.get(ParameterType.INITIAL_TIME);
-		Complex duration = values.get(ParameterType.DURATION);
-
-		double commonRealValue = ((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal());
-		double real = (1.0 / 2.0) * amplitude.getReal() * (commonRealValue + Math.abs(commonRealValue));
-
-		double commonImaginaryValue = ((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary());
-		double imaginary =  (1.0 / 2.0) * amplitude.getImaginary() * (commonImaginaryValue + Math.abs(commonImaginaryValue));
-
-		return new Complex(real, imaginary);
+		return null;
 	}
 }

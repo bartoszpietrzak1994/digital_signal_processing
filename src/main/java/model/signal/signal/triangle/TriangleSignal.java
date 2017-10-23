@@ -1,7 +1,6 @@
 package model.signal.signal.triangle;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -41,7 +40,7 @@ public class TriangleSignal extends PeriodicSignal
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException
+	public Complex calculate(Complex sample) throws SignalParametersException
 	{
 		return null;
 	}

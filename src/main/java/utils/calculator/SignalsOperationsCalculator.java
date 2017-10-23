@@ -1,5 +1,8 @@
 package utils.calculator;
 
+import org.apache.commons.math.complex.Complex;
+
+import exception.SignalParametersException;
 import model.behaviour.SignalOperation;
 import model.signal.base.Signal;
 
@@ -10,7 +13,7 @@ public class SignalsOperationsCalculator
 {
 	public Signal performCalculation(Signal signalOne, Signal signalTwo, String operationName)
 	{
-		if (signalOne.getSamplingRate().compareTo(signalTwo.getSamplingRate()) != 0)
+		if (new Double(signalOne.getSamplingRate().getReal()).compareTo(signalTwo.getSamplingRate().getReal()) != 0)
 		{
 			throw new IllegalStateException("Sampling rates of signals do not match! Aborting calculation.");
 		}

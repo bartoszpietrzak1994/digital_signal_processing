@@ -1,7 +1,6 @@
 package model.signal.impulse;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -34,14 +33,14 @@ public class UnitImpulse extends NonPeriodicSignal
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException
+	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-		isCalculationValidForSignal(values.keySet(), this.applicableParameters);
-
-		Complex amplitude = values.get(ParameterType.AMPLITUDE);
-		Complex initialTime = values.get(ParameterType.INITIAL_TIME);
-		Complex duration = values.get(ParameterType.DURATION);
-		Complex amplitudeRiseTime = values.get(ParameterType.AMPLITUDE_RISE_TIME);
+//		isCalculationValidForSignal(sample.keySet(), this.applicableParameters);
+//
+//		Complex amplitude = sample.get(ParameterType.AMPLITUDE);
+//		Complex initialTime = sample.get(ParameterType.INITIAL_TIME);
+//		Complex duration = sample.get(ParameterType.DURATION);
+//		Complex amplitudeRiseTime = sample.get(ParameterType.AMPLITUDE_RISE_TIME);
 
 		// TODO
 		//		if (duration > amplitudeRiseTime)

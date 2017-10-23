@@ -1,7 +1,6 @@
 package model.signal.noise;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,7 @@ public class ImpulseNoise extends NonPeriodicSignal
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values)
+	public Complex calculate(Complex sample)
 	{
 		return null;
 	}

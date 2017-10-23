@@ -3,11 +3,9 @@ package utils.calculator;
 import java.util.List;
 
 import org.apache.commons.math.complex.Complex;
-import org.springframework.util.CollectionUtils;
+import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Iterables;
-
-import exception.CalculationDataNotProvidedException;
+import exception.SignalParametersException;
 import lombok.Data;
 import model.signal.base.Signal;
 
@@ -15,12 +13,12 @@ import model.signal.base.Signal;
  * Created by bartoszpietrzak on 06/10/2017.
  */
 @Data
+@Component
 public class SignalPropertiesCalculator
 {
-	private Signal signal;
-
-	public Complex calculateAaverageValue()
+	public Complex calculateAaverageValue(Signal signal) throws SignalParametersException
 	{
+		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
 
 		Complex initialTime = signal.getInitialTime();
@@ -28,32 +26,73 @@ public class SignalPropertiesCalculator
 
 		Complex sum = Complex.ZERO;
 
-		for (Complex value : values)
+		for (int i = 0; i < samples.size(); i++)
 		{
-//			sum.add(signal.calculate() value);
+			sum.add(values.get(i));
 		}
 
-		return null;
+		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
 	}
 
-	public double calculateAbsolutetAverageValue()
+	public Complex calculateAbsolutetAverageValue(Signal signal)
 	{
-		return 0;
+		List<Complex> samples = signal.getSamples();
+		List<Complex> values = signal.getValues();
+
+		Complex initialTime = signal.getInitialTime();
+		Complex endTime = signal.getEndTime();
+
+		Complex sum = Complex.ZERO;
+
+		for (int i = 0; i < samples.size(); i++)
+		{
+			Complex value = values.get(i);
+			sum.add(new Complex(Math.abs(value.getReal()), Math.abs(value.getImaginary())));
+		}
+
+		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
 	}
 
-	public double calculateSignalPower()
+	public Complex calculateSignalPower(Signal signal)
 	{
-		return 0;
+		List<Complex> samples = signal.getSamples();
+		List<Complex> values = signal.getValues();
+
+		Complex initialTime = signal.getInitialTime();
+		Complex endTime = signal.getEndTime();
+
+		Complex sum = Complex.ZERO;
+		Complex two = new Complex(2.0D, 2.0D);
+
+		for (int i = 0; i < samples.size(); i++)
+		{
+			sum.add(values.get(i)).pow(two);
+		}
+
+		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
 	}
 
-	// TODO wariancja sygnału w przedziale wokół wartości średniej ??
-	public double calculateVariance()
+	public Complex calculateVariance(Signal signal, Complex averageValue)
 	{
-		return 0;
+		List<Complex> samples = signal.getSamples();
+		List<Complex> values = signal.getValues();
+
+		Complex initialTime = signal.getInitialTime();
+		Complex endTime = signal.getEndTime();
+
+		Complex sum = Complex.ZERO;
+		Complex two = new Complex(2.0D, 2.0D);
+
+		for (int i = 0; i < samples.size(); i++)
+		{
+			sum.add((values.get(i).subtract(averageValue)).pow(two));
+		}
+
+		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
 	}
 
-	public double calculateRootMeanSquareValue()
+	public Complex calculateRootMeanSquareValue(Signal signal)
 	{
-		return 0;
+		return this.calculateSignalPower(signal).sqrt();
 	}
 }

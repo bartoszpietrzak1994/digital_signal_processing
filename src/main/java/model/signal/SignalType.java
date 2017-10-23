@@ -30,5 +30,10 @@ public enum SignalType
 	/**
 	 * IMPULSE
 	 */
-	UNIT_IMPULSE
+	UNIT_IMPULSE,
+
+	/**
+	 * RESULT OF SIGNAL OPERATIONS
+	 */
+	UNKNOWN
 }

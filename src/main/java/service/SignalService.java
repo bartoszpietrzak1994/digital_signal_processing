@@ -34,7 +34,7 @@ public class SignalService
 		return false;
 	}
 
-	public XYChart<Double, Double> provideRealChartData(SignalChartRequest request) throws SignalParametersException
+	public XYChart<Double, Double> provideChartData(SignalChartRequest request) throws SignalParametersException
 	{
 		Signal signal = signalManager.resolveSignalByType(request.getSignalType());
 		signal.setSamples(signalManager.getSignalSamples(
@@ -47,10 +47,12 @@ public class SignalService
 		List<Complex> values = new ArrayList<>();
 		List<Complex> samples = signal.getSamples();
 
-		for (int i = 0; i < signal.getSamples().size(); i++)
+		for (int i = 0; i < samples.size(); i++)
 		{
-			values.add(signal.calculate(null));
+			values.add(signal.calculate(samples.get(i)));
 		}
+
+		signal.setValues(values);
 
 		return null;
 	}

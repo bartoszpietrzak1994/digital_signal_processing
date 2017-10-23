@@ -1,7 +1,6 @@
 package model.signal.signal.sine;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -32,19 +31,21 @@ public class SineSignal extends AbstractSineSignal
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException
+	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-		isCalculationValidForSignal(values.keySet(), this.applicableParameters);
+//		isCalculationValidForSignal(sample.keySet(), this.applicableParameters);
+//
+//		Complex amplitude = sample.get(ParameterType.AMPLITUDE);
+//		Complex period = sample.get(ParameterType.PERIOD);
+//		Complex initialTime = sample.get(ParameterType.INITIAL_TIME);
+//		Complex duration = sample.get(ParameterType.DURATION);
+//
+//		double real = amplitude.getReal() * Math.sin(((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal()));
+//		double imaginary =
+//				amplitude.getImaginary() * Math.sin(((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary()));
+//
+//		return new Complex(real, imaginary);
 
-		Complex amplitude = values.get(ParameterType.AMPLITUDE);
-		Complex period = values.get(ParameterType.PERIOD);
-		Complex initialTime = values.get(ParameterType.INITIAL_TIME);
-		Complex duration = values.get(ParameterType.DURATION);
-
-		double real = amplitude.getReal() * Math.sin(((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal()));
-		double imaginary =
-				amplitude.getImaginary() * Math.sin(((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary()));
-
-		return new Complex(real, imaginary);
+		return null;
 	}
 }

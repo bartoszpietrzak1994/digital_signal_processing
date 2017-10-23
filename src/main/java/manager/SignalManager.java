@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import model.signal.base.Signal;
+import utils.calculator.SignalPropertiesCalculator;
 import utils.calculator.SignalSamplesCalculator;
 import utils.signal.SignalTypeResolver;
 
@@ -21,6 +22,9 @@ public class SignalManager
 
 	@Autowired
 	private SignalSamplesCalculator signalSamplesCalculator;
+
+	@Autowired
+	private SignalPropertiesCalculator signalPropertiesCalculator;
 
 	public Signal resolveSignalByType(String signalType)
 	{
