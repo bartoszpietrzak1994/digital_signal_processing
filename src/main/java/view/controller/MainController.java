@@ -69,17 +69,18 @@ public class MainController implements Initializable
 
 	private Signal chooseProperSignalBySignalType()
 	{
-		SignalType signalType = null;
+		Signal signal = null;
+
 		try
 		{
-			signalType = SignalType.valueOf(signalTypeComboBox.getValue());
+			signal = signalTypeResolver.resolveSignalByType(signalTypeComboBox.getValue());
 		}
-		catch (IllegalArgumentException e)
+		catch(IllegalArgumentException e)
 		{
-			resultProviderLabel.setText("Chosen signal type is not supported!");
+			resultProviderLabel.setText("Unfortunately, given signal of given type is not supported");
 		}
 
-		return signalTypeResolver.resolveSignalByType(signalType);
+		return signal;
 	}
 }
 

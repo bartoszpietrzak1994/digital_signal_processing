@@ -61,6 +61,24 @@ public abstract class AbstractSignal implements Signal
 	}
 
 	@Override
+	public Set<ParameterType> getApplicableParameters()
+	{
+		return this.applicableParameters;
+	}
+
+	@Override
+	public Integer getSamplingRate()
+	{
+		return this.samplingRate;
+	}
+
+	@Override
+	public List<Complex> getValues()
+	{
+		return this.values;
+	}
+
+	@Override
 	public void isCalculationValidForSignal(Set<ParameterType> signalParameters, Set<ParameterType> applicableParameters)
 	{
 		if (!signalParameters.containsAll(applicableParameters))

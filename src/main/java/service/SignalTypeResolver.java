@@ -19,8 +19,10 @@ public class SignalTypeResolver
 	@Autowired
 	private List<Signal> signals;
 
-	public Signal resolveSignalByType(SignalType signalType)
+	public Signal resolveSignalByType(String signalTypeName)
 	{
+		SignalType signalType = SignalType.valueOf(signalTypeName);
+
 		Optional<Signal> optionalSignal = signals.stream().filter(signal -> signal.getSignalType().equals(signalType)).findFirst();
 
 		if (!optionalSignal.isPresent())
