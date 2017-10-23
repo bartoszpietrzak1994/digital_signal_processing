@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 
+import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
 import model.signal.base.type.NonPeriodicSignal;
 
@@ -15,6 +16,7 @@ import model.signal.base.type.NonPeriodicSignal;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
+@NoArgsConstructor
 public class ImpulseNoise extends NonPeriodicSignal
 {
 	public ImpulseNoise(

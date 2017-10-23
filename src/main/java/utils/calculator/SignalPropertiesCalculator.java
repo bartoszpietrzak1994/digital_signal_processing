@@ -9,7 +9,7 @@ import com.google.common.collect.Iterables;
 
 import exception.CalculationDataNotProvidedException;
 import lombok.Data;
-import model.signal.base.Signal;
+import model.signal.base.AbstractSignal;
 
 /**
  * Created by bartoszpietrzak on 06/10/2017.
@@ -17,7 +17,7 @@ import model.signal.base.Signal;
 @Data
 public class SignalPropertiesCalculator
 {
-	private Signal signal;
+	private AbstractSignal signal;
 
 	public Complex calculateAaverageValue()
 	{

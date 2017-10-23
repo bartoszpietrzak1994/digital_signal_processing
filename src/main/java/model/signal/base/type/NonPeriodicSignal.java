@@ -3,15 +3,15 @@ package model.signal.base.type;
 import java.util.List;
 
 import org.apache.commons.math.complex.Complex;
-import org.springframework.stereotype.Component;
 
-import model.signal.base.Signal;
+import lombok.NoArgsConstructor;
+import model.signal.base.AbstractSignal;
 
 /**
  * Created by bartoszpietrzak on 19/10/2017.
  */
-@Component
-public abstract class NonPeriodicSignal extends Signal
+@NoArgsConstructor
+public abstract class NonPeriodicSignal extends AbstractSignal
 {
 	public NonPeriodicSignal(
 			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Integer samplingRate, List<Complex> values)

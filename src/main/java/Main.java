@@ -1,13 +1,7 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import config.DigitalSignalProcessingConfiguration;
-import config.SpringContextBuilder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +23,7 @@ public class Main extends Application
 
 	public static void main(String[] args)
 	{
-		SpringContextBuilder springContext = new SpringContextBuilder().start(DigitalSignalProcessingConfiguration.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(DigitalSignalProcessingConfiguration.class);
 		launch(args);
 	}
 }
