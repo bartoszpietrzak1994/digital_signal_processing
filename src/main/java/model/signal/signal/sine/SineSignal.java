@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
+import exception.SignalParametersException;
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
 
@@ -22,14 +23,14 @@ public class SineSignal extends AbstractSineSignal
 			Complex duration,
 			Complex period,
 			Complex dutyCycle,
-			Integer samplingRate,
+			Complex samplingRate,
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values)
+	public Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException
 	{
 		isCalculationValidForSignal(values.keySet(), this.applicableParameters);
 

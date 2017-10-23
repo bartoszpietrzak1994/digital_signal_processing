@@ -22,7 +22,7 @@ public abstract class AbstractRectangularSignal extends PeriodicSignal
 			Complex duration,
 			Complex period,
 			Complex dutyCycle,
-			Integer samplingRate,
+			Complex samplingRate,
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);

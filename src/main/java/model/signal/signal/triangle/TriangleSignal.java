@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 
+import exception.SignalParametersException;
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
 import model.signal.base.type.PeriodicSignal;
@@ -20,7 +21,7 @@ import model.signal.base.type.PeriodicSignal;
 public class TriangleSignal extends PeriodicSignal
 {
 	public TriangleSignal(
-			Complex amplitude, Complex initialTime, Complex duration, Complex period, Complex dutyCycle, Integer samplingRate, List<Complex> values)
+			Complex amplitude, Complex initialTime, Complex duration, Complex period, Complex dutyCycle, Complex samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE,
@@ -31,7 +32,7 @@ public class TriangleSignal extends PeriodicSignal
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values)
+	public Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException
 	{
 		return null;
 	}

@@ -18,7 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.signal.SignalType;
 import model.signal.base.Signal;
-import service.SignalTypeResolver;
+import service.SignalService;
+import utils.signal.SignalTypeResolver;
 
 /**
  * Created by bartoszpietrzak on 21/10/2017.
@@ -58,6 +59,9 @@ public class MainController implements Initializable
  	@Autowired
 	private SignalTypeResolver signalTypeResolver;
 
+	@Autowired
+	private SignalService signalService;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
@@ -65,22 +69,6 @@ public class MainController implements Initializable
 		List<String> stringSignalTypes = Arrays.stream(SignalType.values()).map(Enum::toString).collect(Collectors.toList());
 		ObservableList<String> signalTypes = FXCollections.observableList(stringSignalTypes);
 		signalTypeComboBox.setItems(signalTypes);
-	}
-
-	private Signal chooseProperSignalBySignalType()
-	{
-		Signal signal = null;
-
-		try
-		{
-			signal = signalTypeResolver.resolveSignalByType(signalTypeComboBox.getValue());
-		}
-		catch(IllegalArgumentException e)
-		{
-			resultProviderLabel.setText("Unfortunately, given signal of given type is not supported");
-		}
-
-		return signal;
 	}
 }
 

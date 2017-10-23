@@ -21,7 +21,7 @@ import model.signal.base.type.NonPeriodicSignal;
 public class GaussNoise extends NonPeriodicSignal
 {
 	public GaussNoise(
-			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Integer samplingRate, List<Complex> values)
+			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Complex samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
 		this.signalType = SignalType.GAUSS_NOISE;

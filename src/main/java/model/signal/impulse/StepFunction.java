@@ -23,7 +23,7 @@ public class StepFunction extends NonPeriodicSignal
 			Complex initialTime,
 			Complex duration,
 			Complex dutyCycle,
-			Integer samplingRate,
+			Complex samplingRate,
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);

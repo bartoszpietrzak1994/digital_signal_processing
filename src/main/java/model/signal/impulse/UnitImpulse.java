@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 
+import exception.SignalParametersException;
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
 import model.signal.base.type.NonPeriodicSignal;
@@ -20,7 +21,7 @@ import model.signal.base.type.NonPeriodicSignal;
 public class UnitImpulse extends NonPeriodicSignal
 {
 	public UnitImpulse(
-			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Integer samplingRate, List<Complex> values)
+			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Complex samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE,
@@ -30,9 +31,8 @@ public class UnitImpulse extends NonPeriodicSignal
 	}
 
 	@Override
-	public Complex calculate(Map<ParameterType, Complex> values)
+	public Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException
 	{
-		// TODO Rewrite using aspectJ
 		isCalculationValidForSignal(values.keySet(), this.applicableParameters);
 
 		Complex amplitude = values.get(ParameterType.AMPLITUDE);

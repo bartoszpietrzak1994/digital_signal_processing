@@ -7,11 +7,11 @@ public class SignalTypeNotSupportedException extends RuntimeException
 {
 	public SignalTypeNotSupportedException()
 	{
-
+		super();
 	}
 
-	public SignalTypeNotSupportedException(String message)
+	public SignalTypeNotSupportedException(String signalType)
 	{
-
+		super(String.format("Signal of type: %s is not supported!", signalType));
 	}
 }

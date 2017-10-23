@@ -9,7 +9,7 @@ import com.google.common.collect.Iterables;
 
 import exception.CalculationDataNotProvidedException;
 import lombok.Data;
-import model.signal.base.AbstractSignal;
+import model.signal.base.Signal;
 
 /**
  * Created by bartoszpietrzak on 06/10/2017.
@@ -17,18 +17,14 @@ import model.signal.base.AbstractSignal;
 @Data
 public class SignalPropertiesCalculator
 {
-	private AbstractSignal signal;
+	private Signal signal;
 
 	public Complex calculateAaverageValue()
 	{
 		List<Complex> values = signal.getValues();
-		Complex first = Iterables.getFirst(values, null);
-		Complex last = Iterables.getLast(values, null);
 
-		if (CollectionUtils.isEmpty(values) || (first == null || last == null))
-		{
-			throw new CalculationDataNotProvidedException("Values for calculation were not provided. Skipping calculation.");
-		}
+		Complex initialTime = signal.getInitialTime();
+		Complex endTime = signal.getEndTime();
 
 		Complex sum = Complex.ZERO;
 
