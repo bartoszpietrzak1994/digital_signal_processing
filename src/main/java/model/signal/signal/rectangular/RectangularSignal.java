@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
+import model.signal.SignalType;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
@@ -26,6 +27,7 @@ public class RectangularSignal extends AbstractRectangularSignal
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
+		this.signalType = SignalType.RECTANGULAR_SIGNAL;
 	}
 
 	@Override

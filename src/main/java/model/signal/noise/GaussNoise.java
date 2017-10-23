@@ -24,8 +24,9 @@ public class GaussNoise extends NonPeriodicSignal
 			Complex amplitude, Complex initialTime, Complex duration, Complex dutyCycle, Complex samplingRate, List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
-		this.signalType = SignalType.GAUSS_NOISE;
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION);
+
+		this.signalType = SignalType.GAUSS_NOISE;
 	}
 
 	@Override

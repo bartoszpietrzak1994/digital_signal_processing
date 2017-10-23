@@ -1,9 +1,13 @@
 package manager;
 
+import java.util.List;
+
+import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import model.signal.base.Signal;
+import utils.calculator.SignalSamplesCalculator;
 import utils.signal.SignalTypeResolver;
 
 /**
@@ -15,8 +19,16 @@ public class SignalManager
 	@Autowired
 	private SignalTypeResolver signalTypeResolver;
 
-	private Signal resolveSignalByType(String signalType)
+	@Autowired
+	private SignalSamplesCalculator signalSamplesCalculator;
+
+	public Signal resolveSignalByType(String signalType)
 	{
 		return signalTypeResolver.resolveSignalByType(signalType);
+	}
+
+	public List<Complex> getSignalSamples(Complex samplingRate, Complex initialTime, Complex endTime)
+	{
+		return signalSamplesCalculator.getSampleList(samplingRate, initialTime, endTime);
 	}
 }

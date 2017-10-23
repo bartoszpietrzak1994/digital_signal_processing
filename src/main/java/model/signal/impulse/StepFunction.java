@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
+import model.signal.SignalType;
 import model.signal.base.type.NonPeriodicSignal;
 
 /**
@@ -27,6 +28,8 @@ public class StepFunction extends NonPeriodicSignal
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
+
+		this.signalType = SignalType.STEP_FUNCTION;
 	}
 
 	@Override

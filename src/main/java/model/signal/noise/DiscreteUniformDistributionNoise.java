@@ -10,6 +10,7 @@ import com.google.common.collect.Sets;
 
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
+import model.signal.SignalType;
 import model.signal.base.type.NonPeriodicSignal;
 
 /**
@@ -29,6 +30,8 @@ public class DiscreteUniformDistributionNoise extends NonPeriodicSignal
 	{
 		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION);
+
+		this.signalType = SignalType.DISCRETE_UNIFORM_DISTRIBUTION_NOISE;
 	}
 
 	@Override

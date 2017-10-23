@@ -7,8 +7,10 @@ import java.util.Set;
 import org.apache.commons.math.complex.Complex;
 
 import exception.SignalParametersException;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import model.behaviour.ParameterType;
 import model.signal.SignalType;
 
@@ -16,6 +18,7 @@ import model.signal.SignalType;
  * Created by bartoszpietrzak on 06/10/2017.
  */
 @Getter
+@Setter
 @NoArgsConstructor
 public abstract class Signal
 {
@@ -59,19 +62,9 @@ public abstract class Signal
 	protected Complex signalPower;
 
 	/**
-	 * Calculated in SamplesCalculator
+	 * Calculated in SignalSamplesCalculator
 	 */
 	protected List<Complex> samples;
-
-	protected abstract Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException;
-
-	protected void isCalculationValidForSignal(Set<ParameterType> signalParameters, Set<ParameterType> applicableParameters) throws SignalParametersException
-	{
-		if (!signalParameters.containsAll(applicableParameters))
-		{
-			throw SignalParametersException.calculationDataNotProvided(signalParameters, applicableParameters);
-		}
-	}
 
 	public Signal(
 			Complex amplitude,
@@ -89,5 +82,15 @@ public abstract class Signal
 		this.values = values;
 
 		this.endTime = initialTime.add(duration);
+	}
+
+	public abstract Complex calculate(Map<ParameterType, Complex> values) throws SignalParametersException;
+
+	protected void isCalculationValidForSignal(Set<ParameterType> signalParameters, Set<ParameterType> applicableParameters) throws SignalParametersException
+	{
+		if (!signalParameters.containsAll(applicableParameters))
+		{
+			throw SignalParametersException.calculationDataNotProvided(signalParameters, applicableParameters);
+		}
 	}
 }

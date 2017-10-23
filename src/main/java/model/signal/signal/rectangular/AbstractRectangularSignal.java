@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
 
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
+import model.signal.SignalType;
 import model.signal.base.type.PeriodicSignal;
 
 /**

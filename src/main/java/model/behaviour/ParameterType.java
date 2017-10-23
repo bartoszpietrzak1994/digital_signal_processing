@@ -30,5 +30,10 @@ public enum ParameterType
 	 * STATISTICS - related
 	 */
 	AVERAGE_VALUE,
-	VALUE_PRESENCE_PROBABILITY
+	VALUE_PRESENCE_PROBABILITY,
+
+	/**
+	 *
+	 */
+	SAMPLE
 }

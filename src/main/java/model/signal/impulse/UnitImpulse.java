@@ -11,6 +11,7 @@ import com.google.common.collect.Sets;
 import exception.SignalParametersException;
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
+import model.signal.SignalType;
 import model.signal.base.type.NonPeriodicSignal;
 
 /**
@@ -28,6 +29,8 @@ public class UnitImpulse extends NonPeriodicSignal
 				ParameterType.INITIAL_TIME,
 				ParameterType.DURATION,
 				ParameterType.AMPLITUDE_RISE_TIME);
+
+		this.signalType = SignalType.UNIT_IMPULSE;
 	}
 
 	@Override

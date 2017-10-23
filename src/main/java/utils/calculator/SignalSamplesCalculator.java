@@ -6,20 +6,14 @@ import java.util.List;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
-import model.signal.base.Signal;
-
 /**
  * Created by bartoszpietrzak on 23/10/2017.
  */
 @Component
-public class SamplesCalculator
+public class SignalSamplesCalculator
 {
-	public List<Complex> getSampleList(Signal signal)
+	public List<Complex> getSampleList(Complex samplingRate, Complex initialTime, Complex endTime)
 	{
-		Complex samplingRate = signal.getSamplingRate();
-		Complex initialTime = signal.getInitialTime();
-		Complex endTime = signal.getEndTime();
-
 		List<Complex> samples = new ArrayList<>();
 
 		for (double iterator = initialTime.getReal(); iterator <= endTime.getReal(); iterator += samplingRate.getReal())

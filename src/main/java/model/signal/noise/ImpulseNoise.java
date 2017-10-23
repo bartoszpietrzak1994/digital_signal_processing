@@ -10,6 +10,7 @@ import com.google.common.collect.Sets;
 
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
+import model.signal.SignalType;
 import model.signal.base.type.NonPeriodicSignal;
 
 /**
@@ -29,6 +30,8 @@ public class ImpulseNoise extends NonPeriodicSignal
 				ParameterType.DURATION,
 				ParameterType.DISCRETIZATION_FREQUENCY,
 				ParameterType.VALUE_PRESENCE_PROBABILITY);
+
+		this.signalType = SignalType.IMPULSE_NOISE;
 	}
 
 	@Override

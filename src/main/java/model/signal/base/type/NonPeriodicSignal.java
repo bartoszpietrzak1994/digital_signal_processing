@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.math.complex.Complex;
 
 import lombok.NoArgsConstructor;
+import model.signal.SignalType;
 import model.signal.base.Signal;
 
 /**

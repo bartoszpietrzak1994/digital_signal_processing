@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import exception.SignalParametersException;
 import lombok.NoArgsConstructor;
 import model.behaviour.ParameterType;
+import model.signal.SignalType;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
@@ -27,6 +28,7 @@ public class SineSignalFullyRectified extends AbstractSineSignal
 			List<Complex> values)
 	{
 		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
+		this.signalType = SignalType.SINE_SIGNAL_FULLY_RECTIFIED;
 	}
 
 	@Override
