@@ -2,11 +2,13 @@ package manager;
 
 import java.util.List;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
+import model.request.SignalChartRequest;
 import model.signal.base.Signal;
 import utils.calculator.SignalPropertiesCalculator;
 import utils.calculator.SignalSamplesCalculator;
@@ -32,8 +34,36 @@ public class SignalManager
 		return signalTypeResolver.resolveSignalByType(signalType);
 	}
 
-	public List<Complex> getSignalSamples(Complex samplingRate, Complex initialTime, Complex endTime)
+	public List<Complex> getSignalSamples(Signal signal)
 	{
-		return signalSamplesCalculator.getSampleList(samplingRate, initialTime, endTime);
+		return signalSamplesCalculator.getSampleList(signal.getSamplingRate(), signal.getInitialTime(), signal.getEndTime());
+	}
+
+	public void extractDataFromSignalChartRequest(SignalChartRequest request, Signal signal)
+	{
+		if (request.getInitialTime() != null)
+		{
+			double realInitialTime = request.getInitialTime().getReal();
+			double imaginaryInitialTime = request.getInitialTime().getImaginary();
+			signal.setInitialTime(new Complex(realInitialTime < 0 ? 0.0D : realInitialTime, imaginaryInitialTime < 0 ? 0.0D : imaginaryInitialTime));
+		}
+
+		if (request.getSamplingRate() != null)
+		{
+			double realSamplingRate = request.getSamplingRate().getReal();
+			double imaginarySamplingRate = request.getSamplingRate().getImaginary();
+			signal.setSamplingRate(new Complex(realSamplingRate <= 0 ? 1.0D : realSamplingRate, imaginarySamplingRate < 0 ? 1.0D : imaginarySamplingRate));
+		}
+
+		if (ObjectUtils.anyNotNull(request.getInitialTime(), request.getDuration()))
+		{
+			signal.setEndTime(request.getInitialTime().add(request.getDuration()));
+		}
+
+		signal.setAmplitude(request.getAmplitude());
+		signal.setDuration(request.getDuration());
+		signal.setPeriod(request.getPeriod());
+		signal.setDutyCycle(signal.getDutyCycle());
+
 	}
 }

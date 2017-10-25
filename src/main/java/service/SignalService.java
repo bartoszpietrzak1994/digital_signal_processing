@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,17 +38,14 @@ public class SignalService
 	public XYChart<Double, Double> provideChartData(SignalChartRequest request) throws SignalParametersException
 	{
 		Signal signal = signalManager.resolveSignalByType(request.getSignalType());
-		signal.setSamples(signalManager.getSignalSamples(
-				request.getSamplingRate(),
-				request.getInitialTime(),
-				request.getInitialTime().add(request.getDuration())));
 
-		extractDataFromSignalChartRequest(request, signal);
-
+		signalManager.extractDataFromSignalChartRequest(request, signal);
 		if (!signal.areParametersProvided())
 		{
 			throw SignalParametersException.calculationDataNotProvided(signal.getApplicableParameters());
 		}
+
+		signal.setSamples(signalManager.getSignalSamples(signal));
 
 		List<Complex> values = new ArrayList<>();
 		List<Complex> samples = signal.getSamples();
@@ -65,16 +63,6 @@ public class SignalService
 	public XYChart<Double, Double> provideImaginaryChartData(SignalChartRequest request)
 	{
 		return null;
-	}
-
-	private void extractDataFromSignalChartRequest(SignalChartRequest request, Signal signal)
-	{
-		signal.setAmplitude(request.getAmplitude());
-		signal.setInitialTime(request.getInitialTime());
-		signal.setDuration(request.getDuration());
-		signal.setPeriod(request.getPeriod());
-		signal.setDutyCycle(signal.getDutyCycle());
-		signal.setSamplingRate(request.getSamplingRate());
 	}
 
 }
