@@ -1,11 +1,12 @@
 package model.signal.impulse;
 
-import java.util.List;
-
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
-import lombok.NoArgsConstructor;
+import com.google.common.collect.Sets;
+
+import model.behaviour.ParameterType;
 import model.signal.SignalType;
 import model.signal.base.type.NonPeriodicSignal;
 
@@ -13,25 +14,24 @@ import model.signal.base.type.NonPeriodicSignal;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
-@NoArgsConstructor
 public class StepFunction extends NonPeriodicSignal
 {
-	public StepFunction(
-			Complex amplitude,
-			Complex initialTime,
-			Complex duration,
-			Complex dutyCycle,
-			Complex samplingRate,
-			List<Complex> values)
+	public StepFunction()
 	{
-		super(amplitude, initialTime, duration, dutyCycle, samplingRate, values);
-
+		super();
 		this.signalType = SignalType.STEP_FUNCTION;
+		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION, ParameterType.END_TIME);
 	}
 
 	@Override
 	public Complex calculate(Complex sample)
 	{
 		return null;
+	}
+
+	@Override
+	public boolean areParametersProvided()
+	{
+		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration, this.endTime);
 	}
 }

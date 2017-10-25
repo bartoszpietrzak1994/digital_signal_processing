@@ -24,11 +24,16 @@ public abstract class Signal
 
 	protected Complex amplitude;
 
+	protected Complex valuePresenceProbability;
+
+	protected Complex amplitudeRiseTime;
+
 	/**
 	 * Miliseconds
 	 */
 	protected Complex initialTime;
 	protected Complex duration;
+
 	/**
 	 * endTime = initialTime + duration
 	 */
@@ -84,11 +89,5 @@ public abstract class Signal
 
 	public abstract Complex calculate(Complex sample) throws SignalParametersException;
 
-	protected void isCalculationValidForSignal(Set<ParameterType> signalParameters, Set<ParameterType> applicableParameters) throws SignalParametersException
-	{
-		if (!signalParameters.containsAll(applicableParameters))
-		{
-			throw SignalParametersException.calculationDataNotProvided(signalParameters, applicableParameters);
-		}
-	}
+	public abstract boolean areParametersProvided();
 }

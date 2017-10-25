@@ -19,11 +19,15 @@ public class SignalParametersException extends Exception
 		super(message);
 	}
 
-	public static SignalParametersException calculationDataNotProvided(Set<ParameterType> actualParameters, Set<ParameterType> applicableParameters)
+	public static SignalParametersException calculationDataNotProvided(Set<ParameterType> expected)
 	{
 		return new SignalParametersException(String.format(
-				"Calculation not possible for parameters: %s. Expected parameters: %s",
-				actualParameters,
-				applicableParameters));
+				"Calculation not possible. Expected parameters were not provided. Expected parameters: %s",
+				expected));
+	}
+
+	public static SignalParametersException signalTypeNotSupported(String signalType)
+	{
+		return new SignalParametersException(String.format("Signal of type %s is not supported.", signalType));
 	}
 }

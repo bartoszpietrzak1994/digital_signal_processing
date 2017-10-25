@@ -1,30 +1,19 @@
 package model.signal.signal.rectangular;
 
-import java.util.List;
-
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
-import lombok.NoArgsConstructor;
 import model.signal.SignalType;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
-@NoArgsConstructor
 public class RectangularSymmetricSignal extends AbstractRectangularSignal
 {
-	public RectangularSymmetricSignal(
-			Complex amplitude,
-			Complex initialTime,
-			Complex duration,
-			Complex period,
-			Complex dutyCycle,
-			Complex samplingRate,
-			List<Complex> values)
+	public RectangularSymmetricSignal()
 	{
-		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
+		super();
 		this.signalType = SignalType.RECTANGULAR_SYMMETRIC_SIGNAL;
 	}
 

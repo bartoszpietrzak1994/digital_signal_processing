@@ -6,6 +6,7 @@ import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import exception.SignalParametersException;
 import model.signal.base.Signal;
 import utils.calculator.SignalPropertiesCalculator;
 import utils.calculator.SignalSamplesCalculator;
@@ -26,7 +27,7 @@ public class SignalManager
 	@Autowired
 	private SignalPropertiesCalculator signalPropertiesCalculator;
 
-	public Signal resolveSignalByType(String signalType)
+	public Signal resolveSignalByType(String signalType) throws SignalParametersException
 	{
 		return signalTypeResolver.resolveSignalByType(signalType);
 	}

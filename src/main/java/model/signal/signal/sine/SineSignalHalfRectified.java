@@ -1,32 +1,20 @@
 package model.signal.signal.sine;
 
-import java.util.List;
-
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
-import lombok.NoArgsConstructor;
-import model.behaviour.ParameterType;
 import model.signal.SignalType;
 
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
-@NoArgsConstructor
 public class SineSignalHalfRectified extends AbstractSineSignal
 {
-	public SineSignalHalfRectified(
-			Complex amplitude,
-			Complex initialTime,
-			Complex duration,
-			Complex period,
-			Complex dutyCycle,
-			Complex samplingRate,
-			List<Complex> values)
+	public SineSignalHalfRectified()
 	{
-		super(amplitude, initialTime, duration, period, dutyCycle, samplingRate, values);
+		super();
 		this.signalType = SignalType.SINE_SIGNAL_HALF_RECTIFIED;
 	}
 

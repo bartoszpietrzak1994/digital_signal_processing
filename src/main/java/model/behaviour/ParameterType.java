@@ -19,6 +19,7 @@ public enum ParameterType
 	PERIOD,
 	DURATION,
 	DUTY_CYCLE,
+	END_TIME,
 
 	/**
 	 * DISCRETIZATION - related

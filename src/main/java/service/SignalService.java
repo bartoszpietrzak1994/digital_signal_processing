@@ -44,6 +44,11 @@ public class SignalService
 
 		extractDataFromSignalChartRequest(request, signal);
 
+		if (!signal.areParametersProvided())
+		{
+			throw SignalParametersException.calculationDataNotProvided(signal.getApplicableParameters());
+		}
+
 		List<Complex> values = new ArrayList<>();
 		List<Complex> samples = signal.getSamples();
 

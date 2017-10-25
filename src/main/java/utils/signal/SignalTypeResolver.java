@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import exception.SignalTypeNotSupportedException;
+import exception.SignalParametersException;
 import model.signal.SignalType;
 import model.signal.base.Signal;
 
@@ -19,7 +19,7 @@ public class SignalTypeResolver
 	@Autowired
 	private List<Signal> signals;
 
-	public Signal resolveSignalByType(String signalTypeName)
+	public Signal resolveSignalByType(String signalTypeName) throws SignalParametersException
 	{
 		SignalType signalType = SignalType.valueOf(signalTypeName);
 
@@ -27,7 +27,7 @@ public class SignalTypeResolver
 
 		if (!optionalSignal.isPresent())
 		{
-			throw new SignalTypeNotSupportedException("Unsupported signal type: " + signalType.name());
+			throw SignalParametersException.signalTypeNotSupported(signalType.name());
 		}
 
 		return optionalSignal.get();
