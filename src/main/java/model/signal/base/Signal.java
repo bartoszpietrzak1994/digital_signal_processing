@@ -20,6 +20,11 @@ import model.signal.SignalType;
 @NoArgsConstructor
 public abstract class Signal
 {
+	/**
+	 * Set when putting signal in a signalRepository
+	 */
+	protected int id;
+
 	protected SignalType signalType;
 
 	protected Complex amplitude;

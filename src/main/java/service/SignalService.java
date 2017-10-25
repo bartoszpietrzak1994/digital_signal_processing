@@ -35,6 +35,11 @@ public class SignalService
 		return false;
 	}
 
+	public Signal loadSignal(int signalId)
+	{
+
+	}
+
 	public XYChart<Double, Double> provideChartData(SignalChartRequest request) throws SignalParametersException
 	{
 		Signal signal = signalManager.resolveSignalByType(request.getSignalType());
