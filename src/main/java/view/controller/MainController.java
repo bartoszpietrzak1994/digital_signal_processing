@@ -17,8 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.signal.SignalType;
-import model.signal.base.Signal;
-import service.SignalService;
+import service.SignalServiceImpl;
 import utils.signal.SignalTypeResolver;
 
 /**
@@ -60,7 +59,7 @@ public class MainController implements Initializable
 	private SignalTypeResolver signalTypeResolver;
 
 	@Autowired
-	private SignalService signalService;
+	private SignalServiceImpl signalService;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)

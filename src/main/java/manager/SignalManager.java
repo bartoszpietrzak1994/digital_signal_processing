@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
+import exception.SignalRepositoryException;
 import model.request.SignalChartRequest;
 import model.signal.base.Signal;
+import repository.SignalRepository;
 import utils.calculator.SignalPropertiesCalculator;
 import utils.calculator.SignalSamplesCalculator;
 import utils.signal.SignalTypeResolver;
@@ -28,6 +30,9 @@ public class SignalManager
 
 	@Autowired
 	private SignalPropertiesCalculator signalPropertiesCalculator;
+
+	@Autowired
+	private SignalRepository signalRepository;
 
 	public Signal resolveSignalByType(String signalType) throws SignalParametersException
 	{
@@ -64,6 +69,10 @@ public class SignalManager
 		signal.setDuration(request.getDuration());
 		signal.setPeriod(request.getPeriod());
 		signal.setDutyCycle(signal.getDutyCycle());
+	}
 
+	public Signal findSignalInRepository(int signalId) throws SignalRepositoryException
+	{
+		return signalRepository.findOne(signalId);
 	}
 }
