@@ -5,8 +5,8 @@ import java.util.List;
 import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
-import javafx.scene.chart.XYChart;
-import model.request.SignalChartRequest;
+import model.request.SignalPropertiesCalculationRequest;
+import model.response.SignalPropertiesCalculationResponse;
 import model.signal.base.Signal;
 
 /**
@@ -29,6 +29,6 @@ public interface SignalService
 	/**
 	 * Signal on charts presentation
 	 */
-	XYChart<Double, Double> provideChartData(SignalChartRequest request) throws SignalParametersException;
-	XYChart<Double, Double> provideImaginaryChartData(SignalChartRequest request);
+	SignalPropertiesCalculationResponse calculateSignalProperties(SignalPropertiesCalculationRequest request) throws SignalParametersException;
+	SignalPropertiesCalculationResponse provideImaginaryChartData(SignalPropertiesCalculationRequest request);
 }

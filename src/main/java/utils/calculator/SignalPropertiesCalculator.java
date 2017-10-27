@@ -16,7 +16,7 @@ import model.signal.base.Signal;
 @Component
 public class SignalPropertiesCalculator
 {
-	public Complex calculateAaverageValue(Signal signal) throws SignalParametersException
+	public Complex calculateAaverageValue(Signal signal)
 	{
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();

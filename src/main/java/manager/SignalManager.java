@@ -1,5 +1,6 @@
 package manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
-import model.request.SignalChartRequest;
+import model.request.SignalPropertiesCalculationRequest;
 import model.signal.base.Signal;
 import repository.SignalRepository;
 import utils.calculator.SignalPropertiesCalculator;
@@ -44,7 +45,20 @@ public class SignalManager
 		return signalSamplesCalculator.getSampleList(signal.getSamplingRate(), signal.getInitialTime(), signal.getEndTime());
 	}
 
-	public void extractDataFromSignalChartRequest(SignalChartRequest request, Signal signal)
+	public List<Complex> calculateSignalValues(Signal signal) throws SignalParametersException
+	{
+		List<Complex> samples = signal.getSamples();
+		List<Complex> values = new ArrayList<>();
+
+		for (int i = 0; i < samples.size(); i++)
+		{
+			values.add(signal.calculate(samples.get(i)));
+		}
+
+		return values;
+	}
+
+	public void extractDataFromSignalChartRequest(SignalPropertiesCalculationRequest request, Signal signal)
 	{
 		if (request.getInitialTime() != null)
 		{
@@ -69,6 +83,31 @@ public class SignalManager
 		signal.setDuration(request.getDuration());
 		signal.setPeriod(request.getPeriod());
 		signal.setDutyCycle(signal.getDutyCycle());
+	}
+
+	public Complex calculateSignalAverageValue(Signal signal)
+	{
+		return signalPropertiesCalculator.calculateAaverageValue(signal);
+	}
+
+	public Complex calculateSignalAbsoluteAverageValue(Signal signal)
+	{
+		return signalPropertiesCalculator.calculateAbsolutetAverageValue(signal);
+	}
+
+	public Complex calculateSignalPower(Signal signal)
+	{
+		return signalPropertiesCalculator.calculateSignalPower(signal);
+	}
+
+	public Complex calculateSignalVariance(Signal signal)
+	{
+		return signalPropertiesCalculator.calculateVariance(signal, calculateSignalAverageValue(signal));
+	}
+
+	public Complex calculateSignalRootMeanSquareValue(Signal signal)
+	{
+		return signalPropertiesCalculator.calculateRootMeanSquareValue(signal);
 	}
 
 	public Signal findSignalInRepository(int signalId) throws SignalRepositoryException

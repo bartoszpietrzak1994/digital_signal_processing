@@ -1,9 +1,7 @@
 package service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -11,9 +9,9 @@ import org.springframework.util.CollectionUtils;
 import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
-import javafx.scene.chart.XYChart;
 import manager.SignalManager;
-import model.request.SignalChartRequest;
+import model.request.SignalPropertiesCalculationRequest;
+import model.response.SignalPropertiesCalculationResponse;
 import model.signal.base.Signal;
 
 /**
@@ -55,33 +53,30 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public XYChart<Double, Double> provideChartData(SignalChartRequest request) throws SignalParametersException
+	public SignalPropertiesCalculationResponse calculateSignalProperties(SignalPropertiesCalculationRequest request) throws SignalParametersException
 	{
 		Signal signal = signalManager.resolveSignalByType(request.getSignalType());
-
 		signalManager.extractDataFromSignalChartRequest(request, signal);
+
 		if (!signal.areParametersProvided())
 		{
 			throw SignalParametersException.calculationDataNotProvided(signal.getApplicableParameters());
 		}
 
 		signal.setSamples(signalManager.getSignalSamples(signal));
+		signal.setValues(signalManager.calculateSignalValues(signal));
 
-		List<Complex> values = new ArrayList<>();
-		List<Complex> samples = signal.getSamples();
-
-		for (int i = 0; i < samples.size(); i++)
-		{
-			values.add(signal.calculate(samples.get(i)));
-		}
-
-		signal.setValues(values);
-
-		return null;
+		return SignalPropertiesCalculationResponse.builder()
+				.signal(signal)
+				.averageSignalValue(signalManager.calculateSignalAverageValue(signal))
+				.absoluteAverageSignalValue(signalManager.calculateSignalAbsoluteAverageValue(signal))
+				.signalPower(signalManager.calculateSignalPower(signal))
+				.signalVariance(signalManager.calculateSignalVariance(signal))
+				.signalRootMeanSquareValue(signalManager.calculateSignalRootMeanSquareValue(signal)).build();
 	}
 
 	@Override
-	public XYChart<Double, Double> provideImaginaryChartData(SignalChartRequest request)
+	public SignalPropertiesCalculationResponse provideImaginaryChartData(SignalPropertiesCalculationRequest request)
 	{
 		return null;
 	}

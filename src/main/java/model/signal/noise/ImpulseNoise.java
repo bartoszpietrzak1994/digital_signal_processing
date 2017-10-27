@@ -1,7 +1,5 @@
 package model.signal.noise;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -18,8 +16,7 @@ import model.signal.base.type.NonPeriodicSignal;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
-@Getter
-@Setter
+// TODO
 public class ImpulseNoise extends NonPeriodicSignal
 {
 	public ImpulseNoise()
