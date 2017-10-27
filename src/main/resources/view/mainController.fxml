@@ -25,7 +25,7 @@
         <TextField fx:id="durationTextField" layoutX="428.0" layoutY="175.0" />
         <TextField fx:id="periodTextField" layoutX="632.0" layoutY="175.0" />
         <TextField fx:id="dutyCycleTextField" layoutX="824.0" layoutY="175.0" />
-        <LineChart fx:id="lineChart" layoutX="24.0" layoutY="355.0" prefHeight="371.0" prefWidth="430.0" title="Real">
+        <LineChart fx:id="realChart" layoutX="24.0" layoutY="355.0" prefHeight="371.0" prefWidth="430.0" title="Real">
             <xAxis>
                 <CategoryAxis side="BOTTOM" />
             </xAxis>
@@ -34,11 +34,11 @@
             </yAxis>
         </LineChart>
       <Label fx:id="resultProviderLabel" alignment="CENTER" layoutX="138.0" layoutY="21.0" prefHeight="44.0" prefWidth="750.0" />
-      <TextField fx:id="signalSampleCount" layoutX="281.0" layoutY="284.0" prefHeight="27.0" prefWidth="213.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="281.0" layoutY="232.0" prefHeight="35.0" prefWidth="213.0" text="Signal sample count (line/dots)" textAlignment="CENTER" />
-      <TextField fx:id="userSampleCount" layoutX="530.0" layoutY="284.0" prefHeight="27.0" prefWidth="213.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="530.0" layoutY="232.0" prefHeight="35.0" prefWidth="213.0" text="User's sample count" textAlignment="CENTER" />
-      <LineChart fx:id="lineChart1" layoutX="545.0" layoutY="355.0" prefHeight="371.0" prefWidth="430.0" title="Imaginary">
+      <TextField fx:id="signalSamplingRate" layoutX="49.0" layoutY="280.0" prefHeight="27.0" prefWidth="213.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="228.0" prefHeight="35.0" prefWidth="213.0" text="Signal sample count (line/dots)" textAlignment="CENTER" />
+      <TextField fx:id="userSampleCount" layoutX="322.0" layoutY="280.0" prefHeight="27.0" prefWidth="213.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="322.0" layoutY="228.0" prefHeight="35.0" prefWidth="213.0" text="User's sample count" textAlignment="CENTER" />
+      <LineChart fx:id="imaginaryChart" layoutX="545.0" layoutY="355.0" prefHeight="371.0" prefWidth="430.0" title="Imaginary">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
          </xAxis>
@@ -46,5 +46,6 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
+      <Button fx:id="renderButton" layoutX="776.0" layoutY="262.0" mnemonicParsing="false" onAction="#renderCharts" prefHeight="44.0" prefWidth="96.0" text="Render" />
     </children>
 </AnchorPane>

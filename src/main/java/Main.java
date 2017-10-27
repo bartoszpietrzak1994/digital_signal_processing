@@ -1,3 +1,5 @@
+import java.util.ResourceBundle;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,10 +14,15 @@ public class Main extends Application
 {
 	public static final String RELATIVE_CONTROLLER_PATH = "view/mainController.fxml";
 
+	private static final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DigitalSignalProcessingConfiguration.class);
+
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		Parent root = FXMLLoader.load(getClass().getResource(RELATIVE_CONTROLLER_PATH));
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setControllerFactory(applicationContext::getBean);
+		fxmlLoader.setLocation(getClass().getResource(RELATIVE_CONTROLLER_PATH));
+		Parent root = fxmlLoader.load();
 		primaryStage.setTitle("Hello World");
 		primaryStage.setScene(new Scene(root, 1024, 768));
 		primaryStage.show();
@@ -23,7 +30,7 @@ public class Main extends Application
 
 	public static void main(String[] args)
 	{
-		ApplicationContext context = new AnnotationConfigApplicationContext(DigitalSignalProcessingConfiguration.class);
+		new AnnotationConfigApplicationContext(DigitalSignalProcessingConfiguration.class);
 		launch(args);
 	}
 }

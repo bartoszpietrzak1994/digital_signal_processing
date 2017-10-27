@@ -16,9 +16,12 @@ public class SignalSamplesCalculator
 	{
 		List<Complex> samples = new ArrayList<>();
 
-		for (double iterator = initialTime.getReal(); iterator <= endTime.getReal(); iterator += samplingRate.getReal())
+		double iterator = initialTime.getReal();
+
+		while (iterator <= endTime.getReal())
 		{
 			samples.add(new Complex(iterator, iterator));
+			iterator += 1.0/samplingRate.getReal();
 		}
 
 		return samples;

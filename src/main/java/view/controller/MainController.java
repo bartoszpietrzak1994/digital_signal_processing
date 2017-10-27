@@ -7,22 +7,31 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import exception.ChartServiceException;
+import exception.SignalParametersException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.request.SignalPropertiesCalculationRequest;
+import model.response.SignalPropertiesCalculationResponse;
 import model.signal.SignalType;
-import service.SignalServiceImpl;
-import utils.signal.SignalTypeResolver;
+import service.ChartService;
+import service.SignalService;
+import utils.request.SignalPropertiesCalculationRequestBuilder;
 
 /**
  * Created by bartoszpietrzak on 21/10/2017.
  */
+@Component
 public class MainController implements Initializable
 {
 	@FXML
@@ -32,7 +41,10 @@ public class MainController implements Initializable
 	private TextField durationTextField;
 
 	@FXML
-	private LineChart<?, ?> lineChart;
+	private LineChart<String, Double> realChart;
+
+	@FXML
+	private LineChart<Double, Double> imaginaryChart;
 
 	@FXML
 	private TextField initialTimeTextField;
@@ -47,7 +59,7 @@ public class MainController implements Initializable
 	private TextField periodTextField;
 
 	@FXML
-	private TextField signalSampleCount;
+	private TextField signalSamplingRate;
 
 	@FXML
 	private TextField userSampleCount;
@@ -55,11 +67,14 @@ public class MainController implements Initializable
 	@FXML
 	private Label resultProviderLabel;
 
- 	@Autowired
-	private SignalTypeResolver signalTypeResolver;
+	@FXML
+	private Button renderButton;
 
 	@Autowired
-	private SignalServiceImpl signalService;
+	private SignalService signalService;
+
+	@Autowired
+	private ChartService chartService;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -68,6 +83,43 @@ public class MainController implements Initializable
 		List<String> stringSignalTypes = Arrays.stream(SignalType.values()).map(Enum::toString).collect(Collectors.toList());
 		ObservableList<String> signalTypes = FXCollections.observableList(stringSignalTypes);
 		signalTypeComboBox.setItems(signalTypes);
+	}
+
+	@FXML
+	public void renderCharts()
+	{
+		SignalPropertiesCalculationRequest signalPropertiesCalculationRequest = SignalPropertiesCalculationRequestBuilder.builder()
+				.signalType(this.signalTypeComboBox.getValue())
+				.amplitude(this.amplitudeTextField.getText())
+				.duration(this.durationTextField.getText())
+				.dutyCycle(this.dutyCycleTextField.getText())
+				.initialTime(this.initialTimeTextField.getText())
+				.period(this.periodTextField.getText())
+				.samplingRate(this.signalSamplingRate.getText())
+				.build()
+				.toRequest();
+
+		SignalPropertiesCalculationResponse response = null;
+		try
+		{
+			response = signalService.calculateSignalProperties(signalPropertiesCalculationRequest);
+		}
+		catch (SignalParametersException e)
+		{
+			e.printStackTrace();
+		}
+
+		XYChart.Series<String, Double> realSignalChart = null;
+		try
+		{
+			realSignalChart = chartService.renderRealSignalChart(response.getSignal());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		this.realChart.getData().setAll(realSignalChart);
 	}
 }
 
