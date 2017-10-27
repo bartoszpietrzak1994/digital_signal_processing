@@ -20,18 +20,32 @@ public class StepFunction extends NonPeriodicSignal
 	{
 		super();
 		this.signalType = SignalType.STEP_FUNCTION;
-		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION, ParameterType.END_TIME);
+		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE,
+				ParameterType.INITIAL_TIME,
+				ParameterType.DURATION,
+				ParameterType.AMPLITUDE_RISE_TIME);
 	}
 
 	@Override
 	public Complex calculate(Complex sample)
 	{
-		return null;
+		if (sample.getReal() > this.amplitudeRiseTime.getReal())
+		{
+			return this.amplitude;
+		}
+		else if (sample.getReal() == amplitudeRiseTime.getReal())
+		{
+			return this.amplitude.divide(new Complex(2.0D, 0.0D));
+		}
+		else
+		{
+			return Complex.ZERO;
+		}
 	}
 
 	@Override
 	public boolean areParametersProvided()
 	{
-		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration, this.endTime);
+		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration, this.amplitudeRiseTime);
 	}
 }

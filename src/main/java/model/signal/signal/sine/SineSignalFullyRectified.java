@@ -21,21 +21,9 @@ public class SineSignalFullyRectified extends AbstractSineSignal
 	@Override
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-//		isCalculationValidForSignal(sample.keySet(), this.applicableParameters);
-//
-//		Complex amplitude = sample.get(ParameterType.AMPLITUDE);
-//		Complex period = sample.get(ParameterType.PERIOD);
-//		Complex initialTime = sample.get(ParameterType.INITIAL_TIME);
-//		Complex duration = sample.get(ParameterType.DURATION);
-//
-//		double commonRealValue = ((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal());
-//		double real = (1.0 / 2.0) * amplitude.getReal() * (commonRealValue + Math.abs(commonRealValue));
-//
-//		double commonImaginaryValue = ((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary());
-//		double imaginary =  (1.0 / 2.0) * amplitude.getImaginary() * (commonImaginaryValue + Math.abs(commonImaginaryValue));
-//
-//		return new Complex(real, imaginary);
+		double commonRealValue = ((2.0 * Math.PI) / this.period.getReal()) * (sample.getReal() - this.initialTime.getReal());
+		double real = (1.0 / 2.0) * this.amplitude.getReal() * (commonRealValue + Math.abs(commonRealValue));
 
-		return null;
+		return new Complex(real, 0.0D);
 	}
 }

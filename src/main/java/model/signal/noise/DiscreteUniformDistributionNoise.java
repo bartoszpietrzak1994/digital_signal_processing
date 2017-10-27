@@ -1,5 +1,7 @@
 package model.signal.noise;
 
+import java.util.Random;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,11 @@ public class DiscreteUniformDistributionNoise extends NonPeriodicSignal
 	@Override
 	public Complex calculate(Complex sample)
 	{
-		return null;
+		double lowerBound = (-1.0D) * this.amplitude.getReal();
+		double upperBound = this.amplitude.getReal();
+
+		Random random = new Random();
+		return new Complex(lowerBound + (upperBound - lowerBound) * random.nextDouble(), 0.0D);
 	}
 
 	@Override

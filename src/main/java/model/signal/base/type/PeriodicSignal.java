@@ -1,5 +1,8 @@
 package model.signal.base.type;
 
+import org.apache.commons.math.complex.Complex;
+
+import exception.SignalParametersException;
 import model.signal.base.Signal;
 
 /**
@@ -11,5 +14,22 @@ public abstract class PeriodicSignal extends Signal
 	{
 		super();
 		this.isPeriodic = Boolean.TRUE;
+	}
+
+	protected Complex getPeriodBySample(Complex sample) throws SignalParametersException
+	{
+		Complex periodCounter = Complex.ONE;
+
+		while (periodCounter.getReal() * this.period.getReal() < this.endTime.getReal())
+		{
+			if (sample.getReal() >= periodCounter.getReal() * this.period.getReal() && sample.getReal() <= periodCounter.getReal() + 1 * this.period.getReal())
+			{
+				return periodCounter;
+			}
+
+			periodCounter.add(Complex.ONE);
+		}
+
+		throw SignalParametersException.unableToCalculatePeriodNumber(sample);
 	}
 }

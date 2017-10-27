@@ -21,19 +21,9 @@ public class SineSignalHalfRectified extends AbstractSineSignal
 	@Override
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-//		isCalculationValidForSignal(sample.keySet(), this.applicableParameters);
-//
-//		Complex amplitude = sample.get(ParameterType.AMPLITUDE);
-//		Complex period = sample.get(ParameterType.PERIOD);
-//		Complex initialTime = sample.get(ParameterType.INITIAL_TIME);
-//		Complex duration = sample.get(ParameterType.DURATION);
-//
-//		double real = amplitude.getReal() * Math.abs(Math.sin(((2.0 * Math.PI) / period.getReal()) * (duration.getReal() - initialTime.getReal())));
-//		double imaginary = amplitude.getImaginary() * Math.abs(Math.sin(
-//				((2.0 * Math.PI) / period.getImaginary()) * (duration.getImaginary() - initialTime.getImaginary())));
-//
-//		return new Complex(real, imaginary);
+		double real = this.amplitude.getReal() * Math.abs(Math.sin(
+				((2.0 * Math.PI) / this.period.getReal()) * (sample.getReal() - this.initialTime.getReal())));
 
-		return null;
+		return new Complex(real, 0.0D);
 	}
 }

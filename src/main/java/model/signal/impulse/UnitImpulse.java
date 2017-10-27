@@ -15,6 +15,7 @@ import model.signal.base.type.NonPeriodicSignal;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
+// TODO
 public class UnitImpulse extends NonPeriodicSignal
 {
 	public UnitImpulse()
@@ -36,27 +37,6 @@ public class UnitImpulse extends NonPeriodicSignal
 	@Override
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-		//		isCalculationValidForSignal(sample.keySet(), this.applicableParameters);
-		//
-		//		Complex amplitude = sample.get(ParameterType.AMPLITUDE);
-		//		Complex initialTime = sample.get(ParameterType.INITIAL_TIME);
-		//		Complex duration = sample.get(ParameterType.DURATION);
-		//		Complex amplitudeRiseTime = sample.get(ParameterType.AMPLITUDE_RISE_TIME);
-
-		// TODO
-		//		if (duration > amplitudeRiseTime)
-		//		{
-		//			return amplitude;
-		//		}
-		//		else if (duration == amplitudeRiseTime)
-		//		{
-		//			return amplitude / 2.0;
-		//		}
-		//		else
-		//		{
-		//			return 0;
-		//		}
-
 		return null;
 	}
 }
