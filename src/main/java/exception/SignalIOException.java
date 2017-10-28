@@ -3,20 +3,20 @@ package exception;
 /**
  * Created by bartoszpietrzak on 23/10/2017.
  */
-public class SignalIOException extends Exception
+public class SignalIOException extends DigitalSignalProcessingException
 {
-	public SignalIOException()
+	private SignalIOException()
 	{
 		super();
 	}
 
-	public static SignalIOException signalValuesNotAvailable()
+	private SignalIOException(DigitalSignalProcessingErrorCode errorCode, String message)
 	{
-		return new SignalIOException("Signal values were not provided.");
+		super(errorCode, message);
 	}
 
-	public SignalIOException(String message)
+	public static SignalIOException signalValuesNotAvailable()
 	{
-		super(message);
+		return new SignalIOException(DigitalSignalProcessingErrorCode.SIGNAL_VALUES_NOT_AVAILABLE, "Signal values were not provided.");
 	}
 }

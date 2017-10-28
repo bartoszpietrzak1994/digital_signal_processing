@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import exception.ChartServiceException;
+import exception.DigitalSignalProcessingErrorCode;
+import exception.DigitalSignalProcessingExceptionHandler;
 import exception.SignalParametersException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,6 +78,9 @@ public class MainController implements Initializable
 	@Autowired
 	private ChartService chartService;
 
+	@Autowired
+	private DigitalSignalProcessingExceptionHandler exceptionHandler;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
@@ -88,6 +93,11 @@ public class MainController implements Initializable
 	@FXML
 	public void renderCharts()
 	{
+		if (StringUtils.isEmpty(this.signalTypeComboBox.getValue()))
+		{
+			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_TYPE_NOT_GIVEN_BY_USER.name() + ". Please provide signal type from list");
+		}
+
 		SignalPropertiesCalculationRequest signalPropertiesCalculationRequest = SignalPropertiesCalculationRequestBuilder.builder()
 				.signalType(this.signalTypeComboBox.getValue())
 				.amplitude(this.amplitudeTextField.getText())
@@ -104,9 +114,9 @@ public class MainController implements Initializable
 		{
 			response = signalService.calculateSignalProperties(signalPropertiesCalculationRequest);
 		}
-		catch (SignalParametersException e)
+		catch (Exception exception)
 		{
-			e.printStackTrace();
+			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
 		}
 
 		XYChart.Series<String, Double> realSignalChart = null;
@@ -114,9 +124,9 @@ public class MainController implements Initializable
 		{
 			realSignalChart = chartService.renderRealSignalChart(response.getSignal());
 		}
-		catch (Exception e)
+		catch (Exception exception)
 		{
-			e.printStackTrace();
+			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
 		}
 
 		this.realChart.getData().setAll(realSignalChart);

@@ -10,15 +10,16 @@ import model.behaviour.ParameterType;
 /**
  * Created by bartoszpietrzak on 16/10/2017.
  */
-public class SignalParametersException extends Exception
+public class SignalParametersException extends DigitalSignalProcessingException
 {
-	@Getter
-	private DigitalSignalProcessingErrorCode errorCode;
+	private SignalParametersException()
+	{
+		super();
+	}
 
 	private SignalParametersException(DigitalSignalProcessingErrorCode errorCode, String message)
 	{
-		super(message);
-		this.errorCode = errorCode;
+		super(errorCode, message);
 	}
 
 	public static SignalParametersException calculationDataNotProvided(Set<ParameterType> expectedParameters)

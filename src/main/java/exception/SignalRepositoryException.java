@@ -3,20 +3,22 @@ package exception;
 /**
  * Created by bartoszpietrzak on 25/10/2017.
  */
-public class SignalRepositoryException extends Exception
+public class SignalRepositoryException extends DigitalSignalProcessingException
 {
-	public SignalRepositoryException()
+	private SignalRepositoryException()
 	{
 		super();
 	}
 
-	public SignalRepositoryException(String message)
+	private SignalRepositoryException(DigitalSignalProcessingErrorCode errorCode, String message)
 	{
-		super(message);
+		super(errorCode, message);
 	}
 
 	public static SignalRepositoryException signalNotPresentInRepository(int id)
 	{
-		return new SignalRepositoryException(String.format("Signal with id: %d is not present in signal repository.", id));
+		return new SignalRepositoryException(
+				DigitalSignalProcessingErrorCode.SIGNAL_NOT_PRESENT_IN_REPOSITORY,
+				String.format("Signal with id: %d is not present in signal repository.", id));
 	}
 }

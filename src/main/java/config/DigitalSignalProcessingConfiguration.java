@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
  * Created by bartoszpietrzak on 22/10/2017.
  */
 @Configuration
-@ComponentScan(basePackages = { "model.signal", "service", "manager", "utils",
-		"repository", "view.controller" }, excludeFilters = @ComponentScan.Filter(value = Configuration.class))
+@ComponentScan(basePackages = { "model.signal", "service", "manager", "utils", "repository", "view.controller",
+		"exception" }, excludeFilters = @ComponentScan.Filter(value = Configuration.class))
 public class DigitalSignalProcessingConfiguration
 {
 }
