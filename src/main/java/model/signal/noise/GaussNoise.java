@@ -1,7 +1,5 @@
 package model.signal.noise;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;

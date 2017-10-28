@@ -28,22 +28,22 @@ public class TriangleSignal extends PeriodicSignal
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{
 		Complex periodCounter = getPeriodBySample(sample);
-		Complex ascendingReturnValue = this.amplitude.divide((this.dutyCycle.multiply(this.period)))
-				.multiply(sample.subtract(periodCounter.multiply(this.period)).subtract(this.initialTime));
+		Complex ascendingReturnValue = amplitude.divide((dutyCycle.multiply(period)))
+				.multiply(sample.subtract(periodCounter.multiply(period)).subtract(initialTime));
 		Complex descendingReturnValue = (((Complex.ONE.negate()
-				.multiply(this.amplitude)).divide((this.period.divide(this.period.multiply(this.dutyCycle))))).multiply(sample.subtract(periodCounter.multiply(
-				this.period)).subtract(this.initialTime))).add(this.amplitude.multiply(Complex.ONE.subtract(this.dutyCycle)));
+				.multiply(amplitude)).divide((period.divide(period.multiply(dutyCycle))))).multiply(sample.subtract(periodCounter.multiply(period))
+				.subtract(initialTime))).add(amplitude.multiply(Complex.ONE.subtract(dutyCycle)));
 
-		Complex ascendingReturnValueLeftInterval = periodCounter.multiply(this.period).subtract(this.initialTime);
-		Complex ascendingReturnValueRightInterval = this.dutyCycle.multiply(this.period).add(periodCounter.multiply(this.period)).add(this.initialTime);
+		Complex ascendingReturnValueLeftInterval = periodCounter.multiply(period).subtract(initialTime);
+		Complex ascendingReturnValueRightInterval = dutyCycle.multiply(period).add(periodCounter.multiply(period)).add(initialTime);
 
 		if (sample.getReal() >= ascendingReturnValueLeftInterval.getReal() && sample.getReal() < ascendingReturnValueRightInterval.getReal())
 		{
 			return ascendingReturnValue;
 		}
 
-		Complex descendingReturnValueLeftInterval = this.dutyCycle.multiply(this.period).add(this.initialTime).add(periodCounter.multiply(this.period));
-		Complex descendingReturnValueRightInterval = this.period.add(periodCounter.multiply(this.period)).add(this.initialTime);
+		Complex descendingReturnValueLeftInterval = dutyCycle.multiply(period).add(initialTime).add(periodCounter.multiply(period));
+		Complex descendingReturnValueRightInterval = period.add(periodCounter.multiply(period)).add(initialTime);
 
 		if (sample.getReal() >= descendingReturnValueLeftInterval.getReal() && sample.getReal() < descendingReturnValueRightInterval.getReal())
 		{
@@ -56,6 +56,6 @@ public class TriangleSignal extends PeriodicSignal
 	@Override
 	public boolean areParametersProvided()
 	{
-		return ObjectUtils.allNotNull(this.amplitude, this.period, this.initialTime, this.duration, this.dutyCycle);
+		return ObjectUtils.allNotNull(amplitude, period, initialTime, duration, dutyCycle);
 	}
 }

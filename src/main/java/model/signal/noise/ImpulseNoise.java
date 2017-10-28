@@ -1,5 +1,7 @@
 package model.signal.noise;
 
+import java.util.Random;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,6 @@ import model.signal.base.type.NonPeriodicSignal;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
-// TODO
 public class ImpulseNoise extends NonPeriodicSignal
 {
 	public ImpulseNoise()
@@ -34,7 +35,12 @@ public class ImpulseNoise extends NonPeriodicSignal
 	@Override
 	public Complex calculate(Complex sample)
 	{
-		return null;
+		Random random = new Random();
+
+		// value between 0.0 and 1.0
+		double v = random.nextDouble();
+
+		return v < valuePresenceProbability.getReal() ? amplitude : Complex.ZERO;
 	}
 
 	@Override

@@ -29,6 +29,9 @@ public abstract class Signal
 
 	protected Complex amplitude;
 
+	/**
+	 * Given as decimal between 0.0 and 1.0
+	 */
 	protected Complex valuePresenceProbability;
 
 	protected Complex amplitudeRiseTime;
