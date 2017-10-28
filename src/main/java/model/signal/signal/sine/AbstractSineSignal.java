@@ -20,7 +20,7 @@ public abstract class AbstractSineSignal extends PeriodicSignal
 	}
 
 	@Override
-	public boolean areParametersProvided()
+	public boolean areSampleCalculationParametersProvided()
 	{
 		return ObjectUtils.allNotNull(this.amplitude, this.period, this.initialTime, this.duration);
 	}

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 
-import lombok.Getter;
-import lombok.Setter;
 import model.behaviour.ParameterType;
 import model.signal.SignalType;
 import model.signal.base.type.NonPeriodicSignal;
@@ -28,7 +26,6 @@ public class ImpulseNoise extends NonPeriodicSignal
 				ParameterType.AMPLITUDE,
 				ParameterType.INITIAL_TIME,
 				ParameterType.DURATION,
-				ParameterType.DISCRETIZATION_FREQUENCY,
 				ParameterType.VALUE_PRESENCE_PROBABILITY);
 	}
 
@@ -38,13 +35,13 @@ public class ImpulseNoise extends NonPeriodicSignal
 		Random random = new Random();
 
 		// value between 0.0 and 1.0
-		double v = random.nextDouble();
+		double randomValue = random.nextDouble();
 
-		return v < valuePresenceProbability.getReal() ? amplitude : Complex.ZERO;
+		return randomValue < valuePresenceProbability.getReal() ? amplitude : Complex.ZERO;
 	}
 
 	@Override
-	public boolean areParametersProvided()
+	public boolean areSampleCalculationParametersProvided()
 	{
 		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration, this.samplingRate, this.valuePresenceProbability);
 	}

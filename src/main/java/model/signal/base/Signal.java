@@ -98,5 +98,10 @@ public abstract class Signal
 
 	public abstract Complex calculate(Complex sample) throws SignalParametersException;
 
-	public abstract boolean areParametersProvided();
+	/**
+	 * Checks if parameters are provided in order to avoid NullPointerException
+	 * while calculating value for given sample.
+	 * @return
+	 */
+	public abstract boolean areSampleCalculationParametersProvided();
 }

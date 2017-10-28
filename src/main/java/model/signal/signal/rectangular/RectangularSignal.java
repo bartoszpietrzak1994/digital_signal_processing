@@ -23,21 +23,25 @@ public class RectangularSignal extends AbstractRectangularSignal
 	{
 		Complex periodCounter = getPeriodBySample(sample);
 
-		Complex amplitudeIntervalLeftLimit = new Complex(periodCounter.getReal() * this.period.getReal() + this.initialTime.getReal(), 0.0D);
-		Complex amplitudeIntervalRightLimit = new Complex(this.dutyCycle.getReal() * this.period.getReal() + amplitudeIntervalLeftLimit.getReal(), 0.0D);
+		// left end of interval
+		Complex amplitudeIntervalLeftEnd = new Complex(periodCounter.getReal() * this.period.getReal() + this.initialTime.getReal(), 0.0D);
+		// right end of interval
+		Complex amplitudeIntervalRightEnd = new Complex(this.dutyCycle.getReal() * this.period.getReal() + amplitudeIntervalLeftEnd.getReal(), 0.0D);
 
-		if (sample.getReal() >= amplitudeIntervalLeftLimit.getReal() && sample.getReal() < amplitudeIntervalRightLimit.getReal())
+		if (sample.getReal() >= amplitudeIntervalLeftEnd.getReal() && sample.getReal() < amplitudeIntervalRightEnd.getReal())
 		{
 			return this.amplitude;
 		}
 
-		Complex zeroIntervalLeftLimit = new Complex(
+		// left end of interval
+		Complex zeroIntervalLeftEnd = new Complex(
 				(this.dutyCycle.getReal() * this.period.getReal()) - periodCounter.getReal() * this.period.getReal() + this.initialTime.getReal(),
 				0.0D);
-		Complex zeroIntervalRightLimit = new Complex((this.period.getReal() + (periodCounter.getReal() * this.period.getReal()) + this.initialTime.getReal()),
+		// right end of interval
+		Complex zeroIntervalRightEnd = new Complex((this.period.getReal() + (periodCounter.getReal() * this.period.getReal()) + this.initialTime.getReal()),
 				0.0D);
 
-		if (sample.getReal() >= zeroIntervalLeftLimit.getReal() && sample.getReal() < zeroIntervalRightLimit.getReal())
+		if (sample.getReal() >= zeroIntervalLeftEnd.getReal() && sample.getReal() < zeroIntervalRightEnd.getReal())
 		{
 			return Complex.ZERO;
 		}

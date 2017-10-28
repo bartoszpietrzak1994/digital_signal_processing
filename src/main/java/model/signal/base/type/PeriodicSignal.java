@@ -16,6 +16,13 @@ public abstract class PeriodicSignal extends Signal
 		this.isPeriodic = Boolean.TRUE;
 	}
 
+	/**
+	 * Finds out in which period is given sample.
+	 * Applicable only for periodic signals.
+	 * @param sample
+	 * @return
+	 * @throws SignalParametersException
+	 */
 	protected Complex getPeriodBySample(Complex sample) throws SignalParametersException
 	{
 		Complex periodCounter = Complex.ONE;

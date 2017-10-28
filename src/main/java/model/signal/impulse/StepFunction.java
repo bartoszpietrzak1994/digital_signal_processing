@@ -44,7 +44,7 @@ public class StepFunction extends NonPeriodicSignal
 	}
 
 	@Override
-	public boolean areParametersProvided()
+	public boolean areSampleCalculationParametersProvided()
 	{
 		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration, this.amplitudeRiseTime);
 	}

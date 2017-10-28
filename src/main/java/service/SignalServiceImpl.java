@@ -58,7 +58,7 @@ public class SignalServiceImpl implements SignalService
 		Signal signal = signalManager.resolveSignalByType(request.getSignalType());
 		signalManager.extractDataFromSignalChartRequest(request, signal);
 
-		if (!signal.areParametersProvided())
+		if (!signal.areSampleCalculationParametersProvided())
 		{
 			throw SignalParametersException.calculationDataNotProvided(signal.getApplicableParameters());
 		}

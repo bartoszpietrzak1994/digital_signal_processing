@@ -1,5 +1,7 @@
 package model.signal.noise;
 
+import java.util.Random;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
@@ -14,22 +16,23 @@ import model.signal.base.type.NonPeriodicSignal;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
-public class GaussNoise extends NonPeriodicSignal
+public class GaussianNoise extends NonPeriodicSignal
 {
-	public GaussNoise()
+	public GaussianNoise()
 	{
-		this.signalType = SignalType.GAUSS_NOISE;
+		this.signalType = SignalType.GAUSSIAN_NOISE;
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION);
 	}
 
 	@Override
 	public Complex calculate(Complex sample)
 	{
-		return null;
+		Random random = new Random();
+		return new Complex(random.nextGaussian(), 0.0D);
 	}
 
 	@Override
-	public boolean areParametersProvided()
+	public boolean areSampleCalculationParametersProvided()
 	{
 		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration);
 	}

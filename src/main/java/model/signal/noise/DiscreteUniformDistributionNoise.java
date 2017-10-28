@@ -27,15 +27,14 @@ public class DiscreteUniformDistributionNoise extends NonPeriodicSignal
 	@Override
 	public Complex calculate(Complex sample)
 	{
-		double lowerBound = (-1.0D) * this.amplitude.getReal();
-		double upperBound = this.amplitude.getReal();
-
+		Complex negatedAmplitude = Complex.ONE.negate().multiply(this.amplitude);
 		Random random = new Random();
-		return new Complex(lowerBound + (upperBound - lowerBound) * random.nextDouble(), 0.0D);
+
+		return negatedAmplitude.add(this.amplitude.subtract(negatedAmplitude).multiply(new Complex(random.nextDouble(), 0.0D)));
 	}
 
 	@Override
-	public boolean areParametersProvided()
+	public boolean areSampleCalculationParametersProvided()
 	{
 		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration);
 	}

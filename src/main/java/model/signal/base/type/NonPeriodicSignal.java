@@ -13,6 +13,6 @@ public abstract class NonPeriodicSignal extends Signal
 	{
 		super();
 		this.isPeriodic = Boolean.FALSE;
-		this.period = new Complex(0, 0);
+		this.period = new Complex(0.0D, 0.0D);
 	}
 }

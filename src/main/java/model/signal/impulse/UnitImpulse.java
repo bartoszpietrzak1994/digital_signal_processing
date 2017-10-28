@@ -28,7 +28,7 @@ public class UnitImpulse extends NonPeriodicSignal
 	}
 
 	@Override
-	public boolean areParametersProvided()
+	public boolean areSampleCalculationParametersProvided()
 	{
 		return ObjectUtils.anyNotNull(this.amplitude, this.initialTime, this.duration, this.amplitudeRiseSample);
 	}
