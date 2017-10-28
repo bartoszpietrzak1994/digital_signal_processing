@@ -10,7 +10,7 @@ public enum ParameterType
 	 */
 	AMPLITUDE,
 	AMPLITUDE_RISE_TIME,
-	AMPLITUDE_RISE_COUNTERPART,
+	AMPLITUDE_RISE_SAMPLE,
 
 	/**
 	 * TIME - related

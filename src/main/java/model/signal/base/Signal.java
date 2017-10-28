@@ -35,6 +35,7 @@ public abstract class Signal
 	protected Complex valuePresenceProbability;
 
 	protected Complex amplitudeRiseTime;
+	protected Complex amplitudeRiseSample;
 
 	/**
 	 * Miliseconds
