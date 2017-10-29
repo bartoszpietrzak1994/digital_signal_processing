@@ -12,20 +12,20 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1050.0" prefWidth="1680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.MainController">
     <children>
-        <ComboBox fx:id="signalTypeComboBox" layoutX="404.0" layoutY="71.0" prefWidth="150.0" promptText="Signal Type" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="119.0" prefHeight="35.0" prefWidth="96.0" text="Amplitude" textAlignment="CENTER" />
-        <Label alignment="CENTER" layoutX="262.0" layoutY="119.0" prefHeight="35.0" prefWidth="96.0" text="Initial Time" />
-        <Label alignment="CENTER" layoutX="478.0" layoutY="119.0" prefHeight="35.0" prefWidth="67.0" text="Duration" />
-        <Label alignment="CENTER" layoutX="682.0" layoutY="119.0" prefHeight="35.0" prefWidth="67.0" text="Period" />
-        <Label alignment="CENTER" layoutX="860.0" layoutY="119.0" prefHeight="35.0" prefWidth="96.0" text="Duty Cycle" />
-        <TextField fx:id="amplitudeTextField" layoutX="14.0" layoutY="175.0" />
-        <TextField fx:id="initialTimeTextField" layoutX="226.0" layoutY="175.0" />
-        <TextField fx:id="durationTextField" layoutX="428.0" layoutY="175.0" />
-        <TextField fx:id="periodTextField" layoutX="632.0" layoutY="175.0" />
-        <TextField fx:id="dutyCycleTextField" layoutX="824.0" layoutY="175.0" />
-        <LineChart fx:id="realChart" layoutX="24.0" layoutY="355.0" prefHeight="371.0" prefWidth="430.0" title="Real">
+        <ComboBox fx:id="signalTypeComboBox" layoutX="23.0" layoutY="73.0" prefHeight="27.0" prefWidth="122.0" promptText="Signal Type" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="119.0" prefHeight="35.0" prefWidth="96.0" text="Amplitude" textAlignment="CENTER" />
+        <Label alignment="CENTER" layoutX="14.0" layoutY="158.0" prefHeight="35.0" prefWidth="96.0" text="Initial Time" />
+        <Label alignment="CENTER" layoutX="29.0" layoutY="198.0" prefHeight="35.0" prefWidth="67.0" text="Duration" />
+        <Label alignment="CENTER" layoutX="29.0" layoutY="242.0" prefHeight="35.0" prefWidth="67.0" text="Period" />
+        <Label alignment="CENTER" layoutX="15.0" layoutY="281.0" prefHeight="35.0" prefWidth="96.0" text="Duty Cycle" />
+        <TextField fx:id="amplitudeTextField" layoutX="147.0" layoutY="123.0" />
+        <TextField fx:id="initialTimeTextField" layoutX="147.0" layoutY="162.0" />
+        <TextField fx:id="durationTextField" layoutX="147.0" layoutY="202.0" />
+        <TextField fx:id="periodTextField" layoutX="147.0" layoutY="246.0" />
+        <TextField fx:id="dutyCycleTextField" layoutX="147.0" layoutY="285.0" />
+        <LineChart fx:id="realChart" layoutX="49.0" layoutY="512.0" prefHeight="458.0" prefWidth="682.0" title="Real">
             <xAxis>
                 <CategoryAxis side="BOTTOM" />
             </xAxis>
@@ -33,12 +33,10 @@
                 <NumberAxis side="LEFT" />
             </yAxis>
         </LineChart>
-      <Label fx:id="resultProviderLabel" alignment="CENTER" layoutX="138.0" layoutY="21.0" prefHeight="44.0" prefWidth="750.0" />
-      <TextField fx:id="signalSamplingRate" layoutX="49.0" layoutY="280.0" prefHeight="27.0" prefWidth="213.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="228.0" prefHeight="35.0" prefWidth="213.0" text="Signal sample count (line/dots)" textAlignment="CENTER" />
-      <TextField fx:id="userSampleCount" layoutX="322.0" layoutY="280.0" prefHeight="27.0" prefWidth="213.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="322.0" layoutY="228.0" prefHeight="35.0" prefWidth="213.0" text="User's sample count" textAlignment="CENTER" />
-      <LineChart fx:id="imaginaryChart" layoutX="545.0" layoutY="355.0" prefHeight="371.0" prefWidth="430.0" title="Imaginary">
+      <Label fx:id="resultProviderLabel" alignment="CENTER" layoutX="449.0" layoutY="447.0" prefHeight="44.0" prefWidth="750.0" />
+      <TextField fx:id="signalSamplingRate" layoutX="147.0" layoutY="322.0" prefHeight="27.0" prefWidth="167.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="318.0" prefHeight="35.0" prefWidth="96.0" text="Sample count" textAlignment="CENTER" />
+      <LineChart fx:id="imaginaryChart" layoutX="776.0" layoutY="512.0" prefHeight="458.0" prefWidth="682.0" title="Imaginary">
          <xAxis>
             <CategoryAxis side="BOTTOM" />
          </xAxis>
@@ -46,6 +44,27 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
-      <Button fx:id="renderButton" layoutX="776.0" layoutY="262.0" mnemonicParsing="false" onAction="#renderCharts" prefHeight="44.0" prefWidth="96.0" text="Render" />
+      <Button fx:id="generateButton" layoutX="183.0" layoutY="447.0" mnemonicParsing="false" onAction="#computeSignalUsingProvidedParameters" prefHeight="44.0" prefWidth="96.0" text="Generate" />
+      <TextField fx:id="valuePresenceProbability" editable="false" layoutX="147.0" layoutY="363.0" prefHeight="27.0" prefWidth="167.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="359.0" prefHeight="35.0" prefWidth="103.0" text="Val. pres. prob." textAlignment="CENTER" />
+      <TextField fx:id="valuePresenceProbability1" editable="false" layoutX="147.0" layoutY="401.0" prefHeight="27.0" prefWidth="167.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="397.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise sample" textAlignment="CENTER" />
+      <ListView layoutX="983.0" layoutY="116.0" prefHeight="335.0" prefWidth="268.0" />
+      <Label alignment="CENTER" layoutX="1034.0" layoutY="45.0" prefHeight="56.0" prefWidth="167.0" text="Signals" />
+      <Label alignment="CENTER" layoutX="765.0" layoutY="144.0" prefHeight="56.0" prefWidth="167.0" text="Two-signal operations" />
+      <ComboBox fx:id="signalOperationComboBox" layoutX="774.0" layoutY="198.0" prefWidth="150.0" promptText="Operation" />
+      <Label alignment="CENTER" layoutX="766.0" layoutY="255.0" prefHeight="56.0" prefWidth="167.0" text="IO Operations" />
+      <ComboBox fx:id="ioOperationComboBox" layoutX="775.0" layoutY="327.0" prefWidth="150.0" promptText="IO Operation" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="367.0" layoutY="165.0" prefHeight="35.0" prefWidth="112.0" text="Avg. sig. value" textAlignment="CENTER" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="367.0" layoutY="205.0" prefHeight="35.0" prefWidth="138.0" text="Abs. avg. sig. value" textAlignment="CENTER" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="361.0" layoutY="245.0" prefHeight="35.0" prefWidth="112.0" text="Signal power" textAlignment="CENTER" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="367.0" layoutY="289.0" prefHeight="35.0" prefWidth="112.0" text="Signal variance" textAlignment="CENTER" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="369.0" layoutY="332.0" prefHeight="35.0" prefWidth="150.0" text="Root mean sqrt. value" textAlignment="CENTER" />
+      <TextField fx:id="averageSignalValueTextField" layoutX="529.0" layoutY="169.0" />
+      <TextField fx:id="absoluteAverageSignalValueTextField" layoutX="529.0" layoutY="209.0" />
+      <TextField fx:id="signalPowerTextField" layoutX="529.0" layoutY="249.0" />
+      <TextField fx:id="signalVarianceTextField" layoutX="529.0" layoutY="293.0" />
+      <TextField fx:id="rootMeanSquareValueTextField" layoutX="529.0" layoutY="336.0" />
+      <Button fx:id="renderChartsButton" layoutX="1296.0" layoutY="227.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="122.0" text="Render  charts" />
     </children>
 </AnchorPane>

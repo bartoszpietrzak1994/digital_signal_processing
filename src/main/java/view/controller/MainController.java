@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 
 import exception.DigitalSignalProcessingErrorCode;
 import exception.DigitalSignalProcessingExceptionHandler;
+import exception.SignalIOException;
 import exception.SignalParametersException;
+import exception.SignalRepositoryException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,9 +25,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.behaviour.IOOperation;
+import model.behaviour.SignalOperation;
 import model.request.SignalPropertiesCalculationRequest;
 import model.response.SignalPropertiesCalculationResponse;
 import model.signal.SignalType;
+import model.signal.base.Signal;
 import service.ChartService;
 import service.SignalService;
 import utils.request.SignalPropertiesCalculationRequestBuilder;
@@ -36,8 +41,17 @@ import utils.request.SignalPropertiesCalculationRequestBuilder;
 @Component
 public class MainController implements Initializable
 {
+	/**
+	 * .fxml file related objects
+	 */
 	@FXML
 	private ComboBox<String> signalTypeComboBox;
+
+	@FXML
+	private ComboBox<String> signalOperationComboBox;
+
+	@FXML
+	private ComboBox<String> ioOperationComboBox;
 
 	@FXML
 	private TextField durationTextField;
@@ -64,14 +78,38 @@ public class MainController implements Initializable
 	private TextField signalSamplingRate;
 
 	@FXML
-	private TextField userSampleCount;
+	private TextField valuePresenceProbability;
+
+	@FXML
+	private TextField amplitudeRiseSample;
+
+	@FXML
+	private TextField averageSignalValueTextField;
+
+	@FXML
+	private TextField absoluteAverageSignalValueTextField;
+
+	@FXML
+	private TextField signalPowerTextField;
+
+	@FXML
+	private TextField signalVarianceTextField;
+
+	@FXML
+	private TextField rootMeanSquareValueTextField;
 
 	@FXML
 	private Label resultProviderLabel;
 
 	@FXML
-	private Button renderButton;
+	private Button generateButton;
 
+	@FXML
+	private Button renderChartsButton;
+
+	/**
+	 * Services
+	 */
 	@Autowired
 	private SignalService signalService;
 
@@ -88,10 +126,20 @@ public class MainController implements Initializable
 		List<String> stringSignalTypes = Arrays.stream(SignalType.values()).map(Enum::toString).collect(Collectors.toList());
 		ObservableList<String> signalTypes = FXCollections.observableList(stringSignalTypes);
 		signalTypeComboBox.setItems(signalTypes);
+
+		// same thing with signalOperationComboBox
+		List<String> stringSignalOperations = Arrays.stream(SignalOperation.values()).map(Enum::toString).collect(Collectors.toList());
+		ObservableList<String> signalOperations = FXCollections.observableList(stringSignalOperations);
+		signalOperationComboBox.setItems(signalOperations);
+
+		// ...and ioOperationComboBox
+		List<String> stringIoOperations = Arrays.stream(IOOperation.values()).map(Enum::toString).collect(Collectors.toList());
+		ObservableList<String> ioOperations = FXCollections.observableList(stringIoOperations);
+		ioOperationComboBox.setItems(ioOperations);
 	}
 
 	@FXML
-	public void renderCharts()
+	public void computeSignalUsingProvidedParameters() throws SignalIOException, SignalParametersException
 	{
 		if (StringUtils.isEmpty(this.signalTypeComboBox.getValue()))
 		{
@@ -109,7 +157,7 @@ public class MainController implements Initializable
 				.build()
 				.toRequest();
 
-		SignalPropertiesCalculationResponse response = null;
+		SignalPropertiesCalculationResponse response;
 		try
 		{
 			response = signalService.calculateSignalProperties(signalPropertiesCalculationRequest);
@@ -117,12 +165,46 @@ public class MainController implements Initializable
 		catch (Exception exception)
 		{
 			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+			throw exception;
+		}
+
+		this.averageSignalValueTextField.setText(Double.valueOf(response.getAverageSignalValue().getReal()).toString());
+		this.absoluteAverageSignalValueTextField.setText(Double.valueOf(response.getAbsoluteAverageSignalValue().getReal()).toString());
+		this.signalPowerTextField.setText(Double.valueOf(response.getSignalPower().getReal()).toString());
+		this.signalVarianceTextField.setText(Double.valueOf(response.getSignalVariance().getReal()).toString());
+		this.rootMeanSquareValueTextField.setText(Double.valueOf(response.getSignalRootMeanSquareValue().getReal()).toString());
+
+//		try
+//		{
+//			signalService.storeSignal(response.getSignal());
+//		}
+//		catch (Exception exception)
+//		{
+//			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+//			throw exception;
+//		}
+
+		// TODO
+		// put signal on currently not-created list of signals5
+	}
+
+	@FXML
+	public void renderChartsForSignal(int signalId)
+	{
+		Signal signal = null;
+		try
+		{
+			signal = signalService.findSignal(signalId);
+		}
+		catch (SignalRepositoryException exception)
+		{
+			resultProviderLabel.setText(exceptionHandler.handle(exception));
 		}
 
 		XYChart.Series<String, Double> realSignalChart = null;
 		try
 		{
-			realSignalChart = chartService.renderRealSignalChart(response.getSignal());
+			realSignalChart = chartService.renderRealSignalChart(signal);
 		}
 		catch (Exception exception)
 		{

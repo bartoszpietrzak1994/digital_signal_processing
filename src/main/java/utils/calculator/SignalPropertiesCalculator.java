@@ -28,7 +28,7 @@ public class SignalPropertiesCalculator
 
 		for (int i = 0; i < samples.size(); i++)
 		{
-			sum.add(values.get(i));
+			sum  = sum.add(values.get(i));
 		}
 
 		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
@@ -47,7 +47,7 @@ public class SignalPropertiesCalculator
 		for (int i = 0; i < samples.size(); i++)
 		{
 			Complex value = values.get(i);
-			sum.add(new Complex(Math.abs(value.getReal()), Math.abs(value.getImaginary())));
+			sum = sum.add(new Complex(Math.abs(value.getReal()), Math.abs(value.getImaginary())));
 		}
 
 		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
@@ -62,11 +62,11 @@ public class SignalPropertiesCalculator
 		Complex endTime = signal.getEndTime();
 
 		Complex sum = Complex.ZERO;
-		Complex two = new Complex(2.0D, 2.0D);
+		Complex two = new Complex(2.0D, 0.0D);
 
 		for (int i = 0; i < samples.size(); i++)
 		{
-			sum.add(values.get(i)).pow(two);
+			sum = sum.add(values.get(i)).pow(two);
 		}
 
 		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
@@ -85,7 +85,7 @@ public class SignalPropertiesCalculator
 
 		for (int i = 0; i < samples.size(); i++)
 		{
-			sum.add((values.get(i).subtract(averageValue)).pow(two));
+			sum = sum.add((values.get(i).subtract(averageValue)).pow(two));
 		}
 
 		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
