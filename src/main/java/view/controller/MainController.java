@@ -24,11 +24,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.behaviour.IOOperation;
 import model.behaviour.SignalOperation;
-import model.request.SignalPropertiesCalculationRequest;
-import model.response.SignalPropertiesCalculationResponse;
+import model.request.ResolveSignalRequest;
+import model.response.ResolveSignalResponse;
 import model.signal.SignalType;
 import model.signal.base.Signal;
 import service.ChartService;
@@ -107,6 +108,9 @@ public class MainController implements Initializable
 	@FXML
 	private Button renderChartsButton;
 
+	@FXML
+	private ListView<String> signalListView;
+
 	/**
 	 * Services
 	 */
@@ -146,7 +150,7 @@ public class MainController implements Initializable
 			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_TYPE_NOT_GIVEN_BY_USER.name() + ". Please provide signal type from list");
 		}
 
-		SignalPropertiesCalculationRequest signalPropertiesCalculationRequest = SignalPropertiesCalculationRequestBuilder.builder()
+		ResolveSignalRequest resolveSignalRequest = SignalPropertiesCalculationRequestBuilder.builder()
 				.signalType(this.signalTypeComboBox.getValue())
 				.amplitude(this.amplitudeTextField.getText())
 				.duration(this.durationTextField.getText())
@@ -157,10 +161,10 @@ public class MainController implements Initializable
 				.build()
 				.toRequest();
 
-		SignalPropertiesCalculationResponse response;
+		ResolveSignalResponse response;
 		try
 		{
-			response = signalService.calculateSignalProperties(signalPropertiesCalculationRequest);
+			response = signalService.processResolveSignalRequest(resolveSignalRequest);
 		}
 		catch (Exception exception)
 		{
@@ -174,18 +178,7 @@ public class MainController implements Initializable
 		this.signalVarianceTextField.setText(Double.valueOf(response.getSignalVariance().getReal()).toString());
 		this.rootMeanSquareValueTextField.setText(Double.valueOf(response.getSignalRootMeanSquareValue().getReal()).toString());
 
-//		try
-//		{
-//			signalService.storeSignal(response.getSignal());
-//		}
-//		catch (Exception exception)
-//		{
-//			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
-//			throw exception;
-//		}
-
-		// TODO
-		// put signal on currently not-created list of signals5
+		signalListView.getItems().add(response.getSignalParametersResponse().toString());
 	}
 
 	@FXML

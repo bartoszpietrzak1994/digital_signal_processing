@@ -20,7 +20,7 @@ public class SignalSamplesCalculator
 
 		while (iterator <= endTime.getReal())
 		{
-			samples.add(new Complex(iterator, iterator));
+			samples.add(new Complex(iterator, 0.0D));
 			iterator += 1.0/samplingRate.getReal();
 		}
 

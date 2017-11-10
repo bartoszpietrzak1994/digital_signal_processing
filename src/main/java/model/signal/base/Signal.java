@@ -72,6 +72,8 @@ public abstract class Signal
 	protected Complex averageValue;
 	protected Complex absoluteAverageValue;
 	protected Complex signalPower;
+	protected Complex signalVariance;
+	protected Complex signalRootMeanSquareValue;
 
 	/**
 	 * Calculated in SignalSamplesCalculator

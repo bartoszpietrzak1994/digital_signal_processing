@@ -2,11 +2,10 @@ package service;
 
 import java.util.List;
 
-import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
-import model.request.SignalPropertiesCalculationRequest;
-import model.response.SignalPropertiesCalculationResponse;
+import model.request.ResolveSignalRequest;
+import model.response.ResolveSignalResponse;
 import model.signal.base.Signal;
 
 /**
@@ -17,7 +16,6 @@ public interface SignalService
 	/**
 	 *	In-memory Signal storage
 	 */
-	boolean storeSignal(Signal signal) throws SignalIOException;
 	Signal findSignal(int signalId) throws SignalRepositoryException;
 
 	/**
@@ -29,6 +27,6 @@ public interface SignalService
 	/**
 	 * Signal on charts presentation
 	 */
-	SignalPropertiesCalculationResponse calculateSignalProperties(SignalPropertiesCalculationRequest request) throws SignalParametersException;
-	SignalPropertiesCalculationResponse provideImaginaryChartData(SignalPropertiesCalculationRequest request);
+	ResolveSignalResponse processResolveSignalRequest(ResolveSignalRequest request) throws SignalParametersException;
+	ResolveSignalResponse provideImaginaryChartData(ResolveSignalRequest request);
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Iterables;
+
 import exception.SignalParametersException;
 import lombok.Data;
 import model.signal.base.Signal;
@@ -16,13 +18,16 @@ import model.signal.base.Signal;
 @Component
 public class SignalPropertiesCalculator
 {
-	public Complex calculateAaverageValue(Signal signal)
+	public Complex calculateAverageValue(Signal signal)
 	{
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
 
-		Complex initialTime = signal.getInitialTime();
-		Complex endTime = signal.getEndTime();
+		Complex firstSample = Iterables.getFirst(samples, null);
+		Complex lastSample = Iterables.getLast(samples, null);
+
+		assert firstSample != null;
+		assert lastSample != null;
 
 		Complex sum = Complex.ZERO;
 
@@ -31,16 +36,19 @@ public class SignalPropertiesCalculator
 			sum  = sum.add(values.get(i));
 		}
 
-		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
+		return Complex.ONE.divide(lastSample.subtract(firstSample).add(Complex.ONE)).multiply(sum);
 	}
 
-	public Complex calculateAbsolutetAverageValue(Signal signal)
+	public Complex calculateAbsoluteAverageValue(Signal signal)
 	{
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
 
-		Complex initialTime = signal.getInitialTime();
-		Complex endTime = signal.getEndTime();
+		Complex firstSample = Iterables.getFirst(samples, null);
+		Complex lastSample = Iterables.getLast(samples, null);
+
+		assert firstSample != null;
+		assert lastSample != null;
 
 		Complex sum = Complex.ZERO;
 
@@ -50,7 +58,7 @@ public class SignalPropertiesCalculator
 			sum = sum.add(new Complex(Math.abs(value.getReal()), Math.abs(value.getImaginary())));
 		}
 
-		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
+		return Complex.ONE.divide(lastSample.subtract(firstSample).add(Complex.ONE)).multiply(sum);
 	}
 
 	public Complex calculateSignalPower(Signal signal)
@@ -58,8 +66,11 @@ public class SignalPropertiesCalculator
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
 
-		Complex initialTime = signal.getInitialTime();
-		Complex endTime = signal.getEndTime();
+		Complex firstSample = Iterables.getFirst(samples, null);
+		Complex lastSample = Iterables.getLast(samples, null);
+
+		assert firstSample != null;
+		assert lastSample != null;
 
 		Complex sum = Complex.ZERO;
 		Complex two = new Complex(2.0D, 0.0D);
@@ -69,16 +80,26 @@ public class SignalPropertiesCalculator
 			sum = sum.add(values.get(i)).pow(two);
 		}
 
-		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
+		return Complex.ONE.divide(lastSample.subtract(firstSample).add(Complex.ONE)).multiply(sum);
 	}
 
-	public Complex calculateVariance(Signal signal, Complex averageValue)
+	public Complex calculateVariance(Signal signal)
 	{
+		if (signal.getAverageValue() == null)
+		{
+			throw new IllegalStateException("Before calculating variance, signal's average values has to be set.");
+		}
+
+		Complex averageValue = signal.getAverageValue();
+
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
 
-		Complex initialTime = signal.getInitialTime();
-		Complex endTime = signal.getEndTime();
+		Complex firstSample = Iterables.getFirst(samples, null);
+		Complex lastSample = Iterables.getLast(samples, null);
+
+		assert firstSample != null;
+		assert lastSample != null;
 
 		Complex sum = Complex.ZERO;
 		Complex two = new Complex(2.0D, 2.0D);
@@ -88,7 +109,7 @@ public class SignalPropertiesCalculator
 			sum = sum.add((values.get(i).subtract(averageValue)).pow(two));
 		}
 
-		return Complex.ONE.divide(endTime.subtract(initialTime).add(Complex.ONE)).multiply(sum);
+		return Complex.ONE.divide(lastSample.subtract(firstSample).add(Complex.ONE)).multiply(sum);
 	}
 
 	public Complex calculateRootMeanSquareValue(Signal signal)

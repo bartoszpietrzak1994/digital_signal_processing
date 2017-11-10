@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
 import manager.SignalManager;
-import model.request.SignalPropertiesCalculationRequest;
-import model.response.SignalPropertiesCalculationResponse;
+import model.request.ResolveSignalRequest;
+import model.response.ResolveSignalResponse;
 import model.signal.base.Signal;
 
 /**
@@ -22,17 +20,6 @@ public class SignalServiceImpl implements SignalService
 {
 	@Autowired
 	private SignalManager signalManager;
-
-	@Override
-	public boolean storeSignal(Signal signal) throws SignalIOException
-	{
-		if (CollectionUtils.isEmpty(signal.getValues()))
-		{
-			throw SignalIOException.signalValuesNotAvailable();
-		}
-
-		return false;
-	}
 
 	@Override
 	public Signal findSignal(int signalId) throws SignalRepositoryException
@@ -53,7 +40,7 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public SignalPropertiesCalculationResponse calculateSignalProperties(SignalPropertiesCalculationRequest request) throws SignalParametersException
+	public ResolveSignalResponse processResolveSignalRequest(ResolveSignalRequest request) throws SignalParametersException
 	{
 		Signal signal = signalManager.resolveSignalByType(request.getSignalType());
 		signalManager.extractDataFromSignalChartRequest(request, signal);
@@ -66,17 +53,32 @@ public class SignalServiceImpl implements SignalService
 		signal.setSamples(signalManager.getSignalSamples(signal));
 		signal.setValues(signalManager.calculateSignalValues(signal));
 
-		return SignalPropertiesCalculationResponse.builder()
-				.signal(signal)
-				.averageSignalValue(signalManager.calculateSignalAverageValue(signal))
-				.absoluteAverageSignalValue(signalManager.calculateSignalAbsoluteAverageValue(signal))
-				.signalPower(signalManager.calculateSignalPower(signal))
-				.signalVariance(signalManager.calculateSignalVariance(signal))
-				.signalRootMeanSquareValue(signalManager.calculateSignalRootMeanSquareValue(signal)).build();
+		signal.setAverageValue(signalManager.calculateSignalAverageValue(signal));
+		signal.setAbsoluteAverageValue(signalManager.calculateSignalAbsoluteAverageValue(signal));
+		signal.setSignalPower(signalManager.calculateSignalPower(signal));
+		signal.setSignalVariance(signalManager.calculateSignalVariance(signal));
+		signal.setSignalRootMeanSquareValue(signalManager.calculateSignalRootMeanSquareValue(signal));
+
+		int signalId = signalManager.insertSignalIntoRepository(signal);
+
+		ResolveSignalResponse resolveSignalResponse = ResolveSignalResponse.builder()
+				.averageSignalValue(signal.getAverageValue())
+				.absoluteAverageSignalValue(signal.getAbsoluteAverageValue())
+				.signalPower(signal.getSignalPower())
+				.signalVariance(signal.getSignalVariance())
+				.signalRootMeanSquareValue(signal.getSignalRootMeanSquareValue())
+				.build();
+
+		resolveSignalResponse.setSignalParametersResponse(resolveSignalResponse.new SignalParametersResponse(signalId,
+				signal.getSamplingRate(),
+				signal.getInitialTime(),
+				signal.getDuration()));
+
+		return resolveSignalResponse;
 	}
 
 	@Override
-	public SignalPropertiesCalculationResponse provideImaginaryChartData(SignalPropertiesCalculationRequest request)
+	public ResolveSignalResponse provideImaginaryChartData(ResolveSignalRequest request)
 	{
 		return null;
 	}

@@ -24,18 +24,8 @@ public class SignalRepository
 
 	public int add(Signal signal)
 	{
-		int id;
 		Signal last = Iterables.getLast(signals, null);
-
-		if (last == null)
-		{
-			id = 1;
-		}
-		else
-		{
-			id = last.getId() + 1;
-		}
-
+		int id = last == null ? 1 : last.getId() + 1;
 		signal.setId(id);
 
 		signals.add(signal);

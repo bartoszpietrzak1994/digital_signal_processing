@@ -5,7 +5,7 @@ import org.apache.commons.math.complex.Complex;
 
 import lombok.Builder;
 import lombok.Data;
-import model.request.SignalPropertiesCalculationRequest;
+import model.request.ResolveSignalRequest;
 
 /**
  * Created by bartoszpietrzak on 27/10/2017.
@@ -22,9 +22,9 @@ public class SignalPropertiesCalculationRequestBuilder
 	public String samplingRate;
 	public String signalType;
 
-	public SignalPropertiesCalculationRequest toRequest()
+	public ResolveSignalRequest toRequest()
 	{
-		return SignalPropertiesCalculationRequest.builder()
+		return ResolveSignalRequest.builder()
 				.amplitude(new Complex(StringUtils.isNotEmpty(this.amplitude) ? Double.valueOf(this.amplitude) : 0.0D, 0.0D))
 				.duration(new Complex(StringUtils.isNotEmpty(this.duration) ? Double.valueOf(this.duration) : 0.0D, 0.0D))
 				.dutyCycle(new Complex(StringUtils.isNotEmpty(this.dutyCycle) ? Double.valueOf(this.dutyCycle) : 0.0D, 0.0D))

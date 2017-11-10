@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
-import model.request.SignalPropertiesCalculationRequest;
+import model.request.ResolveSignalRequest;
 import model.signal.base.Signal;
 import repository.SignalRepository;
 import utils.calculator.SignalPropertiesCalculator;
@@ -58,7 +58,7 @@ public class SignalManager
 		return values;
 	}
 
-	public void extractDataFromSignalChartRequest(SignalPropertiesCalculationRequest request, Signal signal)
+	public void extractDataFromSignalChartRequest(ResolveSignalRequest request, Signal signal)
 	{
 		if (request.getInitialTime() != null)
 		{
@@ -87,12 +87,12 @@ public class SignalManager
 
 	public Complex calculateSignalAverageValue(Signal signal)
 	{
-		return signalPropertiesCalculator.calculateAaverageValue(signal);
+		return signalPropertiesCalculator.calculateAverageValue(signal);
 	}
 
 	public Complex calculateSignalAbsoluteAverageValue(Signal signal)
 	{
-		return signalPropertiesCalculator.calculateAbsolutetAverageValue(signal);
+		return signalPropertiesCalculator.calculateAbsoluteAverageValue(signal);
 	}
 
 	public Complex calculateSignalPower(Signal signal)
@@ -102,7 +102,7 @@ public class SignalManager
 
 	public Complex calculateSignalVariance(Signal signal)
 	{
-		return signalPropertiesCalculator.calculateVariance(signal, calculateSignalAverageValue(signal));
+		return signalPropertiesCalculator.calculateVariance(signal);
 	}
 
 	public Complex calculateSignalRootMeanSquareValue(Signal signal)
@@ -113,5 +113,10 @@ public class SignalManager
 	public Signal findSignalInRepository(int signalId) throws SignalRepositoryException
 	{
 		return signalRepository.findOne(signalId);
+	}
+
+	public int insertSignalIntoRepository(Signal signal)
+	{
+		return signalRepository.add(signal);
 	}
 }

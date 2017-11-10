@@ -49,7 +49,7 @@
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="359.0" prefHeight="35.0" prefWidth="103.0" text="Val. pres. prob." textAlignment="CENTER" />
       <TextField fx:id="valuePresenceProbability1" editable="false" layoutX="147.0" layoutY="401.0" prefHeight="27.0" prefWidth="167.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="397.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise sample" textAlignment="CENTER" />
-      <ListView layoutX="983.0" layoutY="116.0" prefHeight="335.0" prefWidth="268.0" />
+      <ListView fx:id="signalListView" layoutX="983.0" layoutY="116.0" prefHeight="335.0" prefWidth="268.0" />
       <Label alignment="CENTER" layoutX="1034.0" layoutY="45.0" prefHeight="56.0" prefWidth="167.0" text="Signals" />
       <Label alignment="CENTER" layoutX="765.0" layoutY="144.0" prefHeight="56.0" prefWidth="167.0" text="Two-signal operations" />
       <ComboBox fx:id="signalOperationComboBox" layoutX="774.0" layoutY="198.0" prefWidth="150.0" promptText="Operation" />

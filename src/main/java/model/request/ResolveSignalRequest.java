@@ -12,7 +12,7 @@ import lombok.Data;
 @Component
 @Data
 @Builder
-public class SignalPropertiesCalculationRequest
+public class ResolveSignalRequest
 {
 	public Complex amplitude;
 	public Complex initialTime;
