@@ -12,7 +12,7 @@ import model.request.ResolveSignalRequest;
  */
 @Data
 @Builder
-public class SignalPropertiesCalculationRequestBuilder
+public class ResolveSignalRequestBuilder
 {
 	public String amplitude;
 	public String initialTime;

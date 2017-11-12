@@ -34,7 +34,7 @@ import model.signal.SignalType;
 import model.signal.base.Signal;
 import service.ChartService;
 import service.SignalService;
-import utils.request.SignalPropertiesCalculationRequestBuilder;
+import utils.request.ResolveSignalRequestBuilder;
 
 /**
  * Created by bartoszpietrzak on 21/10/2017.
@@ -153,7 +153,7 @@ public class MainController implements Initializable
 			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_TYPE_NOT_GIVEN_BY_USER.name() + ". Please provide signal type from list");
 		}
 
-		ResolveSignalRequest resolveSignalRequest = SignalPropertiesCalculationRequestBuilder.builder()
+		ResolveSignalRequest resolveSignalRequest = ResolveSignalRequestBuilder.builder()
 				.signalType(this.signalTypeComboBox.getValue())
 				.amplitude(this.amplitudeTextField.getText())
 				.duration(this.durationTextField.getText())

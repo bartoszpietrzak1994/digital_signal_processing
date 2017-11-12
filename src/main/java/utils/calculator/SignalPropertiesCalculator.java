@@ -72,12 +72,11 @@ public class SignalPropertiesCalculator
 		assert firstSample != null;
 		assert lastSample != null;
 
-		Complex sum = Complex.ZERO;
-		Complex two = new Complex(2.0D, 0.0D);
+		double sum = 0;
 
 		for (int i = 0; i < samples.size(); i++)
 		{
-			sum = sum.add(values.get(i)).pow(two);
+			sum += values.get(i).getReal() * values.get(i).getReal();
 		}
 
 		return Complex.ONE.divide(lastSample.subtract(firstSample).add(Complex.ONE)).multiply(sum);
@@ -101,12 +100,11 @@ public class SignalPropertiesCalculator
 		assert firstSample != null;
 		assert lastSample != null;
 
-		Complex sum = Complex.ZERO;
-		Complex two = new Complex(2.0D, 2.0D);
+		double sum = 0;
 
 		for (int i = 0; i < samples.size(); i++)
 		{
-			sum = sum.add((values.get(i).subtract(averageValue)).pow(two));
+			sum += (values.get(i).getReal() - averageValue.getReal()) * (values.get(i).getReal() - averageValue.getReal());
 		}
 
 		return Complex.ONE.divide(lastSample.subtract(firstSample).add(Complex.ONE)).multiply(sum);

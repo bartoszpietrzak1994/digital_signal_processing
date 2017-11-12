@@ -14,10 +14,10 @@ public class ResolveSignalRequestDataExtractor
 {
 	public void extractDataFromSignalChartRequest(ResolveSignalRequest request, Signal signal) throws SignalParametersException
 	{
-		if (!signal.areSampleCalculationParametersProvided())
-		{
-			throw SignalParametersException.calculationDataNotProvided(signal.getApplicableParameters());
-		}
+		signal.setAmplitude(request.getAmplitude());
+		signal.setDuration(request.getDuration());
+		signal.setPeriod(request.getPeriod());
+		signal.setDutyCycle(signal.getDutyCycle());
 
 		// Initial time
 		double realInitialTime = request.getInitialTime().getReal();
@@ -29,12 +29,12 @@ public class ResolveSignalRequestDataExtractor
 		double imaginarySamplingRate = request.getSamplingRate().getImaginary();
 		signal.setSamplingRate(new Complex(realSamplingRate <= 0 ? 1.0D : realSamplingRate, imaginarySamplingRate < 0 ? 1.0D : imaginarySamplingRate));
 
+		if (!signal.areSampleCalculationParametersProvided())
+		{
+			throw SignalParametersException.calculationDataNotProvided(signal.getApplicableParameters());
+		}
+
 		// End time
 		signal.setEndTime(request.getInitialTime().add(request.getDuration()));
-
-		signal.setAmplitude(request.getAmplitude());
-		signal.setDuration(request.getDuration());
-		signal.setPeriod(request.getPeriod());
-		signal.setDutyCycle(signal.getDutyCycle());
 	}
 }

@@ -21,11 +21,12 @@ public class SignalValuesCalculator
 		List<Complex> samples = new ArrayList<>();
 
 		double iterator = initialTime.getReal();
+		double increment = 1.0 / samplingRate.getReal();
 
 		while (iterator <= endTime.getReal())
 		{
 			samples.add(new Complex(iterator, 0.0D));
-			iterator += 1.0/samplingRate.getReal();
+			iterator += increment;
 		}
 
 		return samples;
