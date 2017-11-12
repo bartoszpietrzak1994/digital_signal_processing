@@ -128,6 +128,9 @@ public class MainController implements Initializable
 	{
 		// Put every signal type defined in SignalType enumeration to signalTypeComboBoxValues
 		List<String> stringSignalTypes = Arrays.stream(SignalType.values()).map(Enum::toString).collect(Collectors.toList());
+
+		// UNKNOWN signal type is reserved only for signals being a result of calculation between two signals of different type
+		stringSignalTypes.remove(SignalType.UNKNOWN.name());
 		ObservableList<String> signalTypes = FXCollections.observableList(stringSignalTypes);
 		signalTypeComboBox.setItems(signalTypes);
 

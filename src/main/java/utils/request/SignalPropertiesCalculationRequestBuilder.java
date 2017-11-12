@@ -25,12 +25,13 @@ public class SignalPropertiesCalculationRequestBuilder
 	public ResolveSignalRequest toRequest()
 	{
 		return ResolveSignalRequest.builder()
-				.amplitude(new Complex(StringUtils.isNotEmpty(this.amplitude) ? Double.valueOf(this.amplitude) : 0.0D, 0.0D))
-				.duration(new Complex(StringUtils.isNotEmpty(this.duration) ? Double.valueOf(this.duration) : 0.0D, 0.0D))
-				.dutyCycle(new Complex(StringUtils.isNotEmpty(this.dutyCycle) ? Double.valueOf(this.dutyCycle) : 0.0D, 0.0D))
-				.initialTime(new Complex(StringUtils.isNotEmpty(this.initialTime) ? Double.valueOf(this.initialTime) : 0.0D, 0.0D))
-				.period(new Complex(StringUtils.isNotEmpty(this.period) ? Double.valueOf(this.period) : 0.0D, 0.0D))
-				.samplingRate(new Complex(StringUtils.isNotEmpty(this.samplingRate) ? Double.valueOf(this.samplingRate) : 0.0D, 0.0D))
+				// default values for initial time and sampling rate are 0 and 1 - the rest will be set to null if the String is empty
+				.initialTime(StringUtils.isNotEmpty(this.initialTime) ? new Complex(Double.valueOf(this.initialTime), 0.0D) : Complex.ZERO)
+				.samplingRate(StringUtils.isNotEmpty(this.samplingRate) ? new Complex(Double.valueOf(this.samplingRate), 0.0D) : Complex.ONE)
+				.amplitude(StringUtils.isNotEmpty(this.amplitude) ? new Complex(Double.valueOf(this.amplitude), 0.0D) : null)
+				.duration(StringUtils.isNotEmpty(this.duration) ? new Complex(Double.valueOf(this.duration), 0.0D) : null)
+				.dutyCycle(StringUtils.isNotEmpty(this.dutyCycle) ?  new Complex(Double.valueOf(this.dutyCycle), 0.0D) : null)
+				.period(StringUtils.isNotEmpty(this.period) ? new Complex(Double.valueOf(this.period), 0.0D) : null)
 				.signalType(this.signalType)
 				.build();
 	}

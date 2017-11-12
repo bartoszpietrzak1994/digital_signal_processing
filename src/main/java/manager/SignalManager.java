@@ -8,8 +8,11 @@ import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Sets;
+
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
+import model.behaviour.ParameterType;
 import model.request.ResolveSignalRequest;
 import model.signal.base.Signal;
 import repository.SignalRepository;
@@ -58,26 +61,35 @@ public class SignalManager
 		return values;
 	}
 
-	public void extractDataFromSignalChartRequest(ResolveSignalRequest request, Signal signal)
+	public void extractDataFromSignalChartRequest(ResolveSignalRequest request, Signal signal) throws SignalParametersException
 	{
-		if (request.getInitialTime() != null)
+		if (request.getInitialTime() == null)
 		{
-			double realInitialTime = request.getInitialTime().getReal();
-			double imaginaryInitialTime = request.getInitialTime().getImaginary();
-			signal.setInitialTime(new Complex(realInitialTime < 0 ? 0.0D : realInitialTime, imaginaryInitialTime < 0 ? 0.0D : imaginaryInitialTime));
+			request.setInitialTime(Complex.ZERO);
 		}
 
-		if (request.getSamplingRate() != null)
+		if (request.getSamplingRate() == null)
 		{
-			double realSamplingRate = request.getSamplingRate().getReal();
-			double imaginarySamplingRate = request.getSamplingRate().getImaginary();
-			signal.setSamplingRate(new Complex(realSamplingRate <= 0 ? 1.0D : realSamplingRate, imaginarySamplingRate < 0 ? 1.0D : imaginarySamplingRate));
+			request.setSamplingRate(Complex.ONE);
 		}
 
-		if (ObjectUtils.anyNotNull(request.getInitialTime(), request.getDuration()))
+		if (request.getDuration() == null)
 		{
-			signal.setEndTime(request.getInitialTime().add(request.getDuration()));
+			throw SignalParametersException.calculationDataNotProvided(Sets.newHashSet(ParameterType.DURATION));
 		}
+
+		// Initial time
+		double realInitialTime = request.getInitialTime().getReal();
+		double imaginaryInitialTime = request.getInitialTime().getImaginary();
+		signal.setInitialTime(new Complex(realInitialTime < 0 ? 0.0D : realInitialTime, imaginaryInitialTime < 0 ? 0.0D : imaginaryInitialTime));
+
+		// Sampling rate
+		double realSamplingRate = request.getSamplingRate().getReal();
+		double imaginarySamplingRate = request.getSamplingRate().getImaginary();
+		signal.setSamplingRate(new Complex(realSamplingRate <= 0 ? 1.0D : realSamplingRate, imaginarySamplingRate < 0 ? 1.0D : imaginarySamplingRate));
+
+		// End time
+		signal.setEndTime(request.getInitialTime().add(request.getDuration()));
 
 		signal.setAmplitude(request.getAmplitude());
 		signal.setDuration(request.getDuration());

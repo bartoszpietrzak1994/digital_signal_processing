@@ -80,24 +80,6 @@ public abstract class Signal
 	 */
 	protected List<Complex> samples;
 
-	public Signal(
-			Complex amplitude,
-			Complex initialTime,
-			Complex duration,
-			Complex dutyCycle,
-			Complex samplingRate,
-			List<Complex> values)
-	{
-		this.amplitude = amplitude;
-		this.initialTime = (initialTime.getReal() < 0) ? new Complex(0.0D, 0.0D) : initialTime;
-		this.duration = duration;
-		this.dutyCycle = dutyCycle;
-		this.samplingRate = (samplingRate.getReal()  <= 0) ? Complex.ONE : samplingRate;
-		this.values = values;
-
-		this.endTime = initialTime.add(duration);
-	}
-
 	public abstract Complex calculate(Complex sample) throws SignalParametersException;
 
 	/**
