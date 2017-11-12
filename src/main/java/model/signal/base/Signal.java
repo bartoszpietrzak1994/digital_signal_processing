@@ -76,7 +76,7 @@ public abstract class Signal
 	protected Complex signalRootMeanSquareValue;
 
 	/**
-	 * Calculated in SignalSamplesCalculator
+	 * Calculated in SignalValuesCalculator
 	 */
 	protected List<Complex> samples;
 

@@ -7,10 +7,14 @@ import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
-import manager.SignalManager;
 import model.request.ResolveSignalRequest;
+import model.request.ResolveSignalRequestDataExtractor;
 import model.response.ResolveSignalResponse;
 import model.signal.base.Signal;
+import repository.SignalRepository;
+import utils.calculator.SignalPropertiesCalculator;
+import utils.calculator.SignalValuesCalculator;
+import utils.signal.SignalTypeResolver;
 
 /**
  * Created by bartoszpietrzak on 23/10/2017.
@@ -19,12 +23,24 @@ import model.signal.base.Signal;
 public class SignalServiceImpl implements SignalService
 {
 	@Autowired
-	private SignalManager signalManager;
+	private ResolveSignalRequestDataExtractor dataExtractor;
+
+	@Autowired
+	private SignalPropertiesCalculator signalPropertiesCalculator;
+
+	@Autowired
+	private SignalTypeResolver signalTypeResolver;
+
+	@Autowired
+	private SignalValuesCalculator signalValuesCalculator;
+
+	@Autowired
+	private SignalRepository signalRepository;
 
 	@Override
 	public Signal findSignal(int signalId) throws SignalRepositoryException
 	{
-		return signalManager.findSignalInRepository(signalId);
+		return signalRepository.findOne(signalId);
 	}
 
 	@Override
@@ -42,24 +58,19 @@ public class SignalServiceImpl implements SignalService
 	@Override
 	public ResolveSignalResponse processResolveSignalRequest(ResolveSignalRequest request) throws SignalParametersException
 	{
-		Signal signal = signalManager.resolveSignalByType(request.getSignalType());
-		signalManager.extractDataFromSignalChartRequest(request, signal);
+		Signal signal = signalTypeResolver.resolveSignalByType(request.getSignalType());
+		dataExtractor.extractDataFromSignalChartRequest(request, signal);
 
-		if (!signal.areSampleCalculationParametersProvided())
-		{
-			throw SignalParametersException.calculationDataNotProvided(signal.getApplicableParameters());
-		}
+		signal.setSamples(signalValuesCalculator.getSampleList(signal.getSamplingRate(), signal.getInitialTime(), signal.getEndTime()));
+		signal.setValues(signalValuesCalculator.calculateSignalValues(signal));
 
-		signal.setSamples(signalManager.getSignalSamples(signal));
-		signal.setValues(signalManager.calculateSignalValues(signal));
+		signal.setAverageValue(signalPropertiesCalculator.calculateAverageValue(signal));
+		signal.setAbsoluteAverageValue(signalPropertiesCalculator.calculateAbsoluteAverageValue(signal));
+		signal.setSignalPower(signalPropertiesCalculator.calculateSignalPower(signal));
+		signal.setSignalVariance(signalPropertiesCalculator.calculateVariance(signal));
+		signal.setSignalRootMeanSquareValue(signalPropertiesCalculator.calculateRootMeanSquareValue(signal));
 
-		signal.setAverageValue(signalManager.calculateSignalAverageValue(signal));
-		signal.setAbsoluteAverageValue(signalManager.calculateSignalAbsoluteAverageValue(signal));
-		signal.setSignalPower(signalManager.calculateSignalPower(signal));
-		signal.setSignalVariance(signalManager.calculateSignalVariance(signal));
-		signal.setSignalRootMeanSquareValue(signalManager.calculateSignalRootMeanSquareValue(signal));
-
-		int signalId = signalManager.insertSignalIntoRepository(signal);
+		int signalId = signalRepository.add(signal);
 
 		ResolveSignalResponse resolveSignalResponse = ResolveSignalResponse.builder()
 				.averageSignalValue(signal.getAverageValue())

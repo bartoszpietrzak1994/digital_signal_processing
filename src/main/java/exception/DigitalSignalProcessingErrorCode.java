@@ -15,6 +15,8 @@ public enum DigitalSignalProcessingErrorCode
 
 	SIGNAL_VALUES_NOT_AVAILABLE,
 
+	SIGNAL_SAMPLES_NOT_AVAILABLE,
+
 	/**
 	 * Unknown error
 	 */

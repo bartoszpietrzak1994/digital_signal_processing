@@ -42,17 +42,7 @@ public class ResolveSignalResponse
 		@Override
 		public String toString()
 		{
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append(signalId)
-					.append(";")
-					.append(signalSamplingRate.getReal())
-					.append(";")
-					.append(initialTime.getReal())
-					.append(";")
-					.append(duration.getReal())
-					.append(";");
-
-			return stringBuilder.toString();
+			return String.valueOf(signalId) + ";" + signalSamplingRate.getReal() + ";" + initialTime.getReal() + ";" + duration.getReal() + ";";
 		}
 	}
 }

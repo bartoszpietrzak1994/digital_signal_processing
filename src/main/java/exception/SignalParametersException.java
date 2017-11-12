@@ -4,7 +4,6 @@ import java.util.Set;
 
 import org.apache.commons.math.complex.Complex;
 
-import lombok.Getter;
 import model.behaviour.ParameterType;
 
 /**
@@ -39,5 +38,12 @@ public class SignalParametersException extends DigitalSignalProcessingException
 		return new SignalParametersException(
 				DigitalSignalProcessingErrorCode.UNABLE_TO_CALCULATE_PERIOD_NUMBER,
 				String.format("Unable to calculate period number for sample of value %s", sample.getReal()));
+	}
+
+	public static SignalParametersException unableToCalculateSignalValues()
+	{
+		return new SignalParametersException(
+				DigitalSignalProcessingErrorCode.SIGNAL_SAMPLES_NOT_AVAILABLE,
+				"Unable to calculate signal values - samples are not available.");
 	}
 }

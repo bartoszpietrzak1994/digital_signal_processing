@@ -3,8 +3,10 @@ package model.request;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by bartoszpietrzak on 23/10/2017.
@@ -12,6 +14,8 @@ import lombok.Data;
 @Component
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResolveSignalRequest
 {
 	public Complex amplitude;

@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import exception.SignalParametersException;
+import model.signal.base.Signal;
 
 /**
  * Created by bartoszpietrzak on 23/10/2017.
  */
 @Component
-public class SignalSamplesCalculator
+public class SignalValuesCalculator
 {
 	public List<Complex> getSampleList(Complex samplingRate, Complex initialTime, Complex endTime)
 	{
@@ -25,5 +29,24 @@ public class SignalSamplesCalculator
 		}
 
 		return samples;
+	}
+
+	public List<Complex> calculateSignalValues(Signal signal) throws SignalParametersException
+	{
+		List<Complex> samples = signal.getSamples();
+
+		if (CollectionUtils.isEmpty(samples))
+		{
+			throw SignalParametersException.unableToCalculateSignalValues();
+		}
+
+		List<Complex> values = new ArrayList<>();
+
+		for (int i = 0; i < samples.size(); i++)
+		{
+			values.add(signal.calculate(samples.get(i)));
+		}
+
+		return values;
 	}
 }
