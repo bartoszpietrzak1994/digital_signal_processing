@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Iterables;
+
 import exception.DigitalSignalProcessingErrorCode;
 import exception.DigitalSignalProcessingExceptionHandler;
 import exception.SignalIOException;
@@ -28,13 +30,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.behaviour.IOOperation;
 import model.behaviour.SignalOperation;
-import model.request.ResolveSignalRequest;
-import model.response.ResolveSignalResponse;
 import model.signal.SignalType;
 import model.signal.base.Signal;
 import service.ChartService;
 import service.SignalService;
+import service.request.ResolveSignalRequest;
+import service.request.SignalsOperationRequest;
+import service.response.ResolveSignalResponse;
+import service.response.SignalsCalculationResponse;
 import utils.request.ResolveSignalRequestBuilder;
+import utils.request.SignalOperationRequestBuilder;
 
 /**
  * Created by bartoszpietrzak on 21/10/2017.
@@ -151,6 +156,7 @@ public class MainController implements Initializable
 		if (StringUtils.isEmpty(this.signalTypeComboBox.getValue()))
 		{
 			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_TYPE_NOT_GIVEN_BY_USER.name() + ". Please provide signal type from list");
+			return;
 		}
 
 		ResolveSignalRequest resolveSignalRequest = ResolveSignalRequestBuilder.builder()
@@ -208,6 +214,47 @@ public class MainController implements Initializable
 		}
 
 		this.realChart.getData().setAll(realSignalChart);
+	}
+
+	@FXML
+	public void performSignalsOperation()
+	{
+		if (StringUtils.isEmpty(ioOperationComboBox.getValue()))
+		{
+			this.resultProviderLabel.setText(
+					DigitalSignalProcessingErrorCode.SIGNAL_OPERATION_NOT_GIVEN_BY_USER.name() + ". Please select one of the available signals operations");
+			return;
+		}
+
+		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
+
+		if (selectedItems.size() != 2)
+		{
+			this.resultProviderLabel.setText(
+					DigitalSignalProcessingErrorCode.TWO_SIGNALS_NOT_SELECTED_FOR_OPERATION.name() + ". Please select two signals from signals list");
+			return;
+		}
+
+		SignalsOperationRequest signalsOperationRequest = SignalOperationRequestBuilder.builder()
+				.firstSignalData(Iterables.getFirst(selectedItems, null))
+				.secondSignalData(Iterables.getLast(selectedItems, null))
+				.signalOperation(ioOperationComboBox.getValue())
+				.build()
+				.toRequest();
+
+		SignalsCalculationResponse signalsCalculationResponse;
+
+		try
+		{
+			signalsCalculationResponse = signalService.processSignalOperationRequest(signalsOperationRequest);
+		}
+		catch (Exception exception)
+		{
+			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+			throw exception;
+		}
+
+		signalListView.getItems().add(signalsCalculationResponse.getSignalParametersResponse().toString());
 	}
 }
 

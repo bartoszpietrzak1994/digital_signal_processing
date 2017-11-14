@@ -1,4 +1,4 @@
-package model.request;
+package service.request;
 
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;

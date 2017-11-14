@@ -33,6 +33,12 @@ public class SignalParametersException extends DigitalSignalProcessingException
 				String.format("Signal of type %s is not supported.", signalType));
 	}
 
+	public static SignalParametersException operationTypeNotSupported(String operationType)
+	{
+		return new SignalParametersException(DigitalSignalProcessingErrorCode.OPERATION_TYPE_NOT_SUPPORTED,
+				String.format("Operation of type %s is not supported", operationType));
+	}
+
 	public static SignalParametersException unableToCalculatePeriodNumber(Complex sample)
 	{
 		return new SignalParametersException(
@@ -45,5 +51,10 @@ public class SignalParametersException extends DigitalSignalProcessingException
 		return new SignalParametersException(
 				DigitalSignalProcessingErrorCode.SIGNAL_SAMPLES_NOT_AVAILABLE,
 				"Unable to calculate signal values - samples are not available.");
+	}
+
+	public static SignalParametersException unableToPerformSignalsOperation()
+	{
+		return new SignalParametersException(DigitalSignalProcessingErrorCode.TWO_SIGNALS_OPERATION_NOT_POSSIBLE, "Unable to perform two-signals calculation")
 	}
 }

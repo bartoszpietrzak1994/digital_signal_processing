@@ -1,5 +1,6 @@
 package model.signal.base;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ import model.signal.SignalType;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Signal
+public abstract class Signal implements Serializable
 {
 	/**
 	 * Set when putting signal in a signalRepository

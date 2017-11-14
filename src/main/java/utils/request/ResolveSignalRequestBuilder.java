@@ -5,7 +5,7 @@ import org.apache.commons.math.complex.Complex;
 
 import lombok.Builder;
 import lombok.Data;
-import model.request.ResolveSignalRequest;
+import service.request.ResolveSignalRequest;
 
 /**
  * Created by bartoszpietrzak on 27/10/2017.
@@ -25,7 +25,7 @@ public class ResolveSignalRequestBuilder
 	public ResolveSignalRequest toRequest()
 	{
 		return ResolveSignalRequest.builder()
-				// default values for initial time and sampling rate are 0 and 1 - the rest will be set to null if the String is empty
+				// default values for initial time and sampling rate are 0 and 1 - the rest will be set to null if the SignalOperation is empty
 				.initialTime(StringUtils.isNotEmpty(this.initialTime) ? new Complex(Double.valueOf(this.initialTime), 0.0D) : Complex.ZERO)
 				.samplingRate(StringUtils.isNotEmpty(this.samplingRate) ? new Complex(Double.valueOf(this.samplingRate), 0.0D) : Complex.ONE)
 				.amplitude(StringUtils.isNotEmpty(this.amplitude) ? new Complex(Double.valueOf(this.amplitude), 0.0D) : null)

@@ -5,15 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import exception.DigitalSignalProcessingException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
-import model.request.ResolveSignalRequest;
-import model.request.ResolveSignalRequestDataExtractor;
-import model.response.ResolveSignalResponse;
 import model.signal.base.Signal;
 import repository.SignalRepository;
+import service.request.ResolveSignalRequest;
+import service.request.ResolveSignalRequestDataExtractor;
+import service.request.SignalsOperationRequest;
+import service.response.ResolveSignalResponse;
+import service.response.SignalsCalculationResponse;
 import utils.calculator.SignalPropertiesCalculator;
 import utils.calculator.SignalValuesCalculator;
+import utils.operation.SignalOperationResolver;
+import utils.operation.SignalsOperationsCalculator;
 import utils.signal.SignalTypeResolver;
 
 /**
@@ -30,6 +35,9 @@ public class SignalServiceImpl implements SignalService
 
 	@Autowired
 	private SignalTypeResolver signalTypeResolver;
+
+	@Autowired
+	private SignalOperationResolver signalOperationResolver;
 
 	@Autowired
 	private SignalValuesCalculator signalValuesCalculator;
@@ -92,6 +100,38 @@ public class SignalServiceImpl implements SignalService
 	public ResolveSignalResponse provideImaginaryChartData(ResolveSignalRequest request)
 	{
 		return null;
+	}
+
+	@Override
+	public SignalsCalculationResponse processSignalOperationRequest(SignalsOperationRequest request) throws DigitalSignalProcessingException
+	{
+		Signal first = signalRepository.findOne(request.getIdFirst());
+		Signal second = signalRepository.findOne(request.getIdSecond());
+
+		SignalsOperationsCalculator signalsOperationsCalculator = signalOperationResolver.resolveOperationByType(request.getOperation());
+
+		if (!signalsOperationsCalculator.shouldCalculationBePerformed(first, second))
+		{
+			throw SignalParametersException.unableToPerformSignalsOperation();
+		}
+
+		Signal result = signalTypeResolver.resolveSignalByType(signalsOperationsCalculator.resolveSignalType(first.getSignalType(), second.getSignalType())
+				.name());
+
+		// TODO
+		result = signalsOperationsCalculator.calculate(first, second, result);
+
+		int signalId = signalRepository.add(result);
+
+		// TODO
+		SignalsCalculationResponse signalsCalculationResponse = new SignalsCalculationResponse();
+		signalsCalculationResponse.setSignalParametersResponse(signalsCalculationResponse.new SignalParametersResponse(
+				signalId,
+				result.getSamplingRate(),
+				result.getInitialTime(),
+				result.getDuration()));
+
+		return signalsCalculationResponse;
 	}
 
 }

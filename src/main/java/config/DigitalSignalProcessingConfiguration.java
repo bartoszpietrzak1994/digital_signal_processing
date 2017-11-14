@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan(basePackages = { "model.signal", "service", "manager", "utils", "repository", "view.controller",
-		"exception", "model.request" }, excludeFilters = @ComponentScan.Filter(value = Configuration.class))
+		"exception", "service.request" }, excludeFilters = @ComponentScan.Filter(value = Configuration.class))
 public class DigitalSignalProcessingConfiguration
 {
 }

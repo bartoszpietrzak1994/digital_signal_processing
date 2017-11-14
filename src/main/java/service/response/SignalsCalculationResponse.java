@@ -1,31 +1,24 @@
-package model.response;
+package service.response;
 
 import org.apache.commons.math.complex.Complex;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by bartoszpietrzak on 27/10/2017.
+ * Created by bartoszpietrzak on 13/11/2017.
  */
-@Data
-@Builder
-public class ResolveSignalResponse
+@Getter
+@Setter
+@AllArgsConstructor
+public class SignalsCalculationResponse
 {
 	private SignalParametersResponse signalParametersResponse;
 
 	/**
-	 * Calculation results
+	 * TODO Move it to another, reusable structure
 	 */
-	private Complex averageSignalValue;
-	private Complex absoluteAverageSignalValue;
-	private Complex signalPower;
-	private Complex signalVariance;
-	private Complex signalRootMeanSquareValue;
-
 	@AllArgsConstructor
 	@Getter
 	@Setter
