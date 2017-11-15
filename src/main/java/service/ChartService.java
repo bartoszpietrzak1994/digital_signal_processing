@@ -9,6 +9,6 @@ import model.signal.base.Signal;
  */
 public interface ChartService
 {
-	XYChart.Series<String, Double> renderRealSignalChart(Signal signal) throws ChartServiceException;
+	XYChart.Series<Double, Double> renderRealSignalChart(Signal signal) throws ChartServiceException;
 	XYChart.Series<Double, Double> renderImaginarySignalChart(Signal signal) throws ChartServiceException;
 }

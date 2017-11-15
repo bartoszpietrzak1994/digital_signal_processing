@@ -17,7 +17,7 @@ public class ResolveSignalRequestDataExtractor
 		signal.setAmplitude(request.getAmplitude());
 		signal.setDuration(request.getDuration());
 		signal.setPeriod(request.getPeriod());
-		signal.setDutyCycle(signal.getDutyCycle());
+		signal.setDutyCycle(request.getDutyCycle());
 
 		// Initial time
 		double realInitialTime = request.getInitialTime().getReal();

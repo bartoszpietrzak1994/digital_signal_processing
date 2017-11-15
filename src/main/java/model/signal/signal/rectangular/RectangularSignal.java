@@ -46,6 +46,6 @@ public class RectangularSignal extends AbstractRectangularSignal
 			return Complex.ZERO;
 		}
 
-		return null;
+		return Complex.ZERO;
 	}
 }

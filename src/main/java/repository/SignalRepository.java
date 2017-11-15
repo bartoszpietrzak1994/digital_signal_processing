@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,16 +21,18 @@ import model.signal.base.Signal;
 @Component
 public class SignalRepository
 {
+	// TODO
+	private AtomicLong id = new AtomicLong();
+
 	private List<Signal> signals = new ArrayList<>();
 
 	public int add(Signal signal)
 	{
-		Signal last = Iterables.getLast(signals, null);
-		int id = last == null ? 1 : last.getId() + 1;
-		signal.setId(id);
+		id.incrementAndGet();
+		signal.setId(id.intValue());
 
 		signals.add(signal);
-		return id;
+		return id.intValue();
 	}
 
 	public boolean delete(int id) throws SignalRepositoryException

@@ -19,9 +19,9 @@ public class ChartManager
 		return signal.getSamples().size() == signal.getValues().size();
 	}
 	
-	public XYChart.Series<String, Double> getChartOutOfRealSignal(Signal signal)
+	public XYChart.Series<Double, Double> getChartOutOfRealSignal(Signal signal)
 	{
-		XYChart.Series<String, Double> signalChart = new XYChart.Series<>();
+		XYChart.Series<Double, Double> signalChart = new XYChart.Series<>();
 
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
@@ -33,7 +33,7 @@ public class ChartManager
 		{
 			currentSample = samples.get(i);
 			currentValue = values.get(i);
-			signalChart.getData().add(new XYChart.Data(currentSample.getReal(), currentValue.getReal()));
+			signalChart.getData().add(new XYChart.Data(Double.toString(currentSample.getReal()), currentValue.getReal()));
 		}
 
 		return signalChart;

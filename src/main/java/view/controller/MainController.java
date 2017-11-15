@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import model.behaviour.IOOperation;
 import model.behaviour.SignalOperation;
@@ -63,7 +64,7 @@ public class MainController implements Initializable
 	private TextField durationTextField;
 
 	@FXML
-	private LineChart<String, Double> realChart;
+	private LineChart<Double, Double> realChart;
 
 	@FXML
 	private LineChart<Double, Double> imaginaryChart;
@@ -116,6 +117,9 @@ public class MainController implements Initializable
 	@FXML
 	private ListView<String> signalListView;
 
+	@FXML
+	private Button calculateButton;
+
 	/**
 	 * Services
 	 */
@@ -148,6 +152,9 @@ public class MainController implements Initializable
 		List<String> stringIoOperations = Arrays.stream(IOOperation.values()).map(Enum::toString).collect(Collectors.toList());
 		ObservableList<String> ioOperations = FXCollections.observableList(stringIoOperations);
 		ioOperationComboBox.setItems(ioOperations);
+
+		// as to be able to select multiple signals for signals operation, selection mode should be set to multiple
+		signalListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
 	@FXML
@@ -191,19 +198,27 @@ public class MainController implements Initializable
 	}
 
 	@FXML
-	public void renderChartsForSignal(int signalId)
+	public void renderChartsForSignal()
 	{
+		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
+
+		if (selectedItems.isEmpty() && selectedItems.size() != 1)
+		{
+			this.resultProviderLabel.setText("Only one signal can be rendered to a chart.");
+			return;
+		}
+
 		Signal signal = null;
 		try
 		{
-			signal = signalService.findSignal(signalId);
+			signal = signalService.findSignal(Integer.valueOf(selectedItems.get(0).split("\\;")[0]));
 		}
 		catch (SignalRepositoryException exception)
 		{
 			resultProviderLabel.setText(exceptionHandler.handle(exception));
 		}
 
-		XYChart.Series<String, Double> realSignalChart = null;
+		XYChart.Series<Double, Double> realSignalChart = null;
 		try
 		{
 			realSignalChart = chartService.renderRealSignalChart(signal);
@@ -219,7 +234,7 @@ public class MainController implements Initializable
 	@FXML
 	public void performSignalsOperation()
 	{
-		if (StringUtils.isEmpty(ioOperationComboBox.getValue()))
+		if (StringUtils.isEmpty(this.signalOperationComboBox.getValue()))
 		{
 			this.resultProviderLabel.setText(
 					DigitalSignalProcessingErrorCode.SIGNAL_OPERATION_NOT_GIVEN_BY_USER.name() + ". Please select one of the available signals operations");
@@ -238,7 +253,7 @@ public class MainController implements Initializable
 		SignalsOperationRequest signalsOperationRequest = SignalOperationRequestBuilder.builder()
 				.firstSignalData(Iterables.getFirst(selectedItems, null))
 				.secondSignalData(Iterables.getLast(selectedItems, null))
-				.signalOperation(ioOperationComboBox.getValue())
+				.signalOperation(signalOperationComboBox.getValue())
 				.build()
 				.toRequest();
 
@@ -251,7 +266,7 @@ public class MainController implements Initializable
 		catch (Exception exception)
 		{
 			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
-			throw exception;
+			return;
 		}
 
 		signalListView.getItems().add(signalsCalculationResponse.getSignalParametersResponse().toString());

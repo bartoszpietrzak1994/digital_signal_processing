@@ -25,16 +25,16 @@ public abstract class PeriodicSignal extends Signal
 	 */
 	protected Complex getPeriodBySample(Complex sample) throws SignalParametersException
 	{
-		Complex periodCounter = Complex.ONE;
+		int periodCounter = 0;
 
-		while (periodCounter.getReal() * this.period.getReal() < this.endTime.getReal())
+		while ((periodCounter - 1) * this.period.getReal() < this.endTime.getReal())
 		{
-			if (sample.getReal() >= periodCounter.getReal() * this.period.getReal() && sample.getReal() <= periodCounter.getReal() + 1 * this.period.getReal())
+			if (sample.getReal() >= (periodCounter - 1) * this.period.getReal() && sample.getReal() <= periodCounter  * this.period.getReal())
 			{
-				return periodCounter;
+				return new Complex(periodCounter, 0.0D);
 			}
 
-			periodCounter.add(Complex.ONE);
+			periodCounter++;
 		}
 
 		throw SignalParametersException.unableToCalculatePeriodNumber(sample);

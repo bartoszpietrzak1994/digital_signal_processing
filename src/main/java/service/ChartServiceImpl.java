@@ -18,7 +18,7 @@ public class ChartServiceImpl implements ChartService
 	private ChartManager chartManager;
 
 	@Override
-	public XYChart.Series<String, Double> renderRealSignalChart(Signal signal) throws ChartServiceException
+	public XYChart.Series<Double, Double> renderRealSignalChart(Signal signal) throws ChartServiceException
 	{
 		if (!chartManager.validateSignal(signal))
 		{

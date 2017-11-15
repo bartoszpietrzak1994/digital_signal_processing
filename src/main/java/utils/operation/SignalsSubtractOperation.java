@@ -38,8 +38,8 @@ public class SignalsSubtractOperation extends SignalsOperationsCalculator
 		List<Complex> values = new ArrayList<>();
 		for (int i = 0; i < result.getSamples().size(); i++)
 		{
-			firstSample = Complex.ONE;
-			secondSample = Complex.ONE;
+			firstSample = Complex.ZERO;
+			secondSample = Complex.ZERO;
 
 			if (first.getSamples().contains(result.getSamples().get(i)))
 			{

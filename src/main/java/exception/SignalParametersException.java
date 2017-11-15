@@ -55,6 +55,6 @@ public class SignalParametersException extends DigitalSignalProcessingException
 
 	public static SignalParametersException unableToPerformSignalsOperation()
 	{
-		return new SignalParametersException(DigitalSignalProcessingErrorCode.TWO_SIGNALS_OPERATION_NOT_POSSIBLE, "Unable to perform two-signals calculation")
+		return new SignalParametersException(DigitalSignalProcessingErrorCode.TWO_SIGNALS_OPERATION_NOT_POSSIBLE, "Unable to perform two-signals calculation");
 	}
 }
