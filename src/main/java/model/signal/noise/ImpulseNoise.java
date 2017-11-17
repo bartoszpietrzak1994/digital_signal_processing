@@ -4,6 +4,8 @@ import java.util.Random;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
@@ -16,6 +18,7 @@ import model.signal.base.type.NonPeriodicSignal;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ImpulseNoise extends NonPeriodicSignal
 {
 	public ImpulseNoise()

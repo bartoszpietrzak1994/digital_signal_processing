@@ -227,7 +227,7 @@ public class MainController implements Initializable
 		Signal signal = null;
 		try
 		{
-			signal = signalService.findSignal(Integer.valueOf(selectedItems.get(0).split("\\;")[0]));
+			signal = signalService.findSignal(selectedItems.get(0).split("\\;")[0]);
 		}
 		catch (SignalRepositoryException exception)
 		{

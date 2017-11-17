@@ -19,19 +19,19 @@ public class SignalOperationRequestBuilder
 
 	public SignalsOperationRequest toRequest()
 	{
-		int firstSignalId = -1;
-		int secondSignalId = -1;
+		String firstSignalId = null;
+		String secondSignalId = null;
 
 		if (StringUtils.isNotEmpty(this.firstSignalData))
 		{
 			String[] data = firstSignalData.split("\\;");
-			firstSignalId = Integer.valueOf(data[0]);
+			firstSignalId = data[0];
 		}
 
 		if (StringUtils.isNotEmpty(this.secondSignalData))
 		{
 			String[] data = secondSignalData.split("\\;");
-			secondSignalId = Integer.valueOf(data[0]);
+			secondSignalId = data[0];
 		}
 
 		return SignalsOperationRequest.builder().idFirst(firstSignalId).idSecond(secondSignalId).operation(signalOperation).build();

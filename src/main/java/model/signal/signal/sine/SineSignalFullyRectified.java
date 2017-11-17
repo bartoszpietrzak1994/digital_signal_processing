@@ -1,6 +1,8 @@
 package model.signal.signal.sine;
 
 import org.apache.commons.math.complex.Complex;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
@@ -10,6 +12,7 @@ import model.signal.SignalType;
  * Created by bartoszpietrzak on 07/10/2017.
  */
 @Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SineSignalFullyRectified extends AbstractSineSignal
 {
 	public SineSignalFullyRectified()

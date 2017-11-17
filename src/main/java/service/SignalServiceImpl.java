@@ -1,9 +1,7 @@
 package service;
 
 import java.util.List;
-import java.util.Random;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
