@@ -26,14 +26,14 @@ public class ChartManager
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
 
-		Complex currentSample = null;
-		Complex currentValue = null;
+		Complex currentSample;
+		Complex currentValue;
 
 		for (int i = 0; i < signal.getSamples().size(); i++)
 		{
 			currentSample = samples.get(i);
 			currentValue = values.get(i);
-			signalChart.getData().add(new XYChart.Data(Double.toString(currentSample.getReal()), currentValue.getReal()));
+			signalChart.getData().add(new XYChart.Data(currentSample.getReal(), currentValue.getReal()));
 		}
 
 		return signalChart;
@@ -46,8 +46,8 @@ public class ChartManager
 		List<Complex> samples = signal.getSamples();
 		List<Complex> values = signal.getValues();
 
-		Complex currentSample = null;
-		Complex currentValue = null;
+		Complex currentSample;
+		Complex currentValue;
 
 		for (int i = 0; i < signal.getSamples().size(); i++)
 		{

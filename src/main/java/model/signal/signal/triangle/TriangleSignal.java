@@ -24,6 +24,7 @@ public class TriangleSignal extends PeriodicSignal
 		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.PERIOD, ParameterType.DURATION, ParameterType.DUTY_CYCLE);
 	}
 
+	// TODO!
 	@Override
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{
@@ -56,7 +57,7 @@ public class TriangleSignal extends PeriodicSignal
 			return descendingReturnValue;
 		}
 
-		return null;
+		return Complex.ZERO;
 	}
 
 	@Override

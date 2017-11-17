@@ -21,7 +21,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -29,6 +33,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
+import javafx.util.StringConverter;
 import model.behaviour.IOOperation;
 import model.behaviour.SignalOperation;
 import model.signal.SignalType;
@@ -64,7 +70,7 @@ public class MainController implements Initializable
 	private TextField durationTextField;
 
 	@FXML
-	private LineChart<Double, Double> realChart;
+	private ScatterChart<Double, Double> realChart;
 
 	@FXML
 	private LineChart<Double, Double> imaginaryChart;
@@ -155,6 +161,10 @@ public class MainController implements Initializable
 
 		// as to be able to select multiple signals for signals operation, selection mode should be set to multiple
 		signalListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+		realChart.getXAxis().setAnimated(false);
+		realChart.getYAxis().setAnimated(true);
+		realChart.setAnimated(true);
 	}
 
 	@FXML
@@ -174,6 +184,8 @@ public class MainController implements Initializable
 				.initialTime(this.initialTimeTextField.getText())
 				.period(this.periodTextField.getText())
 				.samplingRate(this.signalSamplingRate.getText())
+				.valuePresenceProbability(this.valuePresenceProbability.getText())
+				.amplitudeRiseSample(this.amplitudeRiseSample.getText())
 				.build()
 				.toRequest();
 

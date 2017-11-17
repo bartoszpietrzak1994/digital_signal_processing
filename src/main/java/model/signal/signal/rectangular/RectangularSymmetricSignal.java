@@ -45,6 +45,6 @@ public class RectangularSymmetricSignal extends AbstractRectangularSignal
 			return this.amplitude.negate();
 		}
 
-		return null;
+		return Complex.ZERO;
 	}
 }

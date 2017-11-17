@@ -24,5 +24,7 @@ public class ResolveSignalRequest
 	public Complex period;
 	public Complex dutyCycle;
 	public Complex samplingRate;
+	public Complex valuePresenceProbability;
+	public Complex amplitudeRiseSample;
 	public String signalType;
 }
