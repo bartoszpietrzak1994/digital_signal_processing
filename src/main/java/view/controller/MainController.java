@@ -282,6 +282,7 @@ public class MainController implements Initializable
 		catch (Exception exception)
 		{
 			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+			System.out.println(exception);
 			return;
 		}
 

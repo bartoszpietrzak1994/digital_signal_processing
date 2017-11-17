@@ -33,24 +33,26 @@ public class SignalsSubtractOperation extends SignalsOperationsCalculator
 		result.setSamplingRate(first.getSamplingRate());
 		result.setSamples(signalValuesCalculator.getSampleList(result.getSamplingRate(), result.getInitialTime(), result.getEndTime()));
 
-		Complex firstSample;
-		Complex secondSample;
+		Complex firstValue;
+		Complex secondValue;
 		List<Complex> values = new ArrayList<>();
 		for (int i = 0; i < result.getSamples().size(); i++)
 		{
-			firstSample = Complex.ZERO;
-			secondSample = Complex.ZERO;
+			firstValue = Complex.ZERO;
+			secondValue = Complex.ZERO;
 
 			if (first.getSamples().contains(result.getSamples().get(i)))
 			{
-				firstSample = result.getSamples().get(i);
+				int indexOf = first.getSamples().indexOf(result.getSamples().get(i));
+				firstValue = first.getValues().get(indexOf);
 			}
 			if (second.getSamples().contains(result.getSamples().get(i)))
 			{
-				secondSample = result.getSamples().get(i);
+				int indexOf = second.getSamples().indexOf(result.getSamples().get(i));
+				secondValue = second.getValues().get(indexOf);
 			}
 
-			values.add(firstSample.subtract(secondSample));
+			values.add(firstValue.subtract(secondValue));
 		}
 
 		result.setValues(values);
