@@ -1,7 +1,9 @@
 package service;
 
 import java.util.List;
+import java.util.Random;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,7 +48,7 @@ public class SignalServiceImpl implements SignalService
 	private SignalRepository signalRepository;
 
 	@Override
-	public Signal findSignal(int signalId) throws SignalRepositoryException
+	public Signal findSignal(String signalId) throws SignalRepositoryException
 	{
 		return signalRepository.findOne(signalId);
 	}
@@ -78,7 +80,7 @@ public class SignalServiceImpl implements SignalService
 		signal.setSignalVariance(signalPropertiesCalculator.calculateVariance(signal));
 		signal.setSignalRootMeanSquareValue(signalPropertiesCalculator.calculateRootMeanSquareValue(signal));
 
-		int signalId = signalRepository.add(signal);
+		String signalId = signalRepository.add(signal);
 
 		ResolveSignalResponse resolveSignalResponse = ResolveSignalResponse.builder()
 				.averageSignalValue(signal.getAverageValue())
@@ -121,7 +123,7 @@ public class SignalServiceImpl implements SignalService
 		// TODO
 		result = signalsOperationsCalculator.calculate(first, second, result);
 
-		int signalId = signalRepository.add(result);
+		String signalId = signalRepository.add(result);
 
 		// TODO
 		SignalsCalculationResponse signalsCalculationResponse = new SignalsCalculationResponse();

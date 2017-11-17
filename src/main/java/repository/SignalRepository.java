@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Iterables;
@@ -21,23 +22,20 @@ import model.signal.base.Signal;
 @Component
 public class SignalRepository
 {
-	// TODO
-	private AtomicLong id = new AtomicLong();
-
 	private List<Signal> signals = new ArrayList<>();
 
-	public int add(Signal signal)
+	public String add(Signal signal)
 	{
-		id.incrementAndGet();
-		signal.setId(id.intValue());
+		String signalId = String.valueOf(System.currentTimeMillis() + RandomStringUtils.randomAlphanumeric(4));
+		signal.setId(signalId);
 
 		signals.add(signal);
-		return id.intValue();
+		return signalId;
 	}
 
-	public boolean delete(int id) throws SignalRepositoryException
+	public boolean delete(String id) throws SignalRepositoryException
 	{
-		Optional<Signal> first = signals.stream().filter(signal -> signal.getId() == id).findFirst();
+		Optional<Signal> first = signals.stream().filter(signal -> signal.getId().equals(id)).findFirst();
 
 		if (!first.isPresent())
 		{
@@ -54,9 +52,9 @@ public class SignalRepository
 		return signals;
 	}
 
-	public Signal findOne(int id) throws SignalRepositoryException
+	public Signal findOne(String id) throws SignalRepositoryException
 	{
-		Optional<Signal> first = signals.stream().filter(signal -> signal.getId() == id).findFirst();
+		Optional<Signal> first = signals.stream().filter(signal -> signal.getId().equals(id)).findFirst();
 
 		if (!first.isPresent())
 		{

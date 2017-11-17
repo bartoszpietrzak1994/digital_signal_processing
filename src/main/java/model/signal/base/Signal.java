@@ -24,7 +24,7 @@ public abstract class Signal implements Serializable
 	/**
 	 * Set when putting signal in a signalRepository
 	 */
-	protected int id;
+	protected String id;
 
 	protected SignalType signalType;
 

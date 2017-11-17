@@ -19,7 +19,7 @@ public interface SignalService
 	/**
 	 *	In-memory Signal storage
 	 */
-	Signal findSignal(int signalId) throws SignalRepositoryException;
+	Signal findSignal(String signalId) throws SignalRepositoryException;
 
 	/**
 	 *	IO Signal operations

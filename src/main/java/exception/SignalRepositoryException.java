@@ -15,10 +15,10 @@ public class SignalRepositoryException extends DigitalSignalProcessingException
 		super(errorCode, message);
 	}
 
-	public static SignalRepositoryException signalNotPresentInRepository(int id)
+	public static SignalRepositoryException signalNotPresentInRepository(String id)
 	{
 		return new SignalRepositoryException(
 				DigitalSignalProcessingErrorCode.SIGNAL_NOT_PRESENT_IN_REPOSITORY,
-				String.format("Signal with id: %d is not present in signal repository.", id));
+				String.format("Signal with id: %s is not present in signal repository.", id));
 	}
 }

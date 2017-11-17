@@ -1,5 +1,3 @@
-import java.util.ResourceBundle;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -12,7 +10,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
-	public static final String RELATIVE_CONTROLLER_PATH = "view/mainController.fxml";
+	private static final String RELATIVE_CONTROLLER_PATH = "view/mainController.fxml";
 
 	private static final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DigitalSignalProcessingConfiguration.class);
 
@@ -23,8 +21,10 @@ public class Main extends Application
 		fxmlLoader.setControllerFactory(applicationContext::getBean);
 		fxmlLoader.setLocation(getClass().getResource(RELATIVE_CONTROLLER_PATH));
 		Parent root = fxmlLoader.load();
-		primaryStage.setTitle("Hello World");
-		primaryStage.setScene(new Scene(root, 1024, 768));
+		primaryStage.setTitle("Digital Signal Processing");
+		Scene scene = new Scene(root, 1024, 768);
+		scene.getStylesheets().add("css/styles.css");
+		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 

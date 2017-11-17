@@ -37,7 +37,7 @@ public class ResolveSignalResponse
 		/**
 		 * Parameters from UI
 		 */
-		private int signalId;
+		private String signalId;
 		private Complex signalSamplingRate;
 		private Complex initialTime;
 		private Complex duration;

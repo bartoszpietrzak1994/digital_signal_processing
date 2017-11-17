@@ -10,7 +10,7 @@ import lombok.Data;
 @Builder
 public class SignalsOperationRequest
 {
-	private int idFirst;
-	private int idSecond;
+	private String idFirst;
+	private String idSecond;
 	private String operation;
 }
