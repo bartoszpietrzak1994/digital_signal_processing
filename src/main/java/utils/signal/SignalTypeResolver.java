@@ -1,9 +1,7 @@
 package utils.signal;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
@@ -17,19 +15,18 @@ import model.signal.base.Signal;
 public class SignalTypeResolver
 {
 	@Autowired
-	private List<Signal> signals;
+	private ApplicationContext applicationContext;
 
 	public Signal resolveSignalByType(String signalTypeName) throws SignalParametersException
 	{
 		SignalType signalType = SignalType.valueOf(signalTypeName);
+		Signal signal = (Signal) applicationContext.getBean(signalType.name());
 
-		Optional<Signal> optionalSignal = signals.stream().filter(signal -> signal.getSignalType().equals(signalType)).findFirst();
-
-		if (!optionalSignal.isPresent())
+		if (signal == null)
 		{
 			throw SignalParametersException.signalTypeNotSupported(signalType.name());
 		}
 
-		return optionalSignal.get();
+		return signal;
 	}
 }

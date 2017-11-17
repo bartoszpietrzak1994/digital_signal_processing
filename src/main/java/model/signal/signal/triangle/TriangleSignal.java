@@ -16,7 +16,7 @@ import model.signal.base.type.PeriodicSignal;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-@Component
+@Component(value = "TRIANGLE_SIGNAL")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class TriangleSignal extends PeriodicSignal
 {

@@ -17,7 +17,7 @@ import model.signal.base.type.NonPeriodicSignal;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-@Component
+@Component(value = "GAUSSIAN_NOISE")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class GaussianNoise extends NonPeriodicSignal
 {
