@@ -1,6 +1,7 @@
 package view.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -21,11 +22,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
-import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -33,8 +30,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Font;
-import javafx.util.StringConverter;
 import model.behaviour.IOOperation;
 import model.behaviour.SignalOperation;
 import model.signal.SignalType;
@@ -125,6 +120,9 @@ public class MainController implements Initializable
 
 	@FXML
 	private Button calculateButton;
+
+	@FXML
+	private Button readWriteButton;
 
 	/**
 	 * Services
@@ -279,11 +277,92 @@ public class MainController implements Initializable
 		catch (Exception exception)
 		{
 			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
-			System.out.println(exception);
 			return;
 		}
 
 		signalListView.getItems().add(signalsCalculationResponse.getSignalParametersResponse().toString());
+	}
+
+	@FXML
+	public void handleReadWriteRequest()
+	{
+		if (StringUtils.isEmpty(this.ioOperationComboBox.getValue()))
+		{
+			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.READ_WRITE_OPERATION_NOT_GIVEN_BY_USER.name()
+					+ ". Please select one of the available signal I/O operations");
+			return;
+		}
+
+		String value = ioOperationComboBox.getValue();
+		IOOperation ioOperation = IOOperation.valueOf(value);
+
+		switch(ioOperation)
+		{
+			case SAVE:
+				exportSignalsToFile();
+				break;
+			case LOAD:
+				loadSignalsFromFile();
+				break;
+		}
+	}
+
+	private void exportSignalsToFile()
+	{
+		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
+
+		if (selectedItems.isEmpty())
+		{
+			this.resultProviderLabel.setText("Please select at least one signal to export.");
+		}
+
+		List<Signal> signals = new ArrayList<>();
+
+		for (String data : selectedItems)
+		{
+			try
+			{
+				signals.add(signalService.findSignal(data.split("\\;")[0]));
+			}
+			catch (SignalRepositoryException e)
+			{
+				this.resultProviderLabel.setText(exceptionHandler.handle(e));
+			}
+		}
+
+		try
+		{
+			signalService.saveListOfSignalsInFile(signals, "./signals.json");
+		}
+		catch (SignalIOException e)
+		{
+			this.resultProviderLabel.setText(exceptionHandler.handle(e));
+		}
+	}
+
+	private void loadSignalsFromFile()
+	{
+		List<Signal> signals = null;
+		try
+		{
+			signals = signalService.loadSignalsFromFile("./signals.json");
+		}
+		catch (SignalIOException e)
+		{
+			this.resultProviderLabel.setText(exceptionHandler.handle(e));
+		}
+
+		if (signals == null)
+		{
+			this.resultProviderLabel.setText("Empty signals");
+			return;
+		}
+
+		for (Signal signal : signals)
+		{
+			signalListView.getItems().add(signal.getId());
+		}
+
 	}
 }
 

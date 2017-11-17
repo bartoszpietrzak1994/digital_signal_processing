@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import exception.DigitalSignalProcessingException;
+import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
 import model.signal.base.Signal;
@@ -24,8 +25,8 @@ public interface SignalService
 	/**
 	 *	IO Signal operations
 	 */
-	boolean saveSignalInFile(Signal signal, String path);
-	List<Signal> loadSignalsFromFile(String filePath);
+	boolean saveListOfSignalsInFile(List<Signal> signals, String path) throws SignalIOException;
+	List<Signal> loadSignalsFromFile(String filePath) throws SignalIOException;
 
 	/**
 	 * Signal on charts presentation

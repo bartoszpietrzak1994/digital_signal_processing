@@ -46,10 +46,6 @@ public class DigitalSignalProcessingExceptionHandler
 			{
 				return exceptionErrorCodeAsString + UNABLE_TO_CALCULATE_PERIOD_NUMBER_MESSAGE;
 			}
-			case SIGNAL_VALUES_NOT_AVAILABLE:
-			{
-				return exceptionErrorCodeAsString + SIGNAL_VALUES_NOT_AVAILABLE_MESSAGE;
-			}
 			case SIGNAL_TYPE_NOT_SUPPORTED:
 			{
 				return exceptionErrorCodeAsString + SIGNAL_TYPE_NOT_SUPPORTED_MESSAGE;

@@ -1,11 +1,20 @@
 package service;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import exception.DigitalSignalProcessingException;
+import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
 import model.signal.base.Signal;
@@ -17,6 +26,7 @@ import service.response.ResolveSignalResponse;
 import service.response.SignalsCalculationResponse;
 import utils.calculator.SignalPropertiesCalculator;
 import utils.calculator.SignalValuesCalculator;
+import utils.file.SignalAdapter;
 import utils.operation.SignalOperationResolver;
 import utils.operation.SignalsOperationsCalculator;
 import utils.signal.SignalTypeResolver;
@@ -45,6 +55,9 @@ public class SignalServiceImpl implements SignalService
 	@Autowired
 	private SignalRepository signalRepository;
 
+	@Autowired
+	private SignalAdapter signalAdapter;
+
 	@Override
 	public Signal findSignal(String signalId) throws SignalRepositoryException
 	{
@@ -52,15 +65,42 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public boolean saveSignalInFile(Signal signal, String path)
+	public boolean saveListOfSignalsInFile(List<Signal> signals, String path) throws SignalIOException
 	{
-		return false;
+		Gson gson = new GsonBuilder().registerTypeAdapter(new TypeToken<List<Signal>>(){}.getType(), signalAdapter).create();
+		try
+		{
+			gson.toJson(signals, new FileWriter(path));
+		}
+		catch (IOException e)
+		{
+			throw SignalIOException.unableToExportDataToFile(signals, path);
+		}
+
+		return true;
 	}
 
 	@Override
-	public List<Signal> loadSignalsFromFile(String filePath)
+	public List<Signal> loadSignalsFromFile(String filePath) throws SignalIOException
 	{
-		return null;
+		Gson gson = new GsonBuilder().registerTypeAdapter(new TypeToken<List<Signal>>(){}.getType(), signalAdapter).create();
+
+		List<Signal> signals;
+		try
+		{
+			signals = gson.fromJson(new FileReader(filePath), new TypeToken<List<Signal>>(){}.getType());
+		}
+		catch (FileNotFoundException e)
+		{
+			throw SignalIOException.unableToImportDataFromFile(filePath);
+		}
+
+		if (signals.isEmpty())
+		{
+			throw SignalIOException.noSignalsFoundInGivenFile(filePath);
+		}
+
+		return signals;
 	}
 
 	@Override
