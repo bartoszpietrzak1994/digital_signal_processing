@@ -73,9 +73,6 @@ public class MainController implements Initializable
 	private ScatterChart<Double, Double> realChart;
 
 	@FXML
-	private LineChart<Double, Double> imaginaryChart;
-
-	@FXML
 	private TextField initialTimeTextField;
 
 	@FXML

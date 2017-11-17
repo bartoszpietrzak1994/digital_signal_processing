@@ -11,6 +11,7 @@ import model.signal.SignalType;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
+// TODO
 @Component(value = "SINE_SIGNAL_HALF_RECTIFIED")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SineSignalHalfRectified extends AbstractSineSignal

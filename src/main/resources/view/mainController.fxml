@@ -17,7 +17,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1050.0" prefWidth="1680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.MainController">
     <children>
-        <ComboBox fx:id="signalTypeComboBox" layoutX="23.0" layoutY="73.0" prefHeight="27.0" prefWidth="122.0" promptText="Signal Type" />
+        <ComboBox fx:id="signalTypeComboBox" layoutX="23.0" layoutY="73.0" prefHeight="27.0" prefWidth="294.0" promptText="Signal Type" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="119.0" prefHeight="35.0" prefWidth="96.0" text="Amplitude" textAlignment="CENTER" />
         <Label alignment="CENTER" layoutX="14.0" layoutY="158.0" prefHeight="35.0" prefWidth="96.0" text="Initial Time" />
         <Label alignment="CENTER" layoutX="29.0" layoutY="198.0" prefHeight="35.0" prefWidth="67.0" text="Duration" />
@@ -31,14 +31,6 @@
         <Label fx:id="resultProviderLabel" alignment="CENTER" layoutX="449.0" layoutY="447.0" prefHeight="44.0" prefWidth="750.0" />
         <TextField fx:id="signalSamplingRate" layoutX="147.0" layoutY="322.0" prefHeight="27.0" prefWidth="167.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="318.0" prefHeight="35.0" prefWidth="96.0" text="Sample count" textAlignment="CENTER" />
-        <LineChart fx:id="imaginaryChart" layoutX="776.0" layoutY="512.0" prefHeight="458.0" prefWidth="682.0" title="Imaginary">
-            <xAxis>
-                <CategoryAxis side="BOTTOM" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis side="LEFT" />
-            </yAxis>
-        </LineChart>
         <Button fx:id="generateButton" layoutX="183.0" layoutY="490.0" mnemonicParsing="false" onAction="#computeSignalUsingProvidedParameters" prefHeight="44.0" prefWidth="96.0" text="Generate" />
         <TextField fx:id="valuePresenceProbability" layoutX="147.0" layoutY="363.0" prefHeight="27.0" prefWidth="167.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="359.0" prefHeight="35.0" prefWidth="103.0" text="Val. pres. prob." textAlignment="CENTER" />
@@ -62,7 +54,7 @@
         <TextField fx:id="rootMeanSquareValueTextField" layoutX="529.0" layoutY="336.0" />
         <Button fx:id="renderChartsButton" layoutX="1296.0" layoutY="227.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="122.0" text="Render  charts" />
         <Button fx:id="calculateButton" layoutX="801.0" layoutY="254.0" mnemonicParsing="false" onAction="#performSignalsOperation" prefHeight="44.0" prefWidth="96.0" text="Calculate" />
-        <ScatterChart fx:id="realChart" layoutX="84.0" layoutY="541.0">
+        <ScatterChart fx:id="realChart" layoutX="70.0" layoutY="579.0" prefHeight="400.0" prefWidth="1514.0">
             <xAxis>
                 <NumberAxis side="BOTTOM" />
             </xAxis>

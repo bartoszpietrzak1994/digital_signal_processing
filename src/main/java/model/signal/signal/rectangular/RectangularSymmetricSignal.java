@@ -11,6 +11,7 @@ import model.signal.SignalType;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
+// TODO
 @Component(value = "RECTANGULAR_SYMMETRIC_SIGNAL")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class RectangularSymmetricSignal extends AbstractRectangularSignal
