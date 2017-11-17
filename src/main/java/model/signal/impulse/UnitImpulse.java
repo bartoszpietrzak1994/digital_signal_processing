@@ -28,14 +28,15 @@ public class UnitImpulse extends NonPeriodicSignal
 	}
 
 	@Override
-	public boolean areSampleCalculationParametersProvided()
+	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-		return ObjectUtils.anyNotNull(this.amplitude, this.initialTime, this.duration, this.amplitudeRiseSample);
+		int index = this.samples.indexOf(sample);
+		return index == this.amplitudeRiseSample.getReal() ? this.amplitude : Complex.ZERO;
 	}
 
 	@Override
-	public Complex calculate(Complex sample) throws SignalParametersException
+	public boolean areSampleCalculationParametersProvided()
 	{
-		return sample.getReal() == amplitudeRiseSample.getReal() ? sample : Complex.ZERO;
+		return ObjectUtils.anyNotNull(this.amplitude, this.initialTime, this.duration, this.amplitudeRiseSample);
 	}
 }

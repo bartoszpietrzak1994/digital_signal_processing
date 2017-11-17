@@ -22,6 +22,7 @@ public class ResolveSignalRequestBuilder
 	public String samplingRate;
 	public String valuePresenceProbability;
 	public String amplitudeRiseSample;
+	public String amplitudeRiseTime;
 	public String signalType;
 
 	public ResolveSignalRequest toRequest()
@@ -32,13 +33,12 @@ public class ResolveSignalRequestBuilder
 				.samplingRate(StringUtils.isNotEmpty(this.samplingRate) ? new Complex(Double.valueOf(this.samplingRate), 0.0D) : Complex.ONE)
 				.valuePresenceProbability(StringUtils.isNotEmpty(this.valuePresenceProbability) ?
 						new Complex(Double.valueOf(this.valuePresenceProbability), 0.0D) :
-						Complex.ONE)
-				.amplitudeRiseSample(StringUtils.isNotEmpty(this.amplitudeRiseSample) ?
-						new Complex(Double.valueOf(this.amplitudeRiseSample), 0.0D) :
-						Complex.ONE)
+						null)
+				.amplitudeRiseSample(StringUtils.isNotEmpty(this.amplitudeRiseSample) ? new Complex(Double.valueOf(this.amplitudeRiseSample), 0.0D) : null)
+				.amplitudeRiseTime(StringUtils.isNotEmpty(this.amplitudeRiseTime) ? new Complex(Double.valueOf(this.amplitudeRiseTime), 0.0D) : null)
 				.amplitude(StringUtils.isNotEmpty(this.amplitude) ? new Complex(Double.valueOf(this.amplitude), 0.0D) : null)
 				.duration(StringUtils.isNotEmpty(this.duration) ? new Complex(Double.valueOf(this.duration), 0.0D) : null)
-				.dutyCycle(StringUtils.isNotEmpty(this.dutyCycle) ?  new Complex(Double.valueOf(this.dutyCycle), 0.0D) : null)
+				.dutyCycle(StringUtils.isNotEmpty(this.dutyCycle) ? new Complex(Double.valueOf(this.dutyCycle), 0.0D) : null)
 				.period(StringUtils.isNotEmpty(this.period) ? new Complex(Double.valueOf(this.period), 0.0D) : null)
 				.signalType(this.signalType)
 				.build();

@@ -97,6 +97,9 @@ public class MainController implements Initializable
 	private TextField amplitudeRiseSample;
 
 	@FXML
+	private TextField amplitudeRiseTime;
+
+	@FXML
 	private TextField averageSignalValueTextField;
 
 	@FXML
@@ -186,6 +189,7 @@ public class MainController implements Initializable
 				.samplingRate(this.signalSamplingRate.getText())
 				.valuePresenceProbability(this.valuePresenceProbability.getText())
 				.amplitudeRiseSample(this.amplitudeRiseSample.getText())
+				.amplitudeRiseTime(this.amplitudeRiseTime.getText())
 				.build()
 				.toRequest();
 

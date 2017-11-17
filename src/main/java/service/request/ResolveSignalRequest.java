@@ -26,5 +26,6 @@ public class ResolveSignalRequest
 	public Complex samplingRate;
 	public Complex valuePresenceProbability;
 	public Complex amplitudeRiseSample;
+	public Complex amplitudeRiseTime;
 	public String signalType;
 }
