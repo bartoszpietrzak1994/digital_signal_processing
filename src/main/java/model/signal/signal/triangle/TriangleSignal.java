@@ -31,7 +31,7 @@ public class TriangleSignal extends PeriodicSignal
 	@Override
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-		Complex periodCounter = getPeriodBySample(sample);
+		Complex periodCounter = new Complex(getPeriodBySample(sample), 0.0D);
 
 		// two complex numbers declared below are possible return values
 		Complex ascendingReturnValue = amplitude.divide((dutyCycle.multiply(period)))

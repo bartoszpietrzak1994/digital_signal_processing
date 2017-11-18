@@ -25,24 +25,24 @@ public class RectangularSignal extends AbstractRectangularSignal
 	@Override
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{
-		Complex periodCounter = getPeriodBySample(sample);
+		double periodCounter = getPeriodBySample(sample);
 
 		// left end of interval
-		Complex amplitudeIntervalLeftEnd = new Complex(periodCounter.getReal() * this.period.getReal() + this.initialTime.getReal(), 0.0D);
+		double amplitudeIntervalLeftEnd = periodCounter * this.period.getReal() + this.initialTime.getReal();
 		// right end of interval
-		Complex amplitudeIntervalRightEnd = new Complex(this.dutyCycle.getReal() * this.period.getReal() + amplitudeIntervalLeftEnd.getReal(), 0.0D);
+		double amplitudeIntervalRightEnd = this.dutyCycle.getReal() * this.period.getReal() + amplitudeIntervalLeftEnd;
 
-		if (sample.getReal() >= amplitudeIntervalLeftEnd.getReal() && sample.getReal() < amplitudeIntervalRightEnd.getReal())
+		if (sample.getReal() >= amplitudeIntervalLeftEnd && sample.getReal() < amplitudeIntervalRightEnd)
 		{
 			return this.amplitude;
 		}
 
 		// left end of interval
 		Complex zeroIntervalLeftEnd = new Complex(
-				(this.dutyCycle.getReal() * this.period.getReal()) - periodCounter.getReal() * this.period.getReal() + this.initialTime.getReal(),
+				(this.dutyCycle.getReal() * this.period.getReal()) - periodCounter * this.period.getReal() + this.initialTime.getReal(),
 				0.0D);
 		// right end of interval
-		Complex zeroIntervalRightEnd = new Complex((this.period.getReal() + (periodCounter.getReal() * this.period.getReal()) + this.initialTime.getReal()),
+		Complex zeroIntervalRightEnd = new Complex((this.period.getReal() + (periodCounter * this.period.getReal()) + this.initialTime.getReal()),
 				0.0D);
 
 		if (sample.getReal() >= zeroIntervalLeftEnd.getReal() && sample.getReal() < zeroIntervalRightEnd.getReal())

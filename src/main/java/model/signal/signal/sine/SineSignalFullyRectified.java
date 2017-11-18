@@ -20,7 +20,7 @@ public class SineSignalFullyRectified extends AbstractSineSignal
 		super();
 		this.signalType = SignalType.SINE_SIGNAL_FULLY_RECTIFIED;
 	}
-	
+
 	@Override
 	public Complex calculate(Complex sample) throws SignalParametersException
 	{

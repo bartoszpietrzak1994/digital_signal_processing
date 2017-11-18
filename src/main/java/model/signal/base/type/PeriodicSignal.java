@@ -17,13 +17,13 @@ public abstract class PeriodicSignal extends Signal
 	}
 
 	/**
-	 * Finds out in which period is given sample.
+	 * Finds out in which period given sample is.
 	 * Applicable only for periodic signals.
 	 * @param sample
 	 * @return
 	 * @throws SignalParametersException
 	 */
-	protected Complex getPeriodBySample(Complex sample) throws SignalParametersException
+	protected int getPeriodBySample(Complex sample) throws SignalParametersException
 	{
 		int periodCounter = 0;
 
@@ -31,7 +31,7 @@ public abstract class PeriodicSignal extends Signal
 		{
 			if (sample.getReal() >= (periodCounter - 1) * this.period.getReal() && sample.getReal() <= periodCounter  * this.period.getReal())
 			{
-				return new Complex(periodCounter, 0.0D);
+				return periodCounter;
 			}
 
 			periodCounter++;
