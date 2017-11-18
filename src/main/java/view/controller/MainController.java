@@ -189,7 +189,7 @@ public class MainController implements Initializable
 	}
 
 	@FXML
-	public void computeSignalUsingProvidedParameters() throws SignalIOException, SignalParametersException
+	public void computeSignalUsingProvidedParameters()
 	{
 		if (StringUtils.isEmpty(this.signalTypeComboBox.getValue()))
 		{
@@ -219,7 +219,7 @@ public class MainController implements Initializable
 		catch (Exception exception)
 		{
 			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
-			throw exception;
+			return;
 		}
 
 		this.averageSignalValueTextField.setText(Double.valueOf(response.getAverageSignalValue().getReal()).toString());
@@ -401,7 +401,6 @@ public class MainController implements Initializable
 		}
 	}
 
-	// TODO
 	private void loadSignalsFromFile()
 	{
 		List<Signal> signals = null;
@@ -412,17 +411,41 @@ public class MainController implements Initializable
 		catch (SignalIOException e)
 		{
 			this.resultProviderLabel.setText(exceptionHandler.handle(e));
-		}
-
-		if (signals == null)
-		{
-			this.resultProviderLabel.setText("Empty signals");
 			return;
 		}
 
 		for (Signal signal : signals)
 		{
-			signalListView.getItems().add(signal.getId());
+			ResolveSignalRequest resolveSignalRequest = ResolveSignalRequest.builder()
+					.signalType(signal.getSignalType().name())
+					.amplitude(signal.getAmplitude())
+					.amplitudeRiseSample(signal.getAmplitudeRiseSample())
+					.amplitudeRiseTime(signal.getAmplitudeRiseTime())
+					.duration(signal.getDuration())
+					.dutyCycle(signal.getDutyCycle())
+					.initialTime(signal.getInitialTime())
+					.period(signal.getPeriod())
+					.samplingRate(signal.getSamplingRate())
+					.valuePresenceProbability(signal.getValuePresenceProbability()).build();
+
+			ResolveSignalResponse response;
+			try
+			{
+				response = signalService.processResolveSignalRequest(resolveSignalRequest);
+			}
+			catch (Exception exception)
+			{
+				this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+				return;
+			}
+
+			this.averageSignalValueTextField.setText(Double.valueOf(response.getAverageSignalValue().getReal()).toString());
+			this.absoluteAverageSignalValueTextField.setText(Double.valueOf(response.getAbsoluteAverageSignalValue().getReal()).toString());
+			this.signalPowerTextField.setText(Double.valueOf(response.getSignalPower().getReal()).toString());
+			this.signalVarianceTextField.setText(Double.valueOf(response.getSignalVariance().getReal()).toString());
+			this.rootMeanSquareValueTextField.setText(Double.valueOf(response.getSignalRootMeanSquareValue().getReal()).toString());
+
+			signalListView.getItems().add(response.getSignalParametersResponse().toString());
 		}
 
 	}

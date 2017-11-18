@@ -1,9 +1,14 @@
 package service;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,10 +72,13 @@ public class SignalServiceImpl implements SignalService
 	@Override
 	public boolean saveListOfSignalsInFile(List<Signal> signals, String path) throws SignalIOException
 	{
-		Gson gson = new GsonBuilder().registerTypeAdapter(new TypeToken<List<Signal>>(){}.getType(), signalAdapter).create();
-		try
+		Gson gson = new Gson();
+
+		String signalsAsJson = gson.toJson(signals);
+
+		try(Writer writer =  new FileWriter(path))
 		{
-			gson.toJson(signals, new FileWriter(path));
+			writer.write(signalsAsJson);
 		}
 		catch (IOException e)
 		{
@@ -85,12 +93,12 @@ public class SignalServiceImpl implements SignalService
 	{
 		Gson gson = new GsonBuilder().registerTypeAdapter(new TypeToken<List<Signal>>(){}.getType(), signalAdapter).create();
 
-		List<Signal> signals;
-		try
+		List<Signal> signals = new ArrayList<>();
+		try(Reader reader = new FileReader(filePath))
 		{
-			signals = gson.fromJson(new FileReader(filePath), new TypeToken<List<Signal>>(){}.getType());
+			signals = gson.fromJson(reader, new TypeToken<List<Signal>>(){}.getType());
 		}
-		catch (FileNotFoundException e)
+		catch (Exception e)
 		{
 			throw SignalIOException.unableToImportDataFromFile(filePath);
 		}

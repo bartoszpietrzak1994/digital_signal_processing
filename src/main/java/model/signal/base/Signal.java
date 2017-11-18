@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.apache.commons.math.complex.Complex;
 
+import com.google.gson.annotations.Expose;
+
 import exception.SignalParametersException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,7 @@ public abstract class Signal implements Serializable
 	/**
 	 * Set when putting signal in a signalRepository
 	 */
-	protected String id;
+	protected transient String id;
 
 	protected SignalType signalType;
 
@@ -36,12 +38,14 @@ public abstract class Signal implements Serializable
 	protected Complex valuePresenceProbability;
 
 	protected Complex amplitudeRiseTime;
+
 	protected Complex amplitudeRiseSample;
 
 	/**
 	 * Miliseconds
 	 */
 	protected Complex initialTime;
+
 	protected Complex duration;
 
 	/**
@@ -54,6 +58,7 @@ public abstract class Signal implements Serializable
 	 * If isPeriodic == null, we assume that it should be false
 	 */
 	protected Complex period;
+
 	protected Boolean isPeriodic;
 
 	protected Complex dutyCycle;
@@ -63,23 +68,23 @@ public abstract class Signal implements Serializable
 	 */
 	protected Complex samplingRate;
 
-	protected List<Complex> values;
+	protected transient List<Complex> values;
 
-	protected Set<ParameterType> applicableParameters;
+	protected transient Set<ParameterType> applicableParameters;
 
 	/**
 	 * Calculated in SignalPropertiesCalculator
 	 */
-	protected Complex averageValue;
-	protected Complex absoluteAverageValue;
-	protected Complex signalPower;
-	protected Complex signalVariance;
-	protected Complex signalRootMeanSquareValue;
+	protected transient Complex averageValue;
+	protected transient Complex absoluteAverageValue;
+	protected transient Complex signalPower;
+	protected transient Complex signalVariance;
+	protected transient Complex signalRootMeanSquareValue;
 
 	/**
 	 * Calculated in SignalValuesCalculator
 	 */
-	protected List<Complex> samples;
+	protected transient List<Complex> samples;
 
 	public abstract Complex calculate(Complex sample) throws SignalParametersException;
 
