@@ -3,13 +3,12 @@ package service;
 import java.util.List;
 
 import org.apache.commons.math.complex.Complex;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import exception.ChartServiceException;
 import javafx.scene.chart.XYChart;
-import manager.ChartManager;
 import model.signal.base.Signal;
+import utils.number.NumberUtils;
 
 /**
  * Created by bartoszpietrzak on 23/10/2017.
@@ -44,9 +43,36 @@ public class ChartServiceImpl implements ChartService
 	}
 
 	@Override
-	public XYChart.Series<Double, Double> renderRealSignalHistogram(Signal signal) throws ChartServiceException
+	public XYChart.Series<String, Double> renderRealSignalHistogram(Signal signal, int intervalCount) throws ChartServiceException
 	{
-		return null;
+		if (!validateSignal(signal))
+		{
+			throw ChartServiceException.samplesAndValuesDoNotMatch(signal.getSamples().size(), signal.getValues().size());
+		}
+
+		XYChart.Series<String, Double> signalHistogram = new XYChart.Series<>();
+
+		List<Complex> samples = signal.getSamples();
+		List<Complex> values = signal.getValues();
+
+		Complex currentSample;
+		Complex currentValue;
+
+		int interval = samples.size() / intervalCount;
+
+		for (int i = 0; i < samples.size(); i++)
+		{
+			if (i % interval == 0)
+			{
+				currentSample = samples.get(i);
+				currentValue = values.get(i);
+				String sample = String.valueOf(NumberUtils.formatDouble(currentSample.getReal(), 2));
+				signalHistogram.getData()
+						.add(new XYChart.Data(sample, currentValue.getReal()));
+			}
+		}
+
+		return signalHistogram;
 	}
 
 	private boolean validateSignal(Signal signal)

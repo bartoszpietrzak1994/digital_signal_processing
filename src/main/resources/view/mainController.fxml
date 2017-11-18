@@ -65,7 +65,7 @@
       <TextField fx:id="amplitudeRiseTime" layoutX="147.0" layoutY="438.0" prefHeight="27.0" prefWidth="167.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="434.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise time" textAlignment="CENTER" />
       <Button fx:id="readWriteButton" layoutX="1503.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleReadWriteRequest" prefHeight="44.0" prefWidth="96.0" text="Read/Write" />
-      <Button fx:id="renderHistogramButton" layoutX="1273.0" layoutY="296.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  histogram" />
+      <Button fx:id="renderHistogramButton" layoutX="1273.0" layoutY="296.0" mnemonicParsing="false" onAction="#renderHistogramForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  histogram" />
       <ComboBox fx:id="histogramIntvervalComboBox" layoutX="1270.0" layoutY="401.0" prefWidth="150.0" promptText="Intervals" />
       <BarChart fx:id="realHistogram" layoutX="74.0" layoutY="762.0" prefHeight="229.0" prefWidth="1462.0">
         <xAxis>

@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +76,7 @@ public class MainController implements Initializable
 	private ScatterChart<Double, Double> realChart;
 
 	@FXML
-	private BarChart<Double, Double> realHistogram;
+	private BarChart<String, Double> realHistogram;
 
 	@FXML
 	private TextField initialTimeTextField;
@@ -183,6 +182,10 @@ public class MainController implements Initializable
 		realChart.getXAxis().setAnimated(false);
 		realChart.getYAxis().setAnimated(true);
 		realChart.setAnimated(true);
+
+		realHistogram.getXAxis().setAnimated(false);
+		realHistogram.getYAxis().setAnimated(true);
+		realHistogram.setAnimated(true);
 	}
 
 	@FXML
@@ -260,6 +263,44 @@ public class MainController implements Initializable
 		}
 
 		this.realChart.getData().setAll(realSignalChart);
+	}
+
+	@FXML
+	public void renderHistogramForSignal()
+	{
+		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
+
+		if (selectedItems.isEmpty() && selectedItems.size() != 1)
+		{
+			this.resultProviderLabel.setText("Only one signal can be rendered to a chart.");
+			return;
+		}
+
+		Signal signal = null;
+		try
+		{
+			signal = signalService.findSignal(selectedItems.get(0).split("\\;")[0]);
+		}
+		catch (SignalRepositoryException exception)
+		{
+			resultProviderLabel.setText(exceptionHandler.handle(exception));
+		}
+
+		int interval = StringUtils.isEmpty(histogramIntvervalComboBox.getValue()) ?
+				signal.getSamples().size() / 10 :
+				Integer.valueOf(histogramIntvervalComboBox.getValue());
+
+		XYChart.Series<String, Double> realSignalHistogram = null;
+		try
+		{
+			realSignalHistogram = chartService.renderRealSignalHistogram(signal, interval);
+		}
+		catch (Exception exception)
+		{
+			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+		}
+
+		this.realHistogram.getData().setAll(realSignalHistogram);
 	}
 
 	@FXML
