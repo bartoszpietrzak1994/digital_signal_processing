@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -30,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import model.behaviour.HistogramInvervalNumber;
 import model.behaviour.IOOperation;
 import model.behaviour.SignalOperation;
 import model.signal.SignalType;
@@ -62,10 +65,19 @@ public class MainController implements Initializable
 	private ComboBox<String> ioOperationComboBox;
 
 	@FXML
+	private ComboBox<String> histogramIntvervalComboBox;
+
+	@FXML
+	private Button renderHistogramButton;
+
+	@FXML
 	private TextField durationTextField;
 
 	@FXML
 	private ScatterChart<Double, Double> realChart;
+
+	@FXML
+	private BarChart<Double, Double> realHistogram;
 
 	@FXML
 	private TextField initialTimeTextField;
@@ -156,6 +168,14 @@ public class MainController implements Initializable
 		List<String> stringIoOperations = Arrays.stream(IOOperation.values()).map(Enum::toString).collect(Collectors.toList());
 		ObservableList<String> ioOperations = FXCollections.observableList(stringIoOperations);
 		ioOperationComboBox.setItems(ioOperations);
+
+		// interval counter as well
+		List<String> counterValues = Arrays.stream(HistogramInvervalNumber.values())
+				.map(HistogramInvervalNumber::getCounter)
+				.map(Object::toString)
+				.collect(Collectors.toList());
+		ObservableList<String> counters = FXCollections.observableList(counterValues);
+		histogramIntvervalComboBox.setItems(counters);
 
 		// as to be able to select multiple signals for signals operation, selection mode should be set to multiple
 		signalListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

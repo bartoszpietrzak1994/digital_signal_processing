@@ -31,7 +31,7 @@
         <Label fx:id="resultProviderLabel" alignment="CENTER" layoutX="449.0" layoutY="447.0" prefHeight="44.0" prefWidth="750.0" />
         <TextField fx:id="signalSamplingRate" layoutX="147.0" layoutY="322.0" prefHeight="27.0" prefWidth="167.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="318.0" prefHeight="35.0" prefWidth="96.0" text="Sample count" textAlignment="CENTER" />
-        <Button fx:id="generateButton" layoutX="183.0" layoutY="490.0" mnemonicParsing="false" onAction="#computeSignalUsingProvidedParameters" prefHeight="44.0" prefWidth="96.0" text="Generate" />
+        <Button fx:id="generateButton" layoutX="340.0" layoutY="425.0" mnemonicParsing="false" onAction="#computeSignalUsingProvidedParameters" prefHeight="44.0" prefWidth="96.0" text="Generate" />
         <TextField fx:id="valuePresenceProbability" layoutX="147.0" layoutY="363.0" prefHeight="27.0" prefWidth="167.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="359.0" prefHeight="35.0" prefWidth="103.0" text="Val. pres. prob." textAlignment="CENTER" />
         <TextField fx:id="amplitudeRiseSample" layoutX="147.0" layoutY="401.0" prefHeight="27.0" prefWidth="167.0" />
@@ -52,9 +52,9 @@
         <TextField fx:id="signalPowerTextField" layoutX="529.0" layoutY="249.0" />
         <TextField fx:id="signalVarianceTextField" layoutX="529.0" layoutY="293.0" />
         <TextField fx:id="rootMeanSquareValueTextField" layoutX="529.0" layoutY="336.0" />
-        <Button fx:id="renderChartsButton" layoutX="1271.0" layoutY="228.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="122.0" text="Render  charts" />
+        <Button fx:id="renderChartsButton" layoutX="1273.0" layoutY="147.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  chart" />
         <Button fx:id="calculateButton" layoutX="805.0" layoutY="306.0" mnemonicParsing="false" onAction="#performSignalsOperation" prefHeight="44.0" prefWidth="96.0" text="Calculate" />
-        <ScatterChart fx:id="realChart" layoutX="70.0" layoutY="579.0" prefHeight="400.0" prefWidth="1514.0">
+        <ScatterChart fx:id="realChart" layoutX="48.0" layoutY="480.0" prefHeight="267.0" prefWidth="1514.0">
             <xAxis>
                 <NumberAxis side="BOTTOM" />
             </xAxis>
@@ -65,5 +65,15 @@
       <TextField fx:id="amplitudeRiseTime" layoutX="147.0" layoutY="438.0" prefHeight="27.0" prefWidth="167.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="434.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise time" textAlignment="CENTER" />
       <Button fx:id="readWriteButton" layoutX="1503.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleReadWriteRequest" prefHeight="44.0" prefWidth="96.0" text="Read/Write" />
+      <Button fx:id="renderHistogramButton" layoutX="1273.0" layoutY="296.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  histogram" />
+      <ComboBox fx:id="histogramIntvervalComboBox" layoutX="1270.0" layoutY="401.0" prefWidth="150.0" promptText="Intervals" />
+      <BarChart fx:id="realHistogram" layoutX="74.0" layoutY="762.0" prefHeight="229.0" prefWidth="1462.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </BarChart>
     </children>
 </AnchorPane>
