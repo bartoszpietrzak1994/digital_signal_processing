@@ -2,6 +2,8 @@ package model.signal.impulse;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
@@ -13,7 +15,8 @@ import model.signal.base.type.NonPeriodicSignal;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-@Component
+@Component(value = "STEP_FUNCTION")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class StepFunction extends NonPeriodicSignal
 {
 	public StepFunction()
@@ -35,7 +38,7 @@ public class StepFunction extends NonPeriodicSignal
 		}
 		else if (sample.getReal() == amplitudeRiseTime.getReal())
 		{
-			return this.amplitude.divide(new Complex(2.0D, 0.0D));
+			return new Complex(this.amplitude.getReal() / 2.0, 0.0D);
 		}
 		else
 		{

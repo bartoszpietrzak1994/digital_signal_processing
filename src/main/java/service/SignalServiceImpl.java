@@ -146,12 +146,6 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public ResolveSignalResponse provideImaginaryChartData(ResolveSignalRequest request)
-	{
-		return null;
-	}
-
-	@Override
 	public SignalsCalculationResponse processSignalOperationRequest(SignalsOperationRequest request) throws DigitalSignalProcessingException
 	{
 		Signal first = signalRepository.findOne(request.getIdFirst());

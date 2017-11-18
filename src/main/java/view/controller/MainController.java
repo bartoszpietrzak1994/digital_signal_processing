@@ -217,6 +217,7 @@ public class MainController implements Initializable
 		}
 		catch (Exception exception)
 		{
+			exception.printStackTrace();
 			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
 			return;
 		}

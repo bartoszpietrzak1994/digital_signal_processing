@@ -32,7 +32,6 @@ public interface SignalService
 	 * Signal on charts presentation
 	 */
 	ResolveSignalResponse processResolveSignalRequest(ResolveSignalRequest request) throws SignalParametersException;
-	ResolveSignalResponse provideImaginaryChartData(ResolveSignalRequest request);
 
 	/**
 	 * Signal operations

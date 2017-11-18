@@ -2,6 +2,8 @@ package model.signal.impulse;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.math.complex.Complex;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
@@ -14,7 +16,8 @@ import model.signal.base.type.NonPeriodicSignal;
 /**
  * Created by bartoszpietrzak on 07/10/2017.
  */
-@Component
+@Component(value = "UNIT_IMPULSE")
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class UnitImpulse extends NonPeriodicSignal
 {
 	public UnitImpulse()
