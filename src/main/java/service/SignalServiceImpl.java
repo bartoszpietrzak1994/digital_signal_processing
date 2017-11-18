@@ -131,7 +131,8 @@ public class SignalServiceImpl implements SignalService
 		resolveSignalResponse.setSignalParametersResponse(resolveSignalResponse.new SignalParametersResponse(signalId,
 				signal.getSamplingRate(),
 				signal.getInitialTime(),
-				signal.getDuration()));
+				signal.getDuration(),
+				signal.getSignalType().name()));
 
 		return resolveSignalResponse;
 	}
@@ -169,7 +170,8 @@ public class SignalServiceImpl implements SignalService
 				signalId,
 				result.getSamplingRate(),
 				result.getInitialTime(),
-				result.getDuration()));
+				result.getDuration(),
+				result.getSignalType().name()));
 
 		return signalsCalculationResponse;
 	}

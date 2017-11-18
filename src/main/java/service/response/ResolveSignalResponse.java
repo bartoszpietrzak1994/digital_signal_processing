@@ -41,11 +41,13 @@ public class ResolveSignalResponse
 		private Complex signalSamplingRate;
 		private Complex initialTime;
 		private Complex duration;
+		private String signalType;
 
 		@Override
 		public String toString()
 		{
-			return String.valueOf(signalId) + ";" + signalSamplingRate.getReal() + ";" + initialTime.getReal() + ";" + duration.getReal() + ";";
+			return String.valueOf(signalId) + ";" + signalSamplingRate.getReal() + ";" + initialTime.getReal() + ";" + duration.getReal() + ";" + signalType
+					+ ";";
 		}
 	}
 }

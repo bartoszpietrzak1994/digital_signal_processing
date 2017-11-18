@@ -401,6 +401,7 @@ public class MainController implements Initializable
 		}
 	}
 
+	// TODO
 	private void loadSignalsFromFile()
 	{
 		List<Signal> signals = null;
