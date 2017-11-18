@@ -16,7 +16,6 @@ import com.google.common.collect.Iterables;
 import exception.DigitalSignalProcessingErrorCode;
 import exception.DigitalSignalProcessingExceptionHandler;
 import exception.SignalIOException;
-import exception.SignalParametersException;
 import exception.SignalRepositoryException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -391,9 +390,13 @@ public class MainController implements Initializable
 			}
 		}
 
+		List<Signal> signalsWithoutUnknowns = signals.stream()
+				.filter(signal -> !signal.getSignalType().equals(SignalType.UNKNOWN))
+				.collect(Collectors.toList());
+
 		try
 		{
-			signalService.saveListOfSignalsInFile(signals, "./signals.json");
+			signalService.saveListOfSignalsInFile(signalsWithoutUnknowns, "./signals.json");
 		}
 		catch (SignalIOException e)
 		{
