@@ -17,43 +17,43 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1050.0" prefWidth="1680.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.MainController">
     <children>
-        <ComboBox fx:id="signalTypeComboBox" layoutX="23.0" layoutY="73.0" prefHeight="27.0" prefWidth="294.0" promptText="Signal Type" />
+        <ComboBox fx:id="signalTypeComboBox" layoutX="23.0" layoutY="73.0" prefHeight="27.0" prefWidth="158.0" promptText="Signal Type" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="119.0" prefHeight="35.0" prefWidth="96.0" text="Amplitude" textAlignment="CENTER" />
-        <Label alignment="CENTER" layoutX="14.0" layoutY="158.0" prefHeight="35.0" prefWidth="96.0" text="Initial Time" />
-        <Label alignment="CENTER" layoutX="29.0" layoutY="198.0" prefHeight="35.0" prefWidth="67.0" text="Duration" />
-        <Label alignment="CENTER" layoutX="29.0" layoutY="242.0" prefHeight="35.0" prefWidth="67.0" text="Period" />
+        <Label alignment="CENTER" layoutX="14.0" layoutY="158.0" prefHeight="35.0" prefWidth="96.0" text="Initial Time [s]" />
+        <Label alignment="CENTER" layoutX="21.0" layoutY="198.0" prefHeight="35.0" prefWidth="85.0" text="Duration [s]" />
+        <Label alignment="CENTER" layoutX="22.0" layoutY="242.0" prefHeight="35.0" prefWidth="74.0" text="Period [s]" />
         <Label alignment="CENTER" layoutX="15.0" layoutY="281.0" prefHeight="35.0" prefWidth="96.0" text="Duty Cycle" />
-        <TextField fx:id="amplitudeTextField" layoutX="147.0" layoutY="123.0" />
-        <TextField fx:id="initialTimeTextField" layoutX="147.0" layoutY="162.0" />
-        <TextField fx:id="durationTextField" layoutX="147.0" layoutY="202.0" />
-        <TextField fx:id="periodTextField" layoutX="147.0" layoutY="246.0" />
-        <TextField fx:id="dutyCycleTextField" layoutX="147.0" layoutY="285.0" />
+        <TextField fx:id="amplitudeTextField" layoutX="147.0" layoutY="123.0" prefHeight="27.0" prefWidth="85.0" />
+        <TextField fx:id="initialTimeTextField" layoutX="147.0" layoutY="162.0" prefHeight="27.0" prefWidth="85.0" />
+        <TextField fx:id="durationTextField" layoutX="147.0" layoutY="202.0" prefHeight="27.0" prefWidth="85.0" />
+        <TextField fx:id="periodTextField" layoutX="147.0" layoutY="246.0" prefHeight="27.0" prefWidth="85.0" />
+        <TextField fx:id="dutyCycleTextField" layoutX="147.0" layoutY="285.0" prefHeight="27.0" prefWidth="85.0" />
         <Label fx:id="resultProviderLabel" alignment="CENTER" layoutX="449.0" layoutY="447.0" prefHeight="44.0" prefWidth="750.0" />
-        <TextField fx:id="signalSamplingRate" layoutX="147.0" layoutY="322.0" prefHeight="27.0" prefWidth="167.0" />
+        <TextField fx:id="signalSamplingRate" layoutX="147.0" layoutY="322.0" prefHeight="27.0" prefWidth="85.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="318.0" prefHeight="35.0" prefWidth="96.0" text="Sample count" textAlignment="CENTER" />
-        <Button fx:id="generateButton" layoutX="340.0" layoutY="425.0" mnemonicParsing="false" onAction="#computeSignalUsingProvidedParameters" prefHeight="44.0" prefWidth="96.0" text="Generate" />
-        <TextField fx:id="valuePresenceProbability" layoutX="147.0" layoutY="363.0" prefHeight="27.0" prefWidth="167.0" />
+        <Button fx:id="generateButton" layoutX="259.0" layoutY="425.0" mnemonicParsing="false" onAction="#computeSignalUsingProvidedParameters" prefHeight="44.0" prefWidth="96.0" text="Generate" />
+        <TextField fx:id="valuePresenceProbability" layoutX="147.0" layoutY="363.0" prefHeight="27.0" prefWidth="85.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="359.0" prefHeight="35.0" prefWidth="103.0" text="Val. pres. prob." textAlignment="CENTER" />
-        <TextField fx:id="amplitudeRiseSample" layoutX="147.0" layoutY="401.0" prefHeight="27.0" prefWidth="167.0" />
+        <TextField fx:id="amplitudeRiseSample" layoutX="147.0" layoutY="401.0" prefHeight="27.0" prefWidth="85.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="397.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise sample" textAlignment="CENTER" />
-        <ListView fx:id="signalListView" layoutX="945.0" layoutY="116.0" prefHeight="335.0" prefWidth="306.0" />
-        <Label alignment="CENTER" layoutX="1016.0" layoutY="46.0" prefHeight="27.0" prefWidth="167.0" text="Signals" />
-        <Label alignment="CENTER" layoutX="769.0" layoutY="196.0" prefHeight="56.0" prefWidth="167.0" text="Two-signal operations" />
-        <ComboBox fx:id="signalOperationComboBox" layoutX="778.0" layoutY="250.0" prefWidth="150.0" promptText="Operation" />
+        <ListView fx:id="signalListView" layoutX="869.0" layoutY="116.0" prefHeight="335.0" prefWidth="403.0" />
+        <Label alignment="CENTER" layoutX="980.0" layoutY="46.0" prefHeight="27.0" prefWidth="167.0" text="Signals" />
+        <Label alignment="CENTER" layoutX="663.0" layoutY="115.0" prefHeight="56.0" prefWidth="167.0" text="Two-signal operations" />
+        <ComboBox fx:id="signalOperationComboBox" layoutX="690.0" layoutY="222.0" prefHeight="27.0" prefWidth="112.0" promptText="Operation" />
         <Label alignment="CENTER" layoutX="1467.0" layoutY="122.0" prefHeight="56.0" prefWidth="167.0" text="IO Operations" />
         <ComboBox fx:id="ioOperationComboBox" layoutX="1476.0" layoutY="202.0" prefWidth="150.0" promptText="IO Operation" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="367.0" layoutY="165.0" prefHeight="35.0" prefWidth="112.0" text="Avg. sig. value" textAlignment="CENTER" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="367.0" layoutY="205.0" prefHeight="35.0" prefWidth="138.0" text="Abs. avg. sig. value" textAlignment="CENTER" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="361.0" layoutY="245.0" prefHeight="35.0" prefWidth="112.0" text="Signal power" textAlignment="CENTER" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="367.0" layoutY="289.0" prefHeight="35.0" prefWidth="112.0" text="Signal variance" textAlignment="CENTER" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="369.0" layoutY="332.0" prefHeight="35.0" prefWidth="150.0" text="Root mean sqrt. value" textAlignment="CENTER" />
-        <TextField fx:id="averageSignalValueTextField" layoutX="529.0" layoutY="169.0" />
-        <TextField fx:id="absoluteAverageSignalValueTextField" layoutX="529.0" layoutY="209.0" />
-        <TextField fx:id="signalPowerTextField" layoutX="529.0" layoutY="249.0" />
-        <TextField fx:id="signalVarianceTextField" layoutX="529.0" layoutY="293.0" />
-        <TextField fx:id="rootMeanSquareValueTextField" layoutX="529.0" layoutY="336.0" />
-        <Button fx:id="renderChartsButton" layoutX="1273.0" layoutY="147.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  chart" />
-        <Button fx:id="calculateButton" layoutX="805.0" layoutY="306.0" mnemonicParsing="false" onAction="#performSignalsOperation" prefHeight="44.0" prefWidth="96.0" text="Calculate" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="128.0" prefHeight="35.0" prefWidth="112.0" text="Avg. sig. value" textAlignment="CENTER" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="168.0" prefHeight="35.0" prefWidth="138.0" text="Abs. avg. sig. value" textAlignment="CENTER" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="282.0" layoutY="208.0" prefHeight="35.0" prefWidth="112.0" text="Signal power" textAlignment="CENTER" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="288.0" layoutY="252.0" prefHeight="35.0" prefWidth="112.0" text="Signal variance" textAlignment="CENTER" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="295.0" prefHeight="35.0" prefWidth="150.0" text="Root mean sqrt. value" textAlignment="CENTER" />
+        <TextField fx:id="averageSignalValueTextField" layoutX="450.0" layoutY="132.0" />
+        <TextField fx:id="absoluteAverageSignalValueTextField" layoutX="450.0" layoutY="172.0" />
+        <TextField fx:id="signalPowerTextField" layoutX="450.0" layoutY="212.0" />
+        <TextField fx:id="signalVarianceTextField" layoutX="450.0" layoutY="256.0" />
+        <TextField fx:id="rootMeanSquareValueTextField" layoutX="450.0" layoutY="299.0" />
+        <Button fx:id="renderChartsButton" layoutX="1304.0" layoutY="142.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  chart" />
+        <Button fx:id="calculateButton" layoutX="698.0" layoutY="308.0" mnemonicParsing="false" onAction="#performSignalsOperation" prefHeight="44.0" prefWidth="96.0" text="Calculate" />
         <ScatterChart fx:id="realChart" layoutX="48.0" layoutY="480.0" prefHeight="267.0" prefWidth="1514.0">
             <xAxis>
                 <NumberAxis side="BOTTOM" />
@@ -62,12 +62,12 @@
                 <NumberAxis side="LEFT" />
             </yAxis>
         </ScatterChart>
-      <TextField fx:id="amplitudeRiseTime" layoutX="147.0" layoutY="438.0" prefHeight="27.0" prefWidth="167.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="434.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise time" textAlignment="CENTER" />
+      <TextField fx:id="amplitudeRiseTime" layoutX="147.0" layoutY="438.0" prefHeight="27.0" prefWidth="85.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="434.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise time [s]" textAlignment="CENTER" />
       <Button fx:id="readWriteButton" layoutX="1503.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleReadWriteRequest" prefHeight="44.0" prefWidth="96.0" text="Read/Write" />
-      <Button fx:id="renderHistogramButton" layoutX="1273.0" layoutY="296.0" mnemonicParsing="false" onAction="#renderHistogramForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  histogram" />
-      <ComboBox fx:id="histogramIntvervalComboBox" layoutX="1270.0" layoutY="401.0" prefWidth="150.0" promptText="Intervals" />
-      <BarChart fx:id="realHistogram" layoutX="74.0" layoutY="762.0" prefHeight="229.0" prefWidth="1462.0">
+      <Button fx:id="renderHistogramButton" layoutX="1304.0" layoutY="259.0" mnemonicParsing="false" onAction="#renderHistogramForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  histogram" />
+      <ComboBox fx:id="histogramIntvervalComboBox" layoutX="1310.0" layoutY="363.0" prefWidth="150.0" promptText="Intervals" />
+      <BarChart fx:id="realHistogram" layoutX="47.0" layoutY="762.0" prefHeight="229.0" prefWidth="1505.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -75,6 +75,8 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <Label alignment="CENTER" layoutX="964.0" layoutY="74.0" prefHeight="27.0" prefWidth="268.0" text="[ID, S-ing rate, Init. time, duration, type]" />
+      <Label alignment="CENTER" layoutX="928.0" layoutY="74.0" prefHeight="27.0" prefWidth="268.0" text="[ID, S-ing rate, Init. time, duration, type]" />
+      <TextField fx:id="firstSignalNumber" layoutX="648.0" layoutY="222.0" prefHeight="27.0" prefWidth="31.0" />
+      <TextField fx:id="secondSignalNumber" layoutX="815.0" layoutY="222.0" prefHeight="27.0" prefWidth="31.0" />
     </children>
 </AnchorPane>

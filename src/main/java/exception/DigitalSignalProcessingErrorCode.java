@@ -29,6 +29,8 @@ public enum DigitalSignalProcessingErrorCode
 
 	TWO_SIGNALS_OPERATION_NOT_POSSIBLE,
 
+	NO_SIGNALS_PRESENT_ON_SIGNAL_LIST,
+
 	/**
 	 * Unknown error
 	 */

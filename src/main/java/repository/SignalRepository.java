@@ -26,7 +26,8 @@ public class SignalRepository
 
 	public String add(Signal signal)
 	{
-		String signalId = String.valueOf(System.currentTimeMillis() + RandomStringUtils.randomAlphanumeric(4));
+		Signal last = Iterables.getLast(signals, null);
+		String signalId = last == null ? String.valueOf(1) : String.valueOf(Integer.valueOf(last.getId()) + 1);
 		signal.setId(signalId);
 
 		signals.add(signal);

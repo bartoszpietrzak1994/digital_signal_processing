@@ -10,11 +10,9 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.google.common.collect.Iterables;
+import org.springframework.util.CollectionUtils;
 
 import exception.DigitalSignalProcessingErrorCode;
-import exception.DigitalSignalProcessingExceptionHandler;
 import exception.SignalIOException;
 import exception.SignalRepositoryException;
 import javafx.collections.FXCollections;
@@ -28,7 +26,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import model.behaviour.HistogramInvervalNumber;
 import model.behaviour.IOOperation;
@@ -134,6 +131,12 @@ public class MainController implements Initializable
 	@FXML
 	private Button readWriteButton;
 
+	@FXML
+	private TextField firstSignalNumber;
+
+	@FXML
+	private TextField secondSignalNumber;
+
 	/**
 	 * Services
 	 */
@@ -142,9 +145,6 @@ public class MainController implements Initializable
 
 	@Autowired
 	private ChartService chartService;
-
-	@Autowired
-	private DigitalSignalProcessingExceptionHandler exceptionHandler;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -175,9 +175,6 @@ public class MainController implements Initializable
 		ObservableList<String> counters = FXCollections.observableList(counterValues);
 		histogramIntvervalComboBox.setItems(counters);
 
-		// as to be able to select multiple signals for signals operation, selection mode should be set to multiple
-		signalListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
 		realChart.getXAxis().setAnimated(false);
 		realChart.getYAxis().setAnimated(true);
 		realChart.setAnimated(true);
@@ -190,6 +187,7 @@ public class MainController implements Initializable
 	@FXML
 	public void computeSignalUsingProvidedParameters()
 	{
+		this.resultProviderLabel.setText("");
 		if (StringUtils.isEmpty(this.signalTypeComboBox.getValue()))
 		{
 			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_TYPE_NOT_GIVEN_BY_USER.name() + ". Please provide signal type from list");
@@ -217,8 +215,8 @@ public class MainController implements Initializable
 		}
 		catch (Exception exception)
 		{
+			this.resultProviderLabel.setText(exception.getMessage());
 			exception.printStackTrace();
-			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
 			return;
 		}
 
@@ -234,6 +232,7 @@ public class MainController implements Initializable
 	@FXML
 	public void renderChartsForSignal()
 	{
+		this.resultProviderLabel.setText("");
 		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
 
 		if (selectedItems.isEmpty() && selectedItems.size() != 1)
@@ -249,7 +248,9 @@ public class MainController implements Initializable
 		}
 		catch (SignalRepositoryException exception)
 		{
-			resultProviderLabel.setText(exceptionHandler.handle(exception));
+			resultProviderLabel.setText(exception.getMessage());
+			exception.printStackTrace();
+			return;
 		}
 
 		XYChart.Series<Double, Double> realSignalChart = null;
@@ -259,7 +260,9 @@ public class MainController implements Initializable
 		}
 		catch (Exception exception)
 		{
-			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+			this.resultProviderLabel.setText(exception.getMessage());
+			exception.printStackTrace();
+			return;
 		}
 
 		this.realChart.getData().setAll(realSignalChart);
@@ -268,6 +271,7 @@ public class MainController implements Initializable
 	@FXML
 	public void renderHistogramForSignal()
 	{
+		this.resultProviderLabel.setText("");
 		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
 
 		if (selectedItems.isEmpty() && selectedItems.size() != 1)
@@ -283,7 +287,9 @@ public class MainController implements Initializable
 		}
 		catch (SignalRepositoryException exception)
 		{
-			resultProviderLabel.setText(exceptionHandler.handle(exception));
+			resultProviderLabel.setText(exception.getMessage());
+			exception.printStackTrace();
+			return;
 		}
 
 		int interval = StringUtils.isEmpty(histogramIntvervalComboBox.getValue()) ?
@@ -297,7 +303,9 @@ public class MainController implements Initializable
 		}
 		catch (Exception exception)
 		{
-			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+			this.resultProviderLabel.setText(exception.getMessage());
+			exception.printStackTrace();
+			return;
 		}
 
 		this.realHistogram.getData().setAll(realSignalHistogram);
@@ -306,6 +314,7 @@ public class MainController implements Initializable
 	@FXML
 	public void performSignalsOperation()
 	{
+		this.resultProviderLabel.setText("");
 		if (StringUtils.isEmpty(this.signalOperationComboBox.getValue()))
 		{
 			this.resultProviderLabel.setText(
@@ -313,18 +322,36 @@ public class MainController implements Initializable
 			return;
 		}
 
-		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
-
-		if (selectedItems.size() != 2)
+		if (CollectionUtils.isEmpty(signalListView.getItems()))
 		{
 			this.resultProviderLabel.setText(
-					DigitalSignalProcessingErrorCode.TWO_SIGNALS_NOT_SELECTED_FOR_OPERATION.name() + ". Please select two signals from signals list");
+					DigitalSignalProcessingErrorCode.NO_SIGNALS_PRESENT_ON_SIGNAL_LIST.name() + ". Please generate signal or load if from file");
+			return;
+		}
+
+		if (StringUtils.isAnyEmpty(this.firstSignalNumber.getText(), this.secondSignalNumber.getText()))
+		{
+			this.resultProviderLabel.setText(
+					DigitalSignalProcessingErrorCode.TWO_SIGNALS_NOT_SELECTED_FOR_OPERATION.name() + ". Please select two signals");
+			return;
+		}
+
+		String firstSignalData = null;
+		String secondSignalData = null;
+		try
+		{
+			firstSignalData = signalListView.getItems().get(Integer.valueOf(this.firstSignalNumber.getText()) - 1);
+			secondSignalData = signalListView.getItems().get(Integer.valueOf(this.secondSignalNumber.getText()) - 1);
+		}
+		catch (IndexOutOfBoundsException exception)
+		{
+			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_NOT_PRESENT_IN_REPOSITORY.name() + ". Please select id from the list");
 			return;
 		}
 
 		SignalsOperationRequest signalsOperationRequest = SignalOperationRequestBuilder.builder()
-				.firstSignalData(Iterables.getFirst(selectedItems, null))
-				.secondSignalData(Iterables.getLast(selectedItems, null))
+				.firstSignalData(firstSignalData)
+				.secondSignalData(secondSignalData)
 				.signalOperation(signalOperationComboBox.getValue())
 				.build()
 				.toRequest();
@@ -337,7 +364,8 @@ public class MainController implements Initializable
 		}
 		catch (Exception exception)
 		{
-			this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+			this.resultProviderLabel.setText(exception.getMessage());
+			exception.printStackTrace();
 			return;
 		}
 
@@ -347,6 +375,7 @@ public class MainController implements Initializable
 	@FXML
 	public void handleReadWriteRequest()
 	{
+		this.resultProviderLabel.setText("");
 		if (StringUtils.isEmpty(this.ioOperationComboBox.getValue()))
 		{
 			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.READ_WRITE_OPERATION_NOT_GIVEN_BY_USER.name()
@@ -387,7 +416,9 @@ public class MainController implements Initializable
 			}
 			catch (SignalRepositoryException e)
 			{
-				this.resultProviderLabel.setText(exceptionHandler.handle(e));
+				this.resultProviderLabel.setText(e.getMessage());
+				e.printStackTrace();
+				return;
 			}
 		}
 
@@ -401,7 +432,8 @@ public class MainController implements Initializable
 		}
 		catch (SignalIOException e)
 		{
-			this.resultProviderLabel.setText(exceptionHandler.handle(e));
+			this.resultProviderLabel.setText(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -414,7 +446,7 @@ public class MainController implements Initializable
 		}
 		catch (SignalIOException e)
 		{
-			this.resultProviderLabel.setText(exceptionHandler.handle(e));
+			this.resultProviderLabel.setText(e.getMessage());
 			return;
 		}
 
@@ -439,7 +471,8 @@ public class MainController implements Initializable
 			}
 			catch (Exception exception)
 			{
-				this.resultProviderLabel.setText(exceptionHandler.handle(exception));
+				this.resultProviderLabel.setText(exception.getMessage());
+				exception.printStackTrace();
 				return;
 			}
 
@@ -451,7 +484,6 @@ public class MainController implements Initializable
 
 			signalListView.getItems().add(response.getSignalParametersResponse().toString());
 		}
-
 	}
 }
 

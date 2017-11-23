@@ -46,8 +46,8 @@ public class ResolveSignalResponse
 		@Override
 		public String toString()
 		{
-			return String.valueOf(signalId) + ";" + signalSamplingRate.getReal() + ";" + initialTime.getReal() + ";" + duration.getReal() + ";" + signalType
-					+ ";";
+			return String.valueOf(signalId) + "; S-ing rate: " + signalSamplingRate.getReal() + " Init. time: " + initialTime.getReal() + " Duration: " + duration
+					.getReal() + " Type: " + signalType;
 		}
 	}
 }
