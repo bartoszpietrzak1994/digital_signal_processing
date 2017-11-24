@@ -10,5 +10,5 @@ import model.signal.base.Signal;
 public interface ChartService
 {
 	XYChart.Series<Double, Double> renderRealSignalChart(Signal signal) throws ChartServiceException;
-	XYChart.Series<String, Double> renderRealSignalHistogram(Signal signal, int intervalCount) throws ChartServiceException;
+	XYChart.Series<Double, Integer> renderRealSignalHistogram(Signal signal, int intervalCount) throws ChartServiceException;
 }

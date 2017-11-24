@@ -72,7 +72,7 @@ public class MainController implements Initializable
 	private ScatterChart<Double, Double> realChart;
 
 	@FXML
-	private BarChart<String, Double> realHistogram;
+	private BarChart<Double, Integer> realHistogram;
 
 	@FXML
 	private TextField initialTimeTextField;
@@ -296,7 +296,7 @@ public class MainController implements Initializable
 				signal.getSamples().size() / 10 :
 				Integer.valueOf(histogramIntvervalComboBox.getValue());
 
-		XYChart.Series<String, Double> realSignalHistogram = null;
+		XYChart.Series<Double, Integer> realSignalHistogram = null;
 		try
 		{
 			realSignalHistogram = chartService.renderRealSignalHistogram(signal, interval);
