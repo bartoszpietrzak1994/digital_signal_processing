@@ -63,25 +63,42 @@ public class ChartServiceImpl implements ChartService
 		Collections.copy(copiedAndSortedValues, values);
 		Collections.sort(copiedAndSortedValues, (val1, val2) -> val1.getReal() > val2.getReal() ? 1 : (val1.getReal() < val2.getReal() ? -1 : 0));
 
-		Map<Complex, Integer> histogram = new HashMap<>();
+		List<Double> intervals = new ArrayList<>();
+		intervals.add(Iterables.getFirst(copiedAndSortedValues, null).getReal());
+
+		double increment = ((signal.getAmplitude().getReal() * 2) / (double) intervalCount) + Iterables.getFirst(copiedAndSortedValues, null).getReal();
+		double interval = (signal.getAmplitude().getReal() * 2) / (double) intervalCount;
+
+		while (increment <= Iterables.getLast(copiedAndSortedValues).getReal())
+		{
+			intervals.add(increment);
+			increment += interval;
+		}
+
+		Map<Double, Integer> histogram = new HashMap<>();
+
+		for (int i = 0; i < intervals.size(); i++)
+		{
+			histogram.put(intervals.get(i), 0);
+		}
 
 		Complex currentValue;
 		for (int i = 0; i < copiedAndSortedValues.size(); i++)
 		{
 			currentValue = copiedAndSortedValues.get(i);
-			if (!histogram.containsKey(currentValue))
+
+			for (int j = 0; j < intervals.size() -1; j++)
 			{
-				histogram.put(currentValue, 1);
-			}
-			else
-			{
-				histogram.put(currentValue, histogram.get(currentValue) + 1);
+				if (currentValue.getReal() >= intervals.get(j) && currentValue.getReal() < intervals.get(j + 1))
+				{
+					histogram.put(intervals.get(j), histogram.get(intervals.get(j)) + 1);
+				}
 			}
 		}
 
-		for (Complex key : histogram.keySet())
+		for (Double key : histogram.keySet())
 		{
-			signalHistogram.getData().add(new XYChart.Data(String.valueOf(key.getReal()), histogram.get(key)));
+			signalHistogram.getData().add(new XYChart.Data(String.valueOf(key), histogram.get(key)));
 		}
 
 		return signalHistogram;
