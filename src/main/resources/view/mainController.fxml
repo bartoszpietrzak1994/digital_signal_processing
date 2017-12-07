@@ -78,9 +78,12 @@
       <Label alignment="CENTER" layoutX="928.0" layoutY="74.0" prefHeight="27.0" prefWidth="268.0" text="[ID, S-ing rate, Init. time, duration, type]" />
       <TextField fx:id="firstSignalNumber" layoutX="650.0" layoutY="88.0" prefHeight="27.0" prefWidth="31.0" />
       <TextField fx:id="secondSignalNumber" layoutX="817.0" layoutY="88.0" prefHeight="27.0" prefWidth="31.0" />
-      <Label alignment="CENTER" layoutX="665.0" layoutY="210.0" prefHeight="56.0" prefWidth="167.0" text="Quantization" />
-      <TextField fx:id="quantLevelTextField" alignment="CENTER" layoutX="665.0" layoutY="270.0" promptText="Quant level" />
-      <ComboBox fx:id="quantizationTypeComboBox" layoutX="692.0" layoutY="317.0" prefHeight="27.0" prefWidth="112.0" promptText="Type" />
-      <Button fx:id="performQuantizationButton" layoutX="701.0" layoutY="368.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" text="Perform" />
+      <Label alignment="CENTER" layoutX="688.0" layoutY="205.0" prefHeight="27.0" prefWidth="112.0" text="Quantization" />
+      <TextField fx:id="quantLevelTextField" alignment="CENTER" layoutX="665.0" layoutY="237.0" promptText="Quant level" />
+      <ComboBox fx:id="quantizationTypeComboBox" layoutX="692.0" layoutY="284.0" prefHeight="27.0" prefWidth="112.0" promptText="Type" />
+      <Button fx:id="performQuantizationButton" layoutX="701.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleQuantizationRequest" prefHeight="27.0" prefWidth="85.0" text="Perform" />
+      <Label alignment="CENTER" layoutX="688.0" layoutY="377.0" prefHeight="27.0" prefWidth="112.0" text="Reconstruction" />
+      <ComboBox fx:id="signalReconstructionTypeComboBox" layoutX="692.0" layoutY="401.0" prefHeight="27.0" prefWidth="112.0" promptText="Type" />
+      <Button fx:id="performSignalReconstructionButton" layoutX="702.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleQuantizationRequest" prefHeight="27.0" prefWidth="85.0" text="Perform" />
     </children>
 </AnchorPane>

@@ -64,4 +64,20 @@ public class SignalRepository
 
 		return first.get();
 	}
+
+	public String update(Signal signal)
+	{
+		Optional<Signal> optionalSignal = signals.stream().filter(storedSignal -> signal.getId().equals(storedSignal.getId())).findFirst();
+
+		if (!optionalSignal.isPresent())
+		{
+			return add(signal);
+		}
+
+		Signal storedSignal = optionalSignal.get();
+
+		signals.set(signals.indexOf(storedSignal), signal);
+
+		return storedSignal.getId();
+	}
 }

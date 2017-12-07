@@ -1,19 +1,13 @@
 package exception;
 
-import lombok.Getter;
-
 /**
  * Created by bartoszpietrzak on 27/10/2017.
  */
-public class ChartServiceException extends Exception
+public class ChartServiceException extends DigitalSignalProcessingException
 {
-	@Getter
-	private DigitalSignalProcessingErrorCode errorCode;
-
 	private ChartServiceException(DigitalSignalProcessingErrorCode errorCode, String message)
 	{
-		super(message);
-		this.errorCode = errorCode;
+		super(errorCode, message);
 	}
 
 	public static ChartServiceException samplesAndValuesDoNotMatch(int samplesCount, int valuesCount)

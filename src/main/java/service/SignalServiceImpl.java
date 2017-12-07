@@ -184,18 +184,16 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public int performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel)
+	public void performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel)
 			throws QuantizationException, SignalRepositoryException
 	{
-		SignalQuantization quantization = signalQuantizationResolver.resolve(quantizationType);
-
 		Signal signal = signalRepository.findOne(signalId);
 
+		SignalQuantization quantization = signalQuantizationResolver.resolve(quantizationType);
 		Complex complexQuantLevel = new Complex(quantLevel, 0.0D);
+		signal = quantization.signalQuantization(signal, complexQuantLevel);
 
-		quantization.signalQuantization(signal, complexQuantLevel);
-
-		return 0;
+		signalRepository.update(signal);
 	}
 
 }

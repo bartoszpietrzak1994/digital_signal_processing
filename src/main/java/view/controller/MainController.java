@@ -14,7 +14,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Iterables;
 
+import exception.ChartServiceException;
 import exception.DigitalSignalProcessingErrorCode;
+import exception.DigitalSignalProcessingException;
+import exception.QuantizationException;
 import exception.SignalIOException;
 import exception.SignalRepositoryException;
 import javafx.collections.FXCollections;
@@ -33,6 +36,7 @@ import model.behaviour.HistogramInvervalNumber;
 import model.behaviour.IOOperation;
 import model.behaviour.QuantizationType;
 import model.behaviour.SignalOperation;
+import model.behaviour.SignalReconstructionType;
 import model.signal.SignalType;
 import model.signal.base.Signal;
 import service.ChartService;
@@ -152,6 +156,12 @@ public class MainController implements Initializable
 	@FXML
 	private Button performQuantizationButton;
 
+	@FXML
+	private ComboBox<String> signalReconstructionTypeComboBox;
+
+	@FXML
+	private Button performSignalReconstructionButton;
+
 	/**
 	 * Services
 	 */
@@ -182,10 +192,15 @@ public class MainController implements Initializable
 		ObservableList<String> ioOperations = FXCollections.observableList(stringIoOperations);
 		ioOperationComboBox.setItems(ioOperations);
 
-		// ... and quantizationTypeComboBox
+		// quantizationTypeComboBox
 		List<String> stringQuantizationTypes = Arrays.stream(QuantizationType.values()).map(Enum::toString).collect(Collectors.toList());
 		ObservableList<String> quantizationTypes = FXCollections.observableList(stringQuantizationTypes);
 		quantizationTypeComboBox.setItems(quantizationTypes);
+
+		// signalReconstructionTypeComboBox
+		List<String> stringReconstructionTypes = Arrays.stream(SignalReconstructionType.values()).map(Enum::toString).collect(Collectors.toList());
+		ObservableList<String> reconstructionTypes = FXCollections.observableList(stringQuantizationTypes);
+		signalReconstructionTypeComboBox.setItems(reconstructionTypes);
 
 		// interval counter as well
 		List<String> counterValues = Arrays.stream(HistogramInvervalNumber.values())
@@ -285,7 +300,13 @@ public class MainController implements Initializable
 			return;
 		}
 
-		this.realChart.getData().setAll(realSignalChart);
+		this.realChart.getData().add(realSignalChart);
+	}
+
+	@FXML
+	public void reconstructQuantizationSignal()
+	{
+
 	}
 
 	@FXML
@@ -442,11 +463,65 @@ public class MainController implements Initializable
 
 		String signalId = Iterables.getFirst(selectedItems, null).split("\\;")[0];
 
-		signalService.performSignalQuantization(signalId, quantizationType, quantLevel);
+		try
+		{
+			signalService.performSignalQuantization(signalId, quantizationType, quantLevel);
+		}
+		catch (DigitalSignalProcessingException e)
+		{
+			e.printStackTrace();
+			this.resultProviderLabel.setText(e.getMessage());
+			return;
+		}
+	}
+
+	@FXML
+	public void handleSignalReconstructionRequest()
+	{
+		this.resultProviderLabel.setText("");
+		if (StringUtils.isEmpty(this.signalReconstructionTypeComboBox.getValue()))
+		{
+			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.RECONSTRUCTION_TYPE_NOT_GIVEN_BY_USER.name()
+					+ ". Please select one of the available reconstruction types");
+			return;
+		}
+
+		String signalId = Iterables.getFirst(signalListView.getSelectionModel().getSelectedItems(), null).split("\\;")[0];
+
+		Signal signal;
+		try
+		{
+			signal = signalService.findSignal(signalId);
+		}
+		catch (SignalRepositoryException e)
+		{
+			e.printStackTrace();
+			this.resultProviderLabel.setText(e.getMessage());
+			return;
+		}
+
+		String value = signalReconstructionTypeComboBox.getValue();
+		SignalReconstructionType reconstructionType = SignalReconstructionType.valueOf(value);
+
+		XYChart.Series<Double, Double> doubleDoubleSeries;
+		try
+		{
+			doubleDoubleSeries = chartService.reconstructQuantizationSignal(signal, reconstructionType);
+		}
+		catch (DigitalSignalProcessingException e)
+		{
+			e.printStackTrace();
+			this.resultProviderLabel.setText(e.getMessage());
+			return;
+		}
+
+		this.realChart.getData().add(doubleDoubleSeries);
+		renderChartsForSignal();
 	}
 
 	private void exportSignalsToFile()
 	{
+		this.resultProviderLabel.setText("");
 		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
 
 		if (selectedItems.isEmpty())
@@ -487,6 +562,7 @@ public class MainController implements Initializable
 
 	private void loadSignalsFromFile()
 	{
+		this.resultProviderLabel.setText("");
 		List<Signal> signals = null;
 		try
 		{

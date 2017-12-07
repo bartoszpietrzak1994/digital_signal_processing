@@ -7,13 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.math.complex.Complex;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.support.ReflectiveConstructorResolver;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Iterables;
 
 import exception.ChartServiceException;
+import exception.QuantizationException;
 import javafx.scene.chart.XYChart;
+import model.behaviour.SignalReconstructionType;
+import model.reconstruction.SignalReconstruction;
 import model.signal.base.Signal;
+import utils.quantization.SignalReconstructionTypeResolver;
 
 /**
  * Created by bartoszpietrzak on 23/10/2017.
@@ -21,6 +27,9 @@ import model.signal.base.Signal;
 @Component
 public class ChartServiceImpl implements ChartService
 {
+	@Autowired
+	private SignalReconstructionTypeResolver reconstructionTypeResolver;
+
 	@Override
 	public XYChart.Series<Double, Double> renderRealSignalChart(Signal signal) throws ChartServiceException
 	{
@@ -110,6 +119,14 @@ public class ChartServiceImpl implements ChartService
 		//		List<Double> intervals = new ArrayList<>();
 		//		intervals.add(Iterables.getFirst(copiedAndSortedValues, null).getReal());
 
+	}
+
+	@Override
+	public XYChart.Series<Double, Double> reconstructQuantizationSignal(Signal signal, SignalReconstructionType reconstructionType)
+			throws ChartServiceException, QuantizationException
+	{
+		SignalReconstruction reconstruction = reconstructionTypeResolver.resolve(reconstructionType);
+		return reconstruction.signalReconstruction(signal);
 	}
 
 	private boolean validateSignal(Signal signal)

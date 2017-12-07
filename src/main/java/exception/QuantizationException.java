@@ -19,4 +19,11 @@ public class QuantizationException extends DigitalSignalProcessingException
 	{
 		return new QuantizationException(DigitalSignalProcessingErrorCode.QUANTIZATION_TYPE_NOT_SUPPORTED, "Received quantization type: " + quantizationType);
 	}
+
+	public static QuantizationException signalReconstructionNotSupported(String reconstructionType)
+	{
+		return new QuantizationException(
+				DigitalSignalProcessingErrorCode.RECONSTRUCTION_TYPE_NOT_SUPPORTED,
+				"Received quantization type: " + reconstructionType);
+	}
 }

@@ -43,6 +43,6 @@ public interface SignalService
 	/**
 	 * Quantization
 	 */
-	int performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel) throws QuantizationException,
+	void performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel) throws QuantizationException,
 			SignalRepositoryException;
 }
