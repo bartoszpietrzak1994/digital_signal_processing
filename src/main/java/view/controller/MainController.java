@@ -199,7 +199,7 @@ public class MainController implements Initializable
 
 		// signalReconstructionTypeComboBox
 		List<String> stringReconstructionTypes = Arrays.stream(SignalReconstructionType.values()).map(Enum::toString).collect(Collectors.toList());
-		ObservableList<String> reconstructionTypes = FXCollections.observableList(stringQuantizationTypes);
+		ObservableList<String> reconstructionTypes = FXCollections.observableList(stringReconstructionTypes);
 		signalReconstructionTypeComboBox.setItems(reconstructionTypes);
 
 		// interval counter as well

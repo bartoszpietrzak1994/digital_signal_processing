@@ -34,7 +34,7 @@ public class RoundingSignalQuantization extends SignalQuantization
 		Complex quantizationValue;
 		for (int i = 1; i < signalValues.size(); i++)
 		{
-			quantizationValue = null;
+			quantizationValue = signalValues.get(i);
 			if (signalValues.get(i).getReal() > (quantizationValues.get(i - 1).getReal() + quantLevel.getReal()))
 			{
 				quantizationValue = signalValues.get(i).add(quantLevel);

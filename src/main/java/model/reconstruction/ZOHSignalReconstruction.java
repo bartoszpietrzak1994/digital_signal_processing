@@ -1,5 +1,7 @@
 package model.reconstruction;
 
+import org.springframework.stereotype.Component;
+
 import javafx.scene.chart.XYChart;
 import model.behaviour.SignalReconstructionType;
 import model.signal.base.Signal;
@@ -7,6 +9,7 @@ import model.signal.base.Signal;
 /**
  * Created by bartoszpietrzak on 07/12/2017.
  */
+@Component
 public class ZOHSignalReconstruction extends SignalReconstruction
 {
 	public ZOHSignalReconstruction()
