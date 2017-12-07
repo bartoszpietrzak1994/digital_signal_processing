@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import exception.DigitalSignalProcessingException;
+import exception.QuantizationException;
 import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
 import model.behaviour.QuantizationType;
+import model.quantization.SignalQuantization;
 import model.signal.base.Signal;
 import repository.SignalRepository;
 import service.request.ResolveSignalRequest;
@@ -182,7 +185,16 @@ public class SignalServiceImpl implements SignalService
 
 	@Override
 	public int performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel)
+			throws QuantizationException, SignalRepositoryException
 	{
+		SignalQuantization quantization = signalQuantizationResolver.resolve(quantizationType);
+
+		Signal signal = signalRepository.findOne(signalId);
+
+		Complex complexQuantLevel = new Complex(quantLevel, 0.0D);
+
+		quantization.signalQuantization(signal, complexQuantLevel);
+
 		return 0;
 	}
 

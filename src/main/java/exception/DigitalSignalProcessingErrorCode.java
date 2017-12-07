@@ -34,6 +34,7 @@ public enum DigitalSignalProcessingErrorCode
 	/**
 	 * Quantization
 	 */
+	QUANTIZATION_TYPE_NOT_GIVEN_BY_USER,
 	QUANTIZATION_TYPE_NOT_SUPPORTED,
 
 	/**

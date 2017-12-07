@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import exception.DigitalSignalProcessingException;
+import exception.QuantizationException;
 import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
@@ -42,5 +43,6 @@ public interface SignalService
 	/**
 	 * Quantization
 	 */
-	int performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel);
+	int performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel) throws QuantizationException,
+			SignalRepositoryException;
 }

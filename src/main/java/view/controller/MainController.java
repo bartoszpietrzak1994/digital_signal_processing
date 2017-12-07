@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import com.google.common.collect.Iterables;
+
 import exception.DigitalSignalProcessingErrorCode;
 import exception.SignalIOException;
 import exception.SignalRepositoryException;
@@ -29,6 +31,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.behaviour.HistogramInvervalNumber;
 import model.behaviour.IOOperation;
+import model.behaviour.QuantizationType;
 import model.behaviour.SignalOperation;
 import model.signal.SignalType;
 import model.signal.base.Signal;
@@ -138,6 +141,18 @@ public class MainController implements Initializable
 	private TextField secondSignalNumber;
 
 	/**
+	 * Quantization
+	 */
+	@FXML
+	private ComboBox<String> quantizationTypeComboBox;
+
+	@FXML
+	private TextField quantLevelTextField;
+
+	@FXML
+	private Button performQuantizationButton;
+
+	/**
 	 * Services
 	 */
 	@Autowired
@@ -162,10 +177,15 @@ public class MainController implements Initializable
 		ObservableList<String> signalOperations = FXCollections.observableList(stringSignalOperations);
 		signalOperationComboBox.setItems(signalOperations);
 
-		// ...and ioOperationComboBox
+		// ioOperationComboBox
 		List<String> stringIoOperations = Arrays.stream(IOOperation.values()).map(Enum::toString).collect(Collectors.toList());
 		ObservableList<String> ioOperations = FXCollections.observableList(stringIoOperations);
 		ioOperationComboBox.setItems(ioOperations);
+
+		// ... and quantizationTypeComboBox
+		List<String> stringQuantizationTypes = Arrays.stream(QuantizationType.values()).map(Enum::toString).collect(Collectors.toList());
+		ObservableList<String> quantizationTypes = FXCollections.observableList(stringQuantizationTypes);
+		quantizationTypeComboBox.setItems(quantizationTypes);
 
 		// interval counter as well
 		List<String> counterValues = Arrays.stream(HistogramInvervalNumber.values())
@@ -395,6 +415,34 @@ public class MainController implements Initializable
 				loadSignalsFromFile();
 				break;
 		}
+	}
+
+	@FXML
+	public void handleQuantizationRequest()
+	{
+		this.resultProviderLabel.setText("");
+		if (StringUtils.isEmpty(this.quantizationTypeComboBox.getValue()))
+		{
+			this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.QUANTIZATION_TYPE_NOT_GIVEN_BY_USER.name()
+					+ ". Please select one of the available quantization types");
+			return;
+		}
+
+		String value = quantizationTypeComboBox.getValue();
+		QuantizationType quantizationType = QuantizationType.valueOf(value);
+
+		double quantLevel = Double.valueOf(quantLevelTextField.getText());
+
+		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
+
+		if (selectedItems.isEmpty())
+		{
+			this.resultProviderLabel.setText("Please select at least one signal to perform quantization");
+		}
+
+		String signalId = Iterables.getFirst(selectedItems, null).split("\\;")[0];
+
+		signalService.performSignalQuantization(signalId, quantizationType, quantLevel);
 	}
 
 	private void exportSignalsToFile()

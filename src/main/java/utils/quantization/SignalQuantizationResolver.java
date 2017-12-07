@@ -16,7 +16,7 @@ import model.quantization.SignalQuantization;
 public class SignalQuantizationResolver
 {
 	@Autowired
-	public List<SignalQuantization> quantizationList;
+	private List<SignalQuantization> quantizationList;
 
 	public SignalQuantization resolve(QuantizationType quantizationType) throws QuantizationException
 	{
