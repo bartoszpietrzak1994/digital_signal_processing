@@ -43,6 +43,7 @@ import service.SignalService;
 import service.request.ResolveSignalRequest;
 import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
+import service.response.SignalQuantizationResponse;
 import service.response.SignalsCalculationResponse;
 import utils.request.ResolveSignalRequestBuilder;
 import utils.request.SignalOperationRequestBuilder;
@@ -160,6 +161,9 @@ public class MainController implements Initializable
 
 	@FXML
 	private Button performSignalReconstructionButton;
+
+	@FXML
+	private TextField signalQuantizationTextField;
 
 	/**
 	 * Services
@@ -456,9 +460,10 @@ public class MainController implements Initializable
 
 		String signalId = Iterables.getFirst(selectedItems, null).split("\\;")[0];
 
+		SignalQuantizationResponse signalQuantizationResponse;
 		try
 		{
-			signalService.performSignalQuantization(signalId, quantizationType, quantLevel);
+			signalQuantizationResponse = signalService.performSignalQuantization(signalId, quantizationType, quantLevel);
 		}
 		catch (DigitalSignalProcessingException e)
 		{
@@ -466,6 +471,8 @@ public class MainController implements Initializable
 			this.resultProviderLabel.setText(e.getMessage());
 			return;
 		}
+
+		signalQuantizationTextField.setText(signalQuantizationResponse.toString());
 	}
 
 	@FXML

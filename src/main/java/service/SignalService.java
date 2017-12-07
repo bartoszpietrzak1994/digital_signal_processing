@@ -12,6 +12,7 @@ import model.signal.base.Signal;
 import service.request.ResolveSignalRequest;
 import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
+import service.response.SignalQuantizationResponse;
 import service.response.SignalsCalculationResponse;
 
 /**
@@ -43,6 +44,6 @@ public interface SignalService
 	/**
 	 * Quantization
 	 */
-	void performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel) throws QuantizationException,
+	SignalQuantizationResponse performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel) throws QuantizationException,
 			SignalRepositoryException;
 }

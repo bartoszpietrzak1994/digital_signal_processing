@@ -29,8 +29,10 @@ import service.request.ResolveSignalRequest;
 import service.request.ResolveSignalRequestDataExtractor;
 import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
+import service.response.SignalQuantizationResponse;
 import service.response.SignalsCalculationResponse;
 import utils.calculator.SignalPropertiesCalculator;
+import utils.calculator.SignalReconstructionParametersCalculator;
 import utils.calculator.SignalValuesCalculator;
 import utils.file.SignalAdapter;
 import utils.operation.SignalOperationResolver;
@@ -67,6 +69,9 @@ public class SignalServiceImpl implements SignalService
 
 	@Autowired
 	private SignalQuantizationResolver signalQuantizationResolver;
+
+	@Autowired
+	private SignalReconstructionParametersCalculator reconstructionParametersCalculator;
 
 	@Override
 	public Signal findSignal(String signalId) throws SignalRepositoryException
@@ -184,7 +189,7 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public void performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel)
+	public SignalQuantizationResponse performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel)
 			throws QuantizationException, SignalRepositoryException
 	{
 		Signal signal = signalRepository.findOne(signalId);
@@ -194,6 +199,13 @@ public class SignalServiceImpl implements SignalService
 		signal = quantization.signalQuantization(signal, complexQuantLevel);
 
 		signalRepository.update(signal);
+
+		return SignalQuantizationResponse.builder()
+				.SNR(reconstructionParametersCalculator.calculateSNR(signal))
+				.MD(reconstructionParametersCalculator.calculateMD(signal))
+				.MSE(reconstructionParametersCalculator.calculateMSE(signal))
+				.PSNR(reconstructionParametersCalculator.calculatePSNR(signal))
+				.build();
 	}
 
 }
