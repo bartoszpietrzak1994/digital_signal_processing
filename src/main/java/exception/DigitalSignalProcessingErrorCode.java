@@ -32,6 +32,11 @@ public enum DigitalSignalProcessingErrorCode
 	NO_SIGNALS_PRESENT_ON_SIGNAL_LIST,
 
 	/**
+	 * Quantization
+	 */
+	QUANTIZATION_TYPE_NOT_SUPPORTED,
+
+	/**
 	 * Unknown error
 	 */
 	SYSTEM_ERROR

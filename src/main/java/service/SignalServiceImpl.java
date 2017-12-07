@@ -1,11 +1,8 @@
 package service;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -22,6 +19,7 @@ import exception.DigitalSignalProcessingException;
 import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
+import model.behaviour.QuantizationType;
 import model.signal.base.Signal;
 import repository.SignalRepository;
 import service.request.ResolveSignalRequest;
@@ -34,6 +32,7 @@ import utils.calculator.SignalValuesCalculator;
 import utils.file.SignalAdapter;
 import utils.operation.SignalOperationResolver;
 import utils.operation.SignalsOperationsCalculator;
+import utils.quantization.SignalQuantizationResolver;
 import utils.signal.SignalTypeResolver;
 
 /**
@@ -62,6 +61,9 @@ public class SignalServiceImpl implements SignalService
 
 	@Autowired
 	private SignalAdapter signalAdapter;
+
+	@Autowired
+	private SignalQuantizationResolver signalQuantizationResolver;
 
 	@Override
 	public Signal findSignal(String signalId) throws SignalRepositoryException
@@ -176,6 +178,12 @@ public class SignalServiceImpl implements SignalService
 				result.getSignalType().name()));
 
 		return signalsCalculationResponse;
+	}
+
+	@Override
+	public int performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel)
+	{
+		return 0;
 	}
 
 }

@@ -70,6 +70,8 @@ public abstract class Signal implements Serializable
 
 	protected transient List<Complex> values;
 
+	protected transient List<Complex> quantizationValues;
+
 	protected transient Set<ParameterType> applicableParameters;
 
 	/**

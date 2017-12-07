@@ -6,6 +6,7 @@ import exception.DigitalSignalProcessingException;
 import exception.SignalIOException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
+import model.behaviour.QuantizationType;
 import model.signal.base.Signal;
 import service.request.ResolveSignalRequest;
 import service.request.SignalsOperationRequest;
@@ -37,4 +38,9 @@ public interface SignalService
 	 * Signal operations
 	 */
 	SignalsCalculationResponse processSignalOperationRequest(SignalsOperationRequest request) throws DigitalSignalProcessingException;
+
+	/**
+	 * Quantization
+	 */
+	int performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel);
 }
