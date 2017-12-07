@@ -54,14 +54,6 @@
         <TextField fx:id="rootMeanSquareValueTextField" layoutX="450.0" layoutY="299.0" />
         <Button fx:id="renderChartsButton" layoutX="1304.0" layoutY="142.0" mnemonicParsing="false" onAction="#renderChartsForSignal" prefHeight="72.0" prefWidth="144.0" text="Render  chart" />
         <Button fx:id="calculateButton" layoutX="701.0" layoutY="140.0" mnemonicParsing="false" onAction="#performSignalsOperation" prefHeight="44.0" prefWidth="96.0" text="Calculate" />
-        <ScatterChart fx:id="realChart" layoutX="48.0" layoutY="480.0" prefHeight="267.0" prefWidth="1514.0">
-            <xAxis>
-                <NumberAxis side="BOTTOM" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis side="LEFT" />
-            </yAxis>
-        </ScatterChart>
       <TextField fx:id="amplitudeRiseTime" layoutX="147.0" layoutY="438.0" prefHeight="27.0" prefWidth="85.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="434.0" prefHeight="35.0" prefWidth="112.0" text="Amp. rise time [s]" textAlignment="CENTER" />
       <Button fx:id="readWriteButton" layoutX="1503.0" layoutY="262.0" mnemonicParsing="false" onAction="#handleReadWriteRequest" prefHeight="44.0" prefWidth="96.0" text="Read/Write" />
@@ -80,10 +72,18 @@
       <TextField fx:id="secondSignalNumber" layoutX="817.0" layoutY="88.0" prefHeight="27.0" prefWidth="31.0" />
       <Label alignment="CENTER" layoutX="688.0" layoutY="205.0" prefHeight="27.0" prefWidth="112.0" text="Quantization" />
       <TextField fx:id="quantLevelTextField" alignment="CENTER" layoutX="665.0" layoutY="237.0" promptText="Quant level" />
-      <ComboBox fx:id="quantizationTypeComboBox" layoutX="692.0" layoutY="284.0" prefHeight="27.0" prefWidth="112.0" promptText="Type" />
+      <ComboBox fx:id="quantizationTypeComboBox" layoutX="666.0" layoutY="284.0" prefHeight="27.0" prefWidth="167.0" promptText="Type" />
       <Button fx:id="performQuantizationButton" layoutX="701.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleQuantizationRequest" prefHeight="27.0" prefWidth="85.0" text="Perform" />
       <Label alignment="CENTER" layoutX="688.0" layoutY="377.0" prefHeight="27.0" prefWidth="112.0" text="Reconstruction" />
-      <ComboBox fx:id="signalReconstructionTypeComboBox" layoutX="692.0" layoutY="401.0" prefHeight="27.0" prefWidth="112.0" promptText="Type" />
+      <ComboBox fx:id="signalReconstructionTypeComboBox" layoutX="666.0" layoutY="401.0" prefHeight="27.0" prefWidth="167.0" promptText="Type" />
       <Button fx:id="performSignalReconstructionButton" layoutX="702.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleSignalReconstructionRequest" prefHeight="27.0" prefWidth="85.0" text="Perform" />
+      <ScatterChart fx:id="realChart" layoutX="49.0" layoutY="485.0" prefHeight="260.0" prefWidth="1495.0">
+        <xAxis>
+          <NumberAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </ScatterChart>
     </children>
 </AnchorPane>

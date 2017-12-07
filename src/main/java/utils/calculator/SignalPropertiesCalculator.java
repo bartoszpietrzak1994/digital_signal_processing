@@ -14,7 +14,6 @@ import model.signal.base.Signal;
 /**
  * Created by bartoszpietrzak on 06/10/2017.
  */
-@Data
 @Component
 public class SignalPropertiesCalculator
 {

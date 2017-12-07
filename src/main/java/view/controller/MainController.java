@@ -14,10 +14,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Iterables;
 
-import exception.ChartServiceException;
 import exception.DigitalSignalProcessingErrorCode;
 import exception.DigitalSignalProcessingException;
-import exception.QuantizationException;
 import exception.SignalIOException;
 import exception.SignalRepositoryException;
 import javafx.collections.FXCollections;
@@ -25,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -304,12 +303,6 @@ public class MainController implements Initializable
 	}
 
 	@FXML
-	public void reconstructQuantizationSignal()
-	{
-
-	}
-
-	@FXML
 	public void renderHistogramForSignal()
 	{
 		this.resultProviderLabel.setText("");
@@ -478,6 +471,7 @@ public class MainController implements Initializable
 	@FXML
 	public void handleSignalReconstructionRequest()
 	{
+		this.realChart.getData().clear();
 		this.resultProviderLabel.setText("");
 		if (StringUtils.isEmpty(this.signalReconstructionTypeComboBox.getValue()))
 		{
@@ -515,6 +509,7 @@ public class MainController implements Initializable
 			return;
 		}
 
+		this.realChart.getData().clear();
 		this.realChart.getData().add(doubleDoubleSeries);
 		renderChartsForSignal();
 	}
