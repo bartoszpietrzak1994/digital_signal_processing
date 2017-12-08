@@ -1,4 +1,3 @@
-#realChart .chart-symbol{
-    -fx-background-radius: 0;
-    -fx-padding: 1px ;
+#realChart .chart-series-line{
+    -fx-stroke-width: 0.8px;
 }
