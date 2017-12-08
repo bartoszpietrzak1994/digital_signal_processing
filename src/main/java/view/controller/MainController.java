@@ -93,7 +93,7 @@ public class MainController implements Initializable
 	private TextField dutyCycleTextField;
 
 	@FXML
-	private TextField periodTextField;
+	private TextField frequencyTextField;
 
 	@FXML
 	private TextField signalSamplingRate;
@@ -215,9 +215,6 @@ public class MainController implements Initializable
 		ObservableList<String> counters = FXCollections.observableList(counterValues);
 		histogramIntvervalComboBox.setItems(counters);
 
-		realChart.getXAxis().setAnimated(false);
-		realChart.getYAxis().setAnimated(true);
-		realChart.setAnimated(true);
 		realChart.setCreateSymbols(false);
 
 		realHistogram.getXAxis().setAnimated(false);
@@ -241,7 +238,7 @@ public class MainController implements Initializable
 				.duration(this.durationTextField.getText())
 				.dutyCycle(this.dutyCycleTextField.getText())
 				.initialTime(this.initialTimeTextField.getText())
-				.period(this.periodTextField.getText())
+				.signalFrequency(this.frequencyTextField.getText())
 				.samplingRate(this.signalSamplingRate.getText())
 				.valuePresenceProbability(this.valuePresenceProbability.getText())
 				.amplitudeRiseSample(this.amplitudeRiseSample.getText())
@@ -563,7 +560,7 @@ public class MainController implements Initializable
 
 		try
 		{
-			signalService.saveListOfSignalsInFile(signalsWithoutUnknowns, "./signals.json");
+			signalService.saveListOfSignalsInFile(signalsWithoutUnknowns, "signals.json");
 		}
 		catch (SignalIOException e)
 		{
@@ -578,7 +575,7 @@ public class MainController implements Initializable
 		List<Signal> signals = null;
 		try
 		{
-			signals = signalService.loadSignalsFromFile("./signals.json");
+			signals = signalService.loadSignalsFromFile("signals.json");
 		}
 		catch (SignalIOException e)
 		{

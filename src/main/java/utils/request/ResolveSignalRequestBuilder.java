@@ -17,7 +17,7 @@ public class ResolveSignalRequestBuilder
 	public String amplitude;
 	public String initialTime;
 	public String duration;
-	public String period;
+	public String signalFrequency;
 	public String dutyCycle;
 	public String samplingRate;
 	public String valuePresenceProbability;
@@ -39,7 +39,7 @@ public class ResolveSignalRequestBuilder
 				.amplitude(StringUtils.isNotEmpty(this.amplitude) ? new Complex(Double.valueOf(this.amplitude), 0.0D) : null)
 				.duration(StringUtils.isNotEmpty(this.duration) ? new Complex(Double.valueOf(this.duration), 0.0D) : null)
 				.dutyCycle(StringUtils.isNotEmpty(this.dutyCycle) ? new Complex(Double.valueOf(this.dutyCycle), 0.0D) : null)
-				.period(StringUtils.isNotEmpty(this.period) ? new Complex(Double.valueOf(this.period), 0.0D) : null)
+				.period(StringUtils.isNotEmpty(this.signalFrequency) ? new Complex(1.0 / Double.valueOf(this.signalFrequency), 0.0D) : null)
 				.signalType(this.signalType)
 				.build();
 	}

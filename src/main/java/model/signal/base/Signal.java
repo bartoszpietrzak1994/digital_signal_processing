@@ -54,7 +54,7 @@ public abstract class Signal implements Serializable
 	protected Complex endTime;
 
 	/**
-	 * If isPeriodic == false, period should bo equal to 0
+	 * If isPeriodic == false, signalFrequency should bo equal to 0
 	 * If isPeriodic == null, we assume that it should be false
 	 */
 	protected Complex period;

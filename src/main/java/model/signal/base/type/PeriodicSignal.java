@@ -17,7 +17,7 @@ public abstract class PeriodicSignal extends Signal
 	}
 
 	/**
-	 * Finds out in which period given sample is.
+	 * Finds out in which signalFrequency given sample is.
 	 * Applicable only for periodic signals.
 	 * @param sample
 	 * @return

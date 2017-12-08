@@ -21,16 +21,16 @@
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="119.0" prefHeight="35.0" prefWidth="96.0" text="Amplitude" textAlignment="CENTER" />
         <Label alignment="CENTER" layoutX="14.0" layoutY="158.0" prefHeight="35.0" prefWidth="96.0" text="Initial Time [s]" />
         <Label alignment="CENTER" layoutX="21.0" layoutY="198.0" prefHeight="35.0" prefWidth="85.0" text="Duration [s]" />
-        <Label alignment="CENTER" layoutX="22.0" layoutY="242.0" prefHeight="35.0" prefWidth="74.0" text="Period [s]" />
+        <Label alignment="CENTER" layoutX="22.0" layoutY="242.0" prefHeight="35.0" prefWidth="74.0" text="Freq [Hz]" />
         <Label alignment="CENTER" layoutX="15.0" layoutY="281.0" prefHeight="35.0" prefWidth="96.0" text="Duty Cycle" />
         <TextField fx:id="amplitudeTextField" layoutX="147.0" layoutY="123.0" prefHeight="27.0" prefWidth="85.0" />
         <TextField fx:id="initialTimeTextField" layoutX="147.0" layoutY="162.0" prefHeight="27.0" prefWidth="85.0" />
         <TextField fx:id="durationTextField" layoutX="147.0" layoutY="202.0" prefHeight="27.0" prefWidth="85.0" />
-        <TextField fx:id="periodTextField" layoutX="147.0" layoutY="246.0" prefHeight="27.0" prefWidth="85.0" />
+        <TextField fx:id="frequencyTextField" layoutX="147.0" layoutY="246.0" prefHeight="27.0" prefWidth="85.0" />
         <TextField fx:id="dutyCycleTextField" layoutX="147.0" layoutY="285.0" prefHeight="27.0" prefWidth="85.0" />
         <Label fx:id="resultProviderLabel" alignment="CENTER" layoutX="449.0" layoutY="447.0" prefHeight="44.0" prefWidth="750.0" />
         <TextField fx:id="signalSamplingRate" layoutX="147.0" layoutY="322.0" prefHeight="27.0" prefWidth="85.0" />
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="15.0" layoutY="318.0" prefHeight="35.0" prefWidth="96.0" text="Sample count" textAlignment="CENTER" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="6.0" layoutY="318.0" prefHeight="35.0" prefWidth="121.0" text="Sampling freq [Hz]" textAlignment="CENTER" />
         <Button fx:id="generateButton" layoutX="259.0" layoutY="425.0" mnemonicParsing="false" onAction="#computeSignalUsingProvidedParameters" prefHeight="44.0" prefWidth="96.0" text="Generate" />
         <TextField fx:id="valuePresenceProbability" layoutX="147.0" layoutY="363.0" prefHeight="27.0" prefWidth="85.0" />
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="359.0" prefHeight="35.0" prefWidth="103.0" text="Val. pres. prob." textAlignment="CENTER" />
