@@ -24,7 +24,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -76,7 +75,10 @@ public class MainController implements Initializable
 	private TextField durationTextField;
 
 	@FXML
-	private ScatterChart<Double, Double> realChart;
+	private LineChart<Double, Double> realChart;
+
+	@FXML
+	private Button clearChartButton;
 
 	@FXML
 	private BarChart<Double, Integer> realHistogram;
@@ -216,6 +218,7 @@ public class MainController implements Initializable
 		realChart.getXAxis().setAnimated(false);
 		realChart.getYAxis().setAnimated(true);
 		realChart.setAnimated(true);
+		realChart.setCreateSymbols(false);
 
 		realHistogram.getXAxis().setAnimated(false);
 		realHistogram.getYAxis().setAnimated(true);
@@ -473,6 +476,13 @@ public class MainController implements Initializable
 		}
 
 		signalQuantizationTextField.setText(signalQuantizationResponse.toString());
+	}
+
+	@FXML
+	public void clearChart()
+	{
+		this.realChart.getData().clear();
+		this.quantLevelTextField.setText("");
 	}
 
 	@FXML
