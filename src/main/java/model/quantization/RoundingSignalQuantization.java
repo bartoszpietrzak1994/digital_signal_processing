@@ -43,10 +43,6 @@ public class RoundingSignalQuantization extends SignalQuantization
 			{
 				quantizationValue = signalValues.get(i).subtract(quantLevel);
 			}
-			else
-			{
-				quantizationValue = quantizationValues.get(i -1);
-			}
 
 			quantizationValues.add(quantizationValue);
 		}
