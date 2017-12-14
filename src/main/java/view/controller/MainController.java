@@ -216,6 +216,7 @@ public class MainController implements Initializable
 		histogramIntvervalComboBox.setItems(counters);
 
 		realChart.setCreateSymbols(false);
+		realChart.setScaleShape(false);
 
 		realHistogram.getXAxis().setAnimated(false);
 		realHistogram.getYAxis().setAnimated(true);
