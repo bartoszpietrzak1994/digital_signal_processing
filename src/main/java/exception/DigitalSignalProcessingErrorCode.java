@@ -40,6 +40,11 @@ public enum DigitalSignalProcessingErrorCode
 	RECONSTRUCTION_TYPE_NOT_SUPPORTED,
 
 	/**
+	 * Filters
+	 */
+	FILTER_TYPE_NOT_FOUND,
+
+	/**
 	 * Unknown error
 	 */
 	SYSTEM_ERROR

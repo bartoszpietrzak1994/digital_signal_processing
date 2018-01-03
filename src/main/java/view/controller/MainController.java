@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import exception.*;
+import model.filter.FilterType;
 import model.window.HammingWindowFunction;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Iterables;
 
-import exception.DigitalSignalProcessingErrorCode;
-import exception.DigitalSignalProcessingException;
-import exception.SignalIOException;
-import exception.SignalRepositoryException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -648,25 +646,38 @@ public class MainController implements Initializable
 		signalService.performWindowFunctionOnSignal(signal, new HammingWindowFunction());
 	}
 
+	// TODO
 	@FXML
 	private void performLowPassFilter()
 	{
 		this.resultProviderLabel.setText("");
-		String signalId = getSignalIdFromListView();
-
-		Signal signal;
 		try
 		{
-			signal = signalService.findSignal(signalId);
+			signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.LOW_PASS);
 		}
-		catch (SignalRepositoryException e)
+		catch (DigitalSignalProcessingException e)
 		{
-			resultProviderLabel.setText(e.getMessage());
+			this.resultProviderLabel.setText(e.getMessage());
 			e.printStackTrace();
 			return;
 		}
+	}
 
-
+	// TODO
+	@FXML
+	private void performHighPassFilter()
+	{
+		this.resultProviderLabel.setText("");
+		try
+		{
+			signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.HIGH_PASS);
+		}
+		catch (DigitalSignalProcessingException e)
+		{
+			this.resultProviderLabel.setText(e.getMessage());
+			e.printStackTrace();
+			return;
+		}
 	}
 
 	private String getSignalIdFromListView()

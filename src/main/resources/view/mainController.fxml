@@ -87,8 +87,8 @@
       </LineChart>
       <TextField fx:id="signalQuantizationTextField" alignment="CENTER" layoutX="108.0" layoutY="741.0" prefHeight="56.0" prefWidth="1437.0" promptText="Quantization parameters" />
       <Button fx:id="clearChartButton" layoutX="1570.0" layoutY="580.0" mnemonicParsing="false" onAction="#clearChart" text="Clear" />
-      <Button fx:id="hammingWindowButton" layoutX="1320.0" layoutY="125.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="144.0" text="Hamming Window" />
-      <Button fx:id="lowPassFilterButton" layoutX="1320.0" layoutY="163.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="144.0" text="Low-pass filter" />
-      <Button fx:id="highPassFilterButton" layoutX="1320.0" layoutY="202.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="144.0" text="High-pass filter" />
+      <Button fx:id="hammingWindowButton" layoutX="1320.0" layoutY="125.0" mnemonicParsing="false" onAction="#performHammingWindowOnSignal" prefHeight="31.0" prefWidth="144.0" text="Hamming Window" />
+      <Button fx:id="lowPassFilterButton" layoutX="1320.0" layoutY="163.0" mnemonicParsing="false" onAction="#performLowPassFilter" prefHeight="31.0" prefWidth="144.0" text="Low-pass filter" />
+      <Button fx:id="highPassFilterButton" layoutX="1320.0" layoutY="202.0" mnemonicParsing="false" onAction="#performHighPassFilter" prefHeight="31.0" prefWidth="144.0" text="High-pass filter" />
     </children>
 </AnchorPane>
