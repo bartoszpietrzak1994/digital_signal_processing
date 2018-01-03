@@ -9,6 +9,7 @@ import exception.SignalParametersException;
 import exception.SignalRepositoryException;
 import model.behaviour.QuantizationType;
 import model.signal.base.Signal;
+import model.window.WindowFunction;
 import service.request.ResolveSignalRequest;
 import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
@@ -46,4 +47,9 @@ public interface SignalService
 	 */
 	SignalQuantizationResponse performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel) throws QuantizationException,
 			SignalRepositoryException;
+
+	/**
+	 * Window function
+	 */
+	Signal performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction);
 }

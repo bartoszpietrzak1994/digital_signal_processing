@@ -8,6 +8,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.window.WindowFunction;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -208,4 +209,21 @@ public class SignalServiceImpl implements SignalService
 				.build();
 	}
 
+	@Override
+	public Signal performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction)
+	{
+		List<Complex> values = signal.getValues();
+		int m = values.size();
+
+		Complex value;
+		Complex windowedValue;
+		for (int i = 0; i < values.size(); i++)
+		{
+			value = values.get(i);
+			windowedValue = new Complex(windowFunction.calculate(value.getReal(), m), 0.0D);
+			values.set(i, windowedValue);
+		}
+
+		return signal;
+	}
 }
