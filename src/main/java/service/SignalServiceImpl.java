@@ -8,6 +8,10 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.*;
+import model.filter.Filter;
+import model.filter.FilterType;
+import model.filter.LowPassFilter;
 import model.window.WindowFunction;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +21,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import exception.DigitalSignalProcessingException;
-import exception.QuantizationException;
-import exception.SignalIOException;
-import exception.SignalParametersException;
-import exception.SignalRepositoryException;
 import model.behaviour.QuantizationType;
 import model.quantization.SignalQuantization;
 import model.signal.base.Signal;
@@ -36,6 +35,7 @@ import utils.calculator.SignalPropertiesCalculator;
 import utils.calculator.SignalReconstructionParametersCalculator;
 import utils.calculator.SignalValuesCalculator;
 import utils.file.SignalAdapter;
+import utils.filter.FilterResolver;
 import utils.operation.SignalOperationResolver;
 import utils.operation.SignalsOperationsCalculator;
 import utils.quantization.SignalQuantizationResolver;
@@ -73,6 +73,12 @@ public class SignalServiceImpl implements SignalService
 
 	@Autowired
 	private SignalReconstructionParametersCalculator reconstructionParametersCalculator;
+
+	@Autowired
+    private ConvolutionService convolutionService;
+
+	@Autowired
+    private FilterResolver filterResolver;
 
 	@Override
 	public Signal findSignal(String signalId) throws SignalRepositoryException
@@ -210,7 +216,7 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public Signal performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction)
+	public void performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction)
 	{
 		List<Complex> values = signal.getValues();
 		int m = values.size();
@@ -224,6 +230,25 @@ public class SignalServiceImpl implements SignalService
 			values.set(i, windowedValue);
 		}
 
-		return signal;
+		signalRepository.update(signal);
 	}
+
+    @Override
+    public void performFilterOnSignal(String signalId, FilterType filterType) throws SignalRepositoryException, SignalParametersException, FilterException
+    {
+        Signal signal = signalRepository.findOne(signalId);
+        List<Complex> values = signal.getValues();
+
+        Filter filter = filterResolver.resolve(filterType);
+
+        List<Complex> filterValues = new ArrayList<>();
+        double k = signal.getSamplingRate().getReal() / (1.0 / signal.getPeriod().getReal());
+
+        for (int i = 0; i < values.size(); i++)
+        {
+             filterValues.add(filter.calculate(values.get(i).getReal(), k));
+        }
+
+        convolutionService.calculateConvolution(signal.getValues(), filterValues);
+    }
 }

@@ -1,14 +1,19 @@
 package model.filter;
 
-public class LowPassFilter
+import org.apache.commons.math.complex.Complex;
+import org.springframework.stereotype.Component;
+
+@Component
+public class LowPassFilter extends Filter
 {
-    public double calculate(double value, double k)
+    @Override
+    public Complex calculate(double value, double k)
     {
         if (value == 0)
         {
-            return 2.0 / k;
+            return new Complex(2.0 / k, 0.0D);
         }
 
-        return Math.sin((2.0 * Math.PI * value) / k) / (Math.PI * value);
+        return new Complex(Math.sin((2.0 * Math.PI * value) / k) / (Math.PI * value), 0.0D);
     }
 }

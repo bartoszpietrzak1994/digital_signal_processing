@@ -2,12 +2,10 @@ package service;
 
 import java.util.List;
 
-import exception.DigitalSignalProcessingException;
-import exception.QuantizationException;
-import exception.SignalIOException;
-import exception.SignalParametersException;
-import exception.SignalRepositoryException;
+import exception.*;
 import model.behaviour.QuantizationType;
+import model.filter.FilterType;
+import model.filter.LowPassFilter;
 import model.signal.base.Signal;
 import model.window.WindowFunction;
 import service.request.ResolveSignalRequest;
@@ -51,5 +49,11 @@ public interface SignalService
 	/**
 	 * Window function
 	 */
-	Signal performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction);
+	void performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction);
+
+	/**
+	 * Filters
+	 */
+	// TODO
+	void performFilterOnSignal(String signalId, FilterType filterType) throws SignalRepositoryException, SignalParametersException, FilterException;
 }

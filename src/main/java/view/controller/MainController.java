@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import model.window.HammingWindowFunction;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -166,6 +167,19 @@ public class MainController implements Initializable
 
 	@FXML
 	private TextField signalQuantizationTextField;
+
+	/**
+	 * Window function
+	 */
+	@FXML
+	private Button hammingWindowButton;
+
+	/**
+	 * Filters
+	 */
+	private Button lowPassFilterButton;
+
+	private Button highPassFilterButton;
 
 	/**
 	 * Services
@@ -452,14 +466,7 @@ public class MainController implements Initializable
 
 		double quantLevel = Double.valueOf(quantLevelTextField.getText());
 
-		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
-
-		if (selectedItems.isEmpty())
-		{
-			this.resultProviderLabel.setText("Please select at least one signal to perform quantization");
-		}
-
-		String signalId = Iterables.getFirst(selectedItems, null).split("\\;")[0];
+		String signalId = getSignalIdFromListView();
 
 		SignalQuantizationResponse signalQuantizationResponse;
 		try
@@ -495,7 +502,7 @@ public class MainController implements Initializable
 			return;
 		}
 
-		String signalId = Iterables.getFirst(signalListView.getSelectionModel().getSelectedItems(), null).split("\\;")[0];
+		String signalId = getSignalIdFromListView();
 
 		Signal signal;
 		try
@@ -618,6 +625,60 @@ public class MainController implements Initializable
 
 			signalListView.getItems().add(response.getSignalParametersResponse().toString());
 		}
+	}
+
+	@FXML
+	private void performHammingWindowOnSignal()
+	{
+		this.resultProviderLabel.setText("");
+		String signalId = getSignalIdFromListView();
+
+		Signal signal;
+		try
+		{
+			signal = signalService.findSignal(signalId);
+		}
+		catch (SignalRepositoryException e)
+		{
+			resultProviderLabel.setText(e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+
+		signalService.performWindowFunctionOnSignal(signal, new HammingWindowFunction());
+	}
+
+	@FXML
+	private void performLowPassFilter()
+	{
+		this.resultProviderLabel.setText("");
+		String signalId = getSignalIdFromListView();
+
+		Signal signal;
+		try
+		{
+			signal = signalService.findSignal(signalId);
+		}
+		catch (SignalRepositoryException e)
+		{
+			resultProviderLabel.setText(e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+
+
+	}
+
+	private String getSignalIdFromListView()
+	{
+		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
+
+		if (selectedItems.isEmpty())
+		{
+			this.resultProviderLabel.setText("Please select at least one signal");
+		}
+
+		return Iterables.getFirst(selectedItems, null).split("\\;")[0];
 	}
 }
 
