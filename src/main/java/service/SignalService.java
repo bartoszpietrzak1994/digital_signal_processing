@@ -49,7 +49,7 @@ public interface SignalService
 	/**
 	 * Window function
 	 */
-	void performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction);
+	void performWindowFunctionOnSignal(String signalId, WindowFunction windowFunction) throws SignalRepositoryException;
 
 	/**
 	 * Filters

@@ -2,6 +2,7 @@ package service;
 
 import exception.ChartServiceException;
 import exception.QuantizationException;
+import exception.SignalRepositoryException;
 import javafx.scene.chart.XYChart;
 import model.behaviour.SignalReconstructionType;
 import model.signal.base.Signal;
@@ -11,12 +12,11 @@ import model.signal.base.Signal;
  */
 public interface ChartService
 {
-	XYChart.Series<Double, Double> renderRealSignalChart(Signal signal) throws ChartServiceException;
-	XYChart.Series<Double, Integer> renderRealSignalHistogram(Signal signal, int intervalCount) throws ChartServiceException;
+	XYChart.Series<Double, Double> renderRealSignalChart(String signalId) throws ChartServiceException, SignalRepositoryException;
+	XYChart.Series<Double, Integer> renderRealSignalHistogram(String signalId, int intervalCount) throws ChartServiceException, SignalRepositoryException;
 
 	/**
 	 * Reconstruction
 	 */
-	XYChart.Series<Double, Double> reconstructQuantizationSignal(Signal signal, SignalReconstructionType reconstructionType)
-			throws ChartServiceException, QuantizationException;
+	XYChart.Series<Double, Double> reconstructQuantizationSignal(String signalId, SignalReconstructionType reconstructionType) throws ChartServiceException, QuantizationException, SignalRepositoryException;
 }

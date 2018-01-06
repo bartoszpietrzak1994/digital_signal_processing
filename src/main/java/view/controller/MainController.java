@@ -286,28 +286,17 @@ public class MainController implements Initializable
 		this.resultProviderLabel.setText("");
 		ObservableList<String> selectedItems = signalListView.getSelectionModel().getSelectedItems();
 
-		if (selectedItems.isEmpty() && selectedItems.size() != 1)
+		if (selectedItems.isEmpty())
 		{
 			this.resultProviderLabel.setText("Only one signal can be rendered to a chart.");
 			return;
 		}
 
-		Signal signal = null;
-		try
-		{
-			signal = signalService.findSignal(selectedItems.get(0).split("\\;")[0]);
-		}
-		catch (SignalRepositoryException exception)
-		{
-			resultProviderLabel.setText(exception.getMessage());
-			exception.printStackTrace();
-			return;
-		}
-
 		XYChart.Series<Double, Double> realSignalChart = null;
+		String signalId = getSignalIdFromListView();
 		try
 		{
-			realSignalChart = chartService.renderRealSignalChart(signal);
+			realSignalChart = chartService.renderRealSignalChart(signalId);
 		}
 		catch (Exception exception)
 		{
@@ -331,26 +320,13 @@ public class MainController implements Initializable
 			return;
 		}
 
-		Signal signal = null;
-		try
-		{
-			signal = signalService.findSignal(selectedItems.get(0).split("\\;")[0]);
-		}
-		catch (SignalRepositoryException exception)
-		{
-			resultProviderLabel.setText(exception.getMessage());
-			exception.printStackTrace();
-			return;
-		}
-
-		int interval = StringUtils.isEmpty(histogramIntvervalComboBox.getValue()) ?
-				signal.getSamples().size() / 10 :
-				Integer.valueOf(histogramIntvervalComboBox.getValue());
+		int interval = Integer.valueOf(histogramIntvervalComboBox.getValue());
 
 		XYChart.Series<Double, Integer> realSignalHistogram = null;
+		String signalId = getSignalIdFromListView();
 		try
 		{
-			realSignalHistogram = chartService.renderRealSignalHistogram(signal, interval);
+			realSignalHistogram = chartService.renderRealSignalHistogram(signalId, interval);
 		}
 		catch (Exception exception)
 		{
@@ -500,27 +476,14 @@ public class MainController implements Initializable
 			return;
 		}
 
-		String signalId = getSignalIdFromListView();
-
-		Signal signal;
-		try
-		{
-			signal = signalService.findSignal(signalId);
-		}
-		catch (SignalRepositoryException e)
-		{
-			e.printStackTrace();
-			this.resultProviderLabel.setText(e.getMessage());
-			return;
-		}
-
 		String value = signalReconstructionTypeComboBox.getValue();
 		SignalReconstructionType reconstructionType = SignalReconstructionType.valueOf(value);
 
 		XYChart.Series<Double, Double> doubleDoubleSeries;
+		String signalId = getSignalIdFromListView();
 		try
 		{
-			doubleDoubleSeries = chartService.reconstructQuantizationSignal(signal, reconstructionType);
+			doubleDoubleSeries = chartService.reconstructQuantizationSignal(signalId, reconstructionType);
 		}
 		catch (DigitalSignalProcessingException e)
 		{
@@ -629,21 +592,14 @@ public class MainController implements Initializable
 	private void performHammingWindowOnSignal()
 	{
 		this.resultProviderLabel.setText("");
-		String signalId = getSignalIdFromListView();
-
-		Signal signal;
 		try
 		{
-			signal = signalService.findSignal(signalId);
+			signalService.performWindowFunctionOnSignal(getSignalIdFromListView(), new HammingWindowFunction());
 		}
 		catch (SignalRepositoryException e)
 		{
-			resultProviderLabel.setText(e.getMessage());
 			e.printStackTrace();
-			return;
 		}
-
-		signalService.performWindowFunctionOnSignal(signal, new HammingWindowFunction());
 	}
 
 	// TODO

@@ -1,25 +1,20 @@
 package service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.math.complex.Complex;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.support.ReflectiveConstructorResolver;
-import org.springframework.stereotype.Component;
-
 import com.google.common.collect.Iterables;
-
 import exception.ChartServiceException;
 import exception.QuantizationException;
+import exception.SignalRepositoryException;
 import javafx.scene.chart.XYChart;
 import model.behaviour.SignalReconstructionType;
 import model.reconstruction.SignalReconstruction;
 import model.signal.base.Signal;
+import org.apache.commons.math.complex.Complex;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import repository.SignalRepository;
 import utils.quantization.SignalReconstructionTypeResolver;
+
+import java.util.*;
 
 /**
  * Created by bartoszpietrzak on 23/10/2017.
@@ -28,11 +23,16 @@ import utils.quantization.SignalReconstructionTypeResolver;
 public class ChartServiceImpl implements ChartService
 {
 	@Autowired
+	private SignalRepository signalRepository;
+
+	@Autowired
 	private SignalReconstructionTypeResolver reconstructionTypeResolver;
 
 	@Override
-	public XYChart.Series<Double, Double> renderRealSignalChart(Signal signal) throws ChartServiceException
+	public XYChart.Series<Double, Double> renderRealSignalChart(String signalId) throws ChartServiceException, SignalRepositoryException
 	{
+		Signal signal = signalRepository.findOne(signalId);
+
 		if (!validateSignal(signal))
 		{
 			throw ChartServiceException.samplesAndValuesDoNotMatch(signal.getSamples().size(), signal.getValues().size());
@@ -57,8 +57,10 @@ public class ChartServiceImpl implements ChartService
 	}
 
 	@Override
-	public XYChart.Series<Double, Integer> renderRealSignalHistogram(Signal signal, int intervalCount) throws ChartServiceException
+	public XYChart.Series<Double, Integer> renderRealSignalHistogram(String signalId, int intervalCount) throws ChartServiceException, SignalRepositoryException
 	{
+		Signal signal = signalRepository.findOne(signalId);
+
 		if (!validateSignal(signal))
 		{
 			throw ChartServiceException.samplesAndValuesDoNotMatch(signal.getSamples().size(), signal.getValues().size());
@@ -111,20 +113,13 @@ public class ChartServiceImpl implements ChartService
 		}
 
 		return signalHistogram;
-
-		//		int v = (int) (Iterables.getLast(copiedAndSortedValues, null).getReal() - Iterables.getFirst(copiedAndSortedValues, null).getReal() % intervalCount);
-		//		double interval =
-		//				(Iterables.getLast(copiedAndSortedValues, null).getReal() - Iterables.getFirst(copiedAndSortedValues, null).getReal()) / (double) intervalCount;
-		//
-		//		List<Double> intervals = new ArrayList<>();
-		//		intervals.add(Iterables.getFirst(copiedAndSortedValues, null).getReal());
-
 	}
 
 	@Override
-	public XYChart.Series<Double, Double> reconstructQuantizationSignal(Signal signal, SignalReconstructionType reconstructionType)
-			throws ChartServiceException, QuantizationException
+	public XYChart.Series<Double, Double> reconstructQuantizationSignal(String signalId, SignalReconstructionType reconstructionType) throws QuantizationException, SignalRepositoryException
 	{
+		Signal signal = signalRepository.findOne(signalId);
+
 		SignalReconstruction reconstruction = reconstructionTypeResolver.resolve(reconstructionType);
 		return reconstruction.signalReconstruction(signal);
 	}

@@ -216,8 +216,10 @@ public class SignalServiceImpl implements SignalService
 	}
 
 	@Override
-	public void performWindowFunctionOnSignal(Signal signal, WindowFunction windowFunction)
+	public void performWindowFunctionOnSignal(String signalId, WindowFunction windowFunction) throws SignalRepositoryException
 	{
+		Signal signal = signalRepository.findOne(signalId);
+
 		List<Complex> values = signal.getValues();
 		int m = values.size();
 
