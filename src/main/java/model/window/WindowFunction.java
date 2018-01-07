@@ -1,6 +1,8 @@
 package model.window;
 
+import org.apache.commons.math.complex.Complex;
+
 public interface WindowFunction
 {
-    double calculate(double value, double m);
+    Complex calculate(int n, double m);
 }

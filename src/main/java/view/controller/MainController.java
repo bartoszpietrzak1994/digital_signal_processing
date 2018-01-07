@@ -172,11 +172,16 @@ public class MainController implements Initializable
     @FXML
     private Button hammingWindowButton;
 
+    @FXML
+    private TextField mTextField;
+
     /**
      * Filters
      */
+    @FXML
     private Button lowPassFilterButton;
 
+    @FXML
     private Button highPassFilterButton;
 
     /**
@@ -497,6 +502,68 @@ public class MainController implements Initializable
         renderChartsForSignal();
     }
 
+
+//    @FXML
+//    private void performHammingWindowOnSignal()
+//    {
+//        resultProviderLabel.setText("");
+//        SignalsCalculationResponse signalsCalculationResponse = null;
+//        try
+//        {
+//            signalsCalculationResponse = signalService.performWindowFunctionOnSignal(getSignalIdFromListView(), new
+//                    HammingWindowFunction());
+//        }
+//        catch (DigitalSignalProcessingException e)
+//        {
+//            e.printStackTrace();
+//            resultProviderLabel.setText(e.getMessage());
+//        }
+//
+//        if (signalsCalculationResponse != null)
+//        {
+//            signalListView.getItems().add(signalsCalculationResponse.getSignalParametersResponse().toString());
+//        } else
+//        {
+//            resultProviderLabel.setText("Did not receive any valid response.");
+//        }
+//    }
+
+    // TODO
+    @FXML
+    private void performLowPassFilter()
+    {
+        this.resultProviderLabel.setText("");
+        try
+        {
+            signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.LOW_PASS, new Integer
+                    (mTextField.getText()));
+        }
+        catch (DigitalSignalProcessingException e)
+        {
+            this.resultProviderLabel.setText(e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+    }
+
+    // TODO
+    @FXML
+    private void performHighPassFilter()
+    {
+        this.resultProviderLabel.setText("");
+        try
+        {
+            signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.HIGH_PASS, new Integer
+                    (mTextField.getText()));
+        }
+        catch (DigitalSignalProcessingException e)
+        {
+            this.resultProviderLabel.setText(e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+    }
+
     private void exportSignalsToFile()
     {
         this.resultProviderLabel.setText("");
@@ -582,65 +649,6 @@ public class MainController implements Initializable
                     ()).toString());
 
             signalListView.getItems().add(response.getSignalParametersResponse().toString());
-        }
-    }
-
-    @FXML
-    private void performHammingWindowOnSignal()
-    {
-        resultProviderLabel.setText("");
-        SignalsCalculationResponse signalsCalculationResponse = null;
-        try
-        {
-            signalsCalculationResponse = signalService.performWindowFunctionOnSignal(getSignalIdFromListView(), new
-                    HammingWindowFunction());
-        }
-        catch (DigitalSignalProcessingException e)
-        {
-            e.printStackTrace();
-            resultProviderLabel.setText(e.getMessage());
-        }
-
-        if (signalsCalculationResponse != null)
-        {
-            signalListView.getItems().add(signalsCalculationResponse.getSignalParametersResponse().toString());
-        } else
-        {
-            resultProviderLabel.setText("Did not receive any valid response.");
-        }
-    }
-
-    // TODO
-    @FXML
-    private void performLowPassFilter()
-    {
-        this.resultProviderLabel.setText("");
-        try
-        {
-            signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.LOW_PASS);
-        }
-        catch (DigitalSignalProcessingException e)
-        {
-            this.resultProviderLabel.setText(e.getMessage());
-            e.printStackTrace();
-            return;
-        }
-    }
-
-    // TODO
-    @FXML
-    private void performHighPassFilter()
-    {
-        this.resultProviderLabel.setText("");
-        try
-        {
-            signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.HIGH_PASS);
-        }
-        catch (DigitalSignalProcessingException e)
-        {
-            this.resultProviderLabel.setText(e.getMessage());
-            e.printStackTrace();
-            return;
         }
     }
 

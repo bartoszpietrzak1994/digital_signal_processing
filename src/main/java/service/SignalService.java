@@ -1,11 +1,8 @@
 package service;
 
-import java.util.List;
-
 import exception.*;
 import model.behaviour.QuantizationType;
 import model.filter.FilterType;
-import model.filter.LowPassFilter;
 import model.signal.base.Signal;
 import model.window.WindowFunction;
 import service.request.ResolveSignalRequest;
@@ -13,6 +10,8 @@ import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
 import service.response.SignalQuantizationResponse;
 import service.response.SignalsCalculationResponse;
+
+import java.util.List;
 
 /**
  * Created by bartoszpietrzak on 25/10/2017.
@@ -40,23 +39,18 @@ public interface SignalService
      * Signal operations
      */
     SignalsCalculationResponse processSignalOperationRequest(SignalsOperationRequest request) throws
-			DigitalSignalProcessingException;
+            DigitalSignalProcessingException;
 
     /**
      * Quantization
      */
     SignalQuantizationResponse performSignalQuantization(String signalId, QuantizationType quantizationType, double
-			quantLevel) throws QuantizationException, SignalRepositoryException;
-
-    /**
-     * Window function
-     */
-    SignalsCalculationResponse performWindowFunctionOnSignal(String signalId, WindowFunction windowFunction) throws
-			SignalRepositoryException, SignalParametersException;
+            quantLevel) throws QuantizationException, SignalRepositoryException;
 
     /**
      * Filters
      */
     // TODO
-    void performFilterOnSignal(String signalId, FilterType filterType) throws SignalRepositoryException, SignalParametersException, FilterException;
+    void performFilterOnSignal(String signalId, FilterType filterType, int m) throws SignalRepositoryException,
+            SignalParametersException;
 }

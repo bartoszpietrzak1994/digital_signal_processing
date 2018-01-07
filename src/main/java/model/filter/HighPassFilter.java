@@ -4,11 +4,10 @@ import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HighPassFilter extends Filter
+public class HighPassFilter
 {
-    @Override
-    public Complex calculate(double value, double k)
+    public Complex calculate(int n, double k)
     {
-        return new Complex(Math.pow(-1.0D, value), 0.0D);
+        return new Complex(Math.pow(-1.0D, n) * k, 0.0D);
     }
 }

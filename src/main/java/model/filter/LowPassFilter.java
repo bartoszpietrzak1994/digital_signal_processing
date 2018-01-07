@@ -4,16 +4,18 @@ import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LowPassFilter extends Filter
+public class LowPassFilter
 {
-    @Override
-    public Complex calculate(double value, double k)
+    public Complex calculate(int n, int m, double k)
     {
-        if (value == 0)
+        if (n == ((m-1) / 2))
         {
             return new Complex(2.0 / k, 0.0D);
         }
 
-        return new Complex(Math.sin((2.0 * Math.PI * value) / k) / (Math.PI * value), 0.0D);
+        double numerator = Math.sin((2.0 * Math.PI * (n - ((m-1) / 2.0))) / k);
+        double denominator = Math.PI * (n - ((m-1) / 2.0));
+
+        return new Complex(numerator / denominator, 0.0D);
     }
 }
