@@ -21,22 +21,23 @@ import model.signal.base.type.NonPeriodicSignal;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class GaussianNoise extends NonPeriodicSignal
 {
-	public GaussianNoise()
-	{
-		this.signalType = SignalType.GAUSSIAN_NOISE;
-		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION);
-	}
+    public GaussianNoise()
+    {
+        this.signalType = SignalType.GAUSSIAN_NOISE;
+        this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME,
+				ParameterType.DURATION);
+    }
 
-	@Override
-	public Complex calculate(Complex sample)
-	{
-		Random random = new Random();
-		return new Complex(random.nextGaussian(), 0.0D);
-	}
+    @Override
+    public Complex calculate(Complex sample)
+    {
+        Random random = new Random();
+        return new Complex(random.nextGaussian(), 0.0D);
+    }
 
-	@Override
-	public boolean areSampleCalculationParametersProvided()
-	{
-		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration);
-	}
+    @Override
+    public boolean areSampleCalculationParametersProvided()
+    {
+        return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration);
+    }
 }

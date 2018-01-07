@@ -37,8 +37,9 @@ public class TruncationSignalQuantization extends SignalQuantization
 		{
 			quantizationValue = signalValues.get(i);
 
-			if ((signalValues.get(i).getReal() > (quantizationValues.get(i - 1).getReal() + quantLevel.getReal())) || (signalValues.get(i).getReal() <= (
-					quantizationValues.get(i - 1).getReal() - quantLevel.getReal())))
+			if ((signalValues.get(i).getReal() > (quantizationValues.get(i - 1).getReal() + quantLevel.getReal())) ||
+					(signalValues.get(i).getReal() <= (quantizationValues.get(i - 1).getReal() - quantLevel.getReal
+							())))
 			{
 				quantizationValue = signalValues.get(i);
 			}

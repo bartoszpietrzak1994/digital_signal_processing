@@ -12,11 +12,15 @@ import model.signal.base.Signal;
  */
 public interface ChartService
 {
-	XYChart.Series<Double, Double> renderRealSignalChart(String signalId) throws ChartServiceException, SignalRepositoryException;
-	XYChart.Series<Double, Integer> renderRealSignalHistogram(String signalId, int intervalCount) throws ChartServiceException, SignalRepositoryException;
+    XYChart.Series<Double, Double> renderRealSignalChart(String signalId) throws ChartServiceException,
+			SignalRepositoryException;
 
-	/**
-	 * Reconstruction
-	 */
-	XYChart.Series<Double, Double> reconstructQuantizationSignal(String signalId, SignalReconstructionType reconstructionType) throws ChartServiceException, QuantizationException, SignalRepositoryException;
+    XYChart.Series<Double, Integer> renderRealSignalHistogram(String signalId, int intervalCount) throws
+			ChartServiceException, SignalRepositoryException;
+
+    /**
+     * Reconstruction
+     */
+    XYChart.Series<Double, Double> reconstructQuantizationSignal(String signalId, SignalReconstructionType
+			reconstructionType) throws ChartServiceException, QuantizationException, SignalRepositoryException;
 }

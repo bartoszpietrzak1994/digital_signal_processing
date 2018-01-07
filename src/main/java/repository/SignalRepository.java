@@ -67,7 +67,8 @@ public class SignalRepository
 
 	public String update(Signal signal)
 	{
-		Optional<Signal> optionalSignal = signals.stream().filter(storedSignal -> signal.getId().equals(storedSignal.getId())).findFirst();
+		Optional<Signal> optionalSignal = signals.stream().filter(storedSignal -> signal.getId().equals(storedSignal
+				.getId())).findFirst();
 
 		if (!optionalSignal.isPresent())
 		{

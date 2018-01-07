@@ -29,7 +29,8 @@ public abstract class PeriodicSignal extends Signal
 
 		while ((periodCounter - 1) * this.period.getReal() < this.endTime.getReal())
 		{
-			if (sample.getReal() >= (periodCounter - 1) * this.period.getReal() && sample.getReal() <= periodCounter  * this.period.getReal())
+			if (sample.getReal() >= (periodCounter - 1) * this.period.getReal() && sample.getReal() <= periodCounter *
+					this.period.getReal())
 			{
 				return periodCounter;
 			}

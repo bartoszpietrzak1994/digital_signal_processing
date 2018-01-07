@@ -15,39 +15,39 @@ import lombok.Setter;
 @Builder
 public class ResolveSignalResponse
 {
-	private SignalParametersResponse signalParametersResponse;
+    private SignalParametersResponse signalParametersResponse;
 
-	/**
-	 * Calculation results
-	 */
-	private Complex averageSignalValue;
-	private Complex absoluteAverageSignalValue;
-	private Complex signalPower;
-	private Complex signalVariance;
-	private Complex signalRootMeanSquareValue;
+    /**
+     * Calculation results
+     */
+    private Complex averageSignalValue;
+    private Complex absoluteAverageSignalValue;
+    private Complex signalPower;
+    private Complex signalVariance;
+    private Complex signalRootMeanSquareValue;
 
-	/**
-	 * TODO Move it to another, reusable structure
-	 */
-	@AllArgsConstructor
-	@Getter
-	@Setter
-	public class SignalParametersResponse
-	{
-		/**
-		 * Parameters from UI
-		 */
-		private String signalId;
-		private Complex signalSamplingRate;
-		private Complex initialTime;
-		private Complex duration;
-		private String signalType;
+    /**
+     * TODO Move it to another, reusable structure
+     */
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public class SignalParametersResponse
+    {
+        /**
+         * Parameters from UI
+         */
+        private String signalId;
+        private Complex signalSamplingRate;
+        private Complex initialTime;
+        private Complex duration;
+        private String signalType;
 
-		@Override
-		public String toString()
-		{
-			return String.valueOf(signalId) + "; S-ing rate: " + signalSamplingRate.getReal() + " Init. time: " + initialTime.getReal() + " Duration: " + duration
-					.getReal() + " Type: " + signalType;
-		}
-	}
+        @Override
+        public String toString()
+        {
+            return String.valueOf(signalId) + "; S-ing rate: " + signalSamplingRate.getReal() + " Init. time: " +
+                    initialTime.getReal() + " Duration: " + duration.getReal() + " Type: " + signalType;
+        }
+    }
 }

@@ -16,31 +16,32 @@ import utils.signal.SignalTypeResolver;
 @Component
 public class ConvolutionServiceImpl implements ConvolutionService
 {
-	@Autowired
-	private SignalTypeResolver signalTypeResolver;
+    @Autowired
+    private SignalTypeResolver signalTypeResolver;
 
-	@Override
-	public List<Complex> calculateConvolution(List<Complex> first, List<Complex> second) throws SignalParametersException
-	{
-		List<Complex> convolutionValues = new ArrayList<>();
+    @Override
+    public List<Complex> calculateConvolution(List<Complex> first, List<Complex> second) throws
+			SignalParametersException
+    {
+        List<Complex> convolutionValues = new ArrayList<>();
 
-		int convolutionValuesSize = first.size() + second.size() - 1;
-		int j;
-		double tmp;
-		for (int i = 0; i < convolutionValuesSize; i++)
-		{
-			j = i;
-			tmp = 0.0;
-			for (int k = 0; k < second.size(); k++)
-			{
-				if (j >= 0 && j < first.size())
-					tmp = tmp + (first.get(j).getReal() * second.get(k).getReal());
+        int convolutionValuesSize = first.size() + second.size() - 1;
+        int j;
+        double tmp;
+        for (int i = 0; i < convolutionValuesSize; i++)
+        {
+            j = i;
+            tmp = 0.0;
+            for (int k = 0; k < second.size(); k++)
+            {
+                if (j >= 0 && j < first.size())
+                    tmp = tmp + (first.get(j).getReal() * second.get(k).getReal());
 
-				j -= 1;
-			}
-			convolutionValues.add(new Complex(tmp, 0.0D));
-		}
+                j -= 1;
+            }
+            convolutionValues.add(new Complex(tmp, 0.0D));
+        }
 
-		return convolutionValues;
-	}
+        return convolutionValues;
+    }
 }

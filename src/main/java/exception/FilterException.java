@@ -14,6 +14,7 @@ public class FilterException extends DigitalSignalProcessingException
 
     public static FilterException filterTypeNotSupported(String filterType)
     {
-        return new FilterException(DigitalSignalProcessingErrorCode.FILTER_TYPE_NOT_FOUND, "Received filter type: " + filterType);
+        return new FilterException(DigitalSignalProcessingErrorCode.FILTER_TYPE_NOT_FOUND, "Received filter type: " +
+                filterType);
     }
 }

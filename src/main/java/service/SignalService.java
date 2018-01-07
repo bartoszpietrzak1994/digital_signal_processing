@@ -19,41 +19,44 @@ import service.response.SignalsCalculationResponse;
  */
 public interface SignalService
 {
-	/**
-	 *	In-memory Signal storage
-	 */
-	Signal findSignal(String signalId) throws SignalRepositoryException;
+    /**
+     * In-memory Signal storage
+     */
+    Signal findSignal(String signalId) throws SignalRepositoryException;
 
-	/**
-	 *	IO Signal operations
-	 */
-	boolean saveListOfSignalsInFile(List<Signal> signals, String path) throws SignalIOException;
-	List<Signal> loadSignalsFromFile(String filePath) throws SignalIOException;
+    /**
+     * IO Signal operations
+     */
+    boolean saveListOfSignalsInFile(List<Signal> signals, String path) throws SignalIOException;
 
-	/**
-	 * Signal on charts presentation
-	 */
-	ResolveSignalResponse processResolveSignalRequest(ResolveSignalRequest request) throws SignalParametersException;
+    List<Signal> loadSignalsFromFile(String filePath) throws SignalIOException;
 
-	/**
-	 * Signal operations
-	 */
-	SignalsCalculationResponse processSignalOperationRequest(SignalsOperationRequest request) throws DigitalSignalProcessingException;
+    /**
+     * Signal on charts presentation
+     */
+    ResolveSignalResponse processResolveSignalRequest(ResolveSignalRequest request) throws SignalParametersException;
 
-	/**
-	 * Quantization
-	 */
-	SignalQuantizationResponse performSignalQuantization(String signalId, QuantizationType quantizationType, double quantLevel) throws QuantizationException,
-			SignalRepositoryException;
+    /**
+     * Signal operations
+     */
+    SignalsCalculationResponse processSignalOperationRequest(SignalsOperationRequest request) throws
+			DigitalSignalProcessingException;
 
-	/**
-	 * Window function
-	 */
-	void performWindowFunctionOnSignal(String signalId, WindowFunction windowFunction) throws SignalRepositoryException;
+    /**
+     * Quantization
+     */
+    SignalQuantizationResponse performSignalQuantization(String signalId, QuantizationType quantizationType, double
+			quantLevel) throws QuantizationException, SignalRepositoryException;
 
-	/**
-	 * Filters
-	 */
-	// TODO
-	void performFilterOnSignal(String signalId, FilterType filterType) throws SignalRepositoryException, SignalParametersException, FilterException;
+    /**
+     * Window function
+     */
+    SignalsCalculationResponse performWindowFunctionOnSignal(String signalId, WindowFunction windowFunction) throws
+			SignalRepositoryException, SignalParametersException;
+
+    /**
+     * Filters
+     */
+    // TODO
+    void performFilterOnSignal(String signalId, FilterType filterType) throws SignalRepositoryException, SignalParametersException, FilterException;
 }

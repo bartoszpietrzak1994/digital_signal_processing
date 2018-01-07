@@ -5,25 +5,24 @@ package exception;
  */
 public class QuantizationException extends DigitalSignalProcessingException
 {
-	public QuantizationException()
-	{
-		super();
-	}
+    public QuantizationException()
+    {
+        super();
+    }
 
-	private QuantizationException(DigitalSignalProcessingErrorCode errorCode, String message)
-	{
-		super(errorCode, message);
-	}
+    private QuantizationException(DigitalSignalProcessingErrorCode errorCode, String message)
+    {
+        super(errorCode, message);
+    }
 
-	public static QuantizationException quantizationTypeNotSupported(String quantizationType)
-	{
-		return new QuantizationException(DigitalSignalProcessingErrorCode.QUANTIZATION_TYPE_NOT_SUPPORTED, "Received quantization type: " + quantizationType);
-	}
+    public static QuantizationException quantizationTypeNotSupported(String quantizationType)
+    {
+        return new QuantizationException(DigitalSignalProcessingErrorCode.QUANTIZATION_TYPE_NOT_SUPPORTED, "Received " +
+				"quantization type: " + quantizationType);
+    }
 
-	public static QuantizationException signalReconstructionNotSupported(String reconstructionType)
-	{
-		return new QuantizationException(
-				DigitalSignalProcessingErrorCode.RECONSTRUCTION_TYPE_NOT_SUPPORTED,
-				"Received quantization type: " + reconstructionType);
-	}
+    public static QuantizationException signalReconstructionNotSupported(String reconstructionType)
+    {
+        return new QuantizationException(DigitalSignalProcessingErrorCode.RECONSTRUCTION_TYPE_NOT_SUPPORTED, "Received quantization type: " + reconstructionType);
+    }
 }

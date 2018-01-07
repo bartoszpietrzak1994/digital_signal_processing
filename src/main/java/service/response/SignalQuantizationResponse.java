@@ -12,14 +12,15 @@ import lombok.Data;
 @Builder
 public class SignalQuantizationResponse
 {
-	private Complex SNR;
-	private Complex MSE;
-	private Complex PSNR;
-	private Complex MD;
+    private Complex SNR;
+    private Complex MSE;
+    private Complex PSNR;
+    private Complex MD;
 
-	@Override
-	public String toString()
-	{
-		return "SNR: " + SNR.getReal() + ", MSE: " + MSE.getReal() + ", PSNR: " + PSNR.getReal() + ", MD: " + MD.getReal();
-	}
+    @Override
+    public String toString()
+    {
+        return "SNR: " + SNR.getReal() + ", MSE: " + MSE.getReal() + ", PSNR: " + PSNR.getReal() + ", MD: " + MD
+                .getReal();
+    }
 }

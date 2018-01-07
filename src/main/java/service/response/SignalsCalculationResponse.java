@@ -16,30 +16,31 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SignalsCalculationResponse
 {
-	private SignalParametersResponse signalParametersResponse;
+    private SignalParametersResponse signalParametersResponse;
 
-	/**
-	 * TODO Move it to another, reusable structure
-	 */
-	@AllArgsConstructor
-	@Getter
-	@Setter
-	public class SignalParametersResponse
-	{
-		/**
-		 * Parameters from UI
-		 */
-		private String signalId;
-		private Complex signalSamplingRate;
-		private Complex initialTime;
-		private Complex duration;
-		private String signalType;
+    /**
+     * TODO Move it to another, reusable structure
+     */
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public class SignalParametersResponse
+    {
+        /**
+         * Parameters from UI
+         */
+        private String signalId;
+        private Complex signalSamplingRate;
+        private Complex initialTime;
+        private Complex duration;
+        private String signalType;
+        private boolean isWindowed;
 
-		@Override
-		public String toString()
-		{
-			return String.valueOf(signalId) + ";" + signalSamplingRate.getReal() + ";" + initialTime.getReal() + ";" + duration.getReal() + ";" + signalType
-					+ ";";
-		}
-	}
+        @Override
+        public String toString()
+        {
+            return String.valueOf(signalId) + ";" + signalSamplingRate.getReal() + ";" + initialTime.getReal() + ";" +
+                    duration.getReal() + ";" + signalType + ";" + (isWindowed ? "[W]" : "");
+        }
+    }
 }

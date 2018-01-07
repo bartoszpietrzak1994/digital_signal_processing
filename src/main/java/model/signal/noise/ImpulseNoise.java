@@ -46,6 +46,7 @@ public class ImpulseNoise extends NonPeriodicSignal
 	@Override
 	public boolean areSampleCalculationParametersProvided()
 	{
-		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration, this.samplingRate, this.valuePresenceProbability);
+		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration, this.samplingRate, this
+				.valuePresenceProbability);
 	}
 }

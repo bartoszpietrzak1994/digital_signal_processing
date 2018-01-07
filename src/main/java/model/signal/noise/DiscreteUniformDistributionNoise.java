@@ -21,24 +21,26 @@ import model.signal.base.type.NonPeriodicSignal;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class DiscreteUniformDistributionNoise extends NonPeriodicSignal
 {
-	public DiscreteUniformDistributionNoise()
-	{
-		this.signalType = SignalType.DISCRETE_UNIFORM_DISTRIBUTION_NOISE;
-		this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME, ParameterType.DURATION);
-	}
+    public DiscreteUniformDistributionNoise()
+    {
+        this.signalType = SignalType.DISCRETE_UNIFORM_DISTRIBUTION_NOISE;
+        this.applicableParameters = Sets.newHashSet(ParameterType.AMPLITUDE, ParameterType.INITIAL_TIME,
+				ParameterType.DURATION);
+    }
 
-	@Override
-	public Complex calculate(Complex sample)
-	{
-		Complex negatedAmplitude = Complex.ONE.negate().multiply(this.amplitude);
-		Random random = new Random();
+    @Override
+    public Complex calculate(Complex sample)
+    {
+        Complex negatedAmplitude = Complex.ONE.negate().multiply(this.amplitude);
+        Random random = new Random();
 
-		return negatedAmplitude.add(this.amplitude.subtract(negatedAmplitude).multiply(new Complex(random.nextDouble(), 0.0D)));
-	}
+        return negatedAmplitude.add(this.amplitude.subtract(negatedAmplitude).multiply(new Complex(random.nextDouble
+				(), 0.0D)));
+    }
 
-	@Override
-	public boolean areSampleCalculationParametersProvided()
-	{
-		return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration);
-	}
+    @Override
+    public boolean areSampleCalculationParametersProvided()
+    {
+        return ObjectUtils.allNotNull(this.amplitude, this.initialTime, this.duration);
+    }
 }

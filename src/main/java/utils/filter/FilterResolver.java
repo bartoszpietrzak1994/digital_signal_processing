@@ -16,6 +16,7 @@ public class FilterResolver
 
     public Filter resolve(FilterType filterType) throws FilterException
     {
-        return filtersList.stream().filter(filter -> filterType.equals(filter.getFilterType())).findFirst().orElseThrow(() -> FilterException.filterTypeNotSupported(filterType.name()));
+        return filtersList.stream().filter(filter -> filterType.equals(filter.getFilterType())).findFirst()
+                .orElseThrow(() -> FilterException.filterTypeNotSupported(filterType.name()));
     }
 }
