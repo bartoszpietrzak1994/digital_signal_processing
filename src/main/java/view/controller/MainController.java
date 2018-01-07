@@ -193,41 +193,41 @@ public class MainController implements Initializable
     {
         // Put every signal type defined in SignalType enumeration to signalTypeComboBoxValues
         List<String> stringSignalTypes = Arrays.stream(SignalType.values()).map(Enum::toString).collect(Collectors
-				.toList());
+                .toList());
 
         // UNKNOWN signal type is reserved only for signals being a result of calculation between two signals of
-		// different type
+        // different type
         stringSignalTypes.remove(SignalType.UNKNOWN.name());
         ObservableList<String> signalTypes = FXCollections.observableList(stringSignalTypes);
         signalTypeComboBox.setItems(signalTypes);
 
         // same thing with signalOperationComboBox
         List<String> stringSignalOperations = Arrays.stream(SignalOperation.values()).map(Enum::toString).collect
-				(Collectors.toList());
+                (Collectors.toList());
         ObservableList<String> signalOperations = FXCollections.observableList(stringSignalOperations);
         signalOperationComboBox.setItems(signalOperations);
 
         // ioOperationComboBox
         List<String> stringIoOperations = Arrays.stream(IOOperation.values()).map(Enum::toString).collect(Collectors
-				.toList());
+                .toList());
         ObservableList<String> ioOperations = FXCollections.observableList(stringIoOperations);
         ioOperationComboBox.setItems(ioOperations);
 
         // quantizationTypeComboBox
         List<String> stringQuantizationTypes = Arrays.stream(QuantizationType.values()).map(Enum::toString).collect
-				(Collectors.toList());
+                (Collectors.toList());
         ObservableList<String> quantizationTypes = FXCollections.observableList(stringQuantizationTypes);
         quantizationTypeComboBox.setItems(quantizationTypes);
 
         // signalReconstructionTypeComboBox
         List<String> stringReconstructionTypes = Arrays.stream(SignalReconstructionType.values()).map(Enum::toString)
-				.collect(Collectors.toList());
+                .collect(Collectors.toList());
         ObservableList<String> reconstructionTypes = FXCollections.observableList(stringReconstructionTypes);
         signalReconstructionTypeComboBox.setItems(reconstructionTypes);
 
         // interval counter as well
         List<String> counterValues = Arrays.stream(HistogramInvervalNumber.values()).map
-				(HistogramInvervalNumber::getCounter).map(Object::toString).collect(Collectors.toList());
+                (HistogramInvervalNumber::getCounter).map(Object::toString).collect(Collectors.toList());
         ObservableList<String> counters = FXCollections.observableList(counterValues);
         histogramIntvervalComboBox.setItems(counters);
 
@@ -246,23 +246,24 @@ public class MainController implements Initializable
         if (StringUtils.isEmpty(this.signalTypeComboBox.getValue()))
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_TYPE_NOT_GIVEN_BY_USER.name() +
-					". Please provide signal type from list");
+                    ". Please provide signal type from list");
             return;
         }
 
         ResolveSignalRequest resolveSignalRequest = ResolveSignalRequestBuilder.builder().signalType(this
-				.signalTypeComboBox.getValue()).amplitude(this.amplitudeTextField.getText()).duration(this
-				.durationTextField.getText()).dutyCycle(this.dutyCycleTextField.getText()).initialTime(this
-				.initialTimeTextField.getText()).signalFrequency(this.frequencyTextField.getText()).samplingRate(this
-				.signalSamplingRate.getText()).valuePresenceProbability(this.valuePresenceProbability.getText())
-				.amplitudeRiseSample(this.amplitudeRiseSample.getText()).amplitudeRiseTime(this.amplitudeRiseTime
-						.getText()).build().toRequest();
+                .signalTypeComboBox.getValue()).amplitude(this.amplitudeTextField.getText()).duration(this
+                .durationTextField.getText()).dutyCycle(this.dutyCycleTextField.getText()).initialTime(this
+                .initialTimeTextField.getText()).signalFrequency(this.frequencyTextField.getText()).samplingRate(this
+                .signalSamplingRate.getText()).valuePresenceProbability(this.valuePresenceProbability.getText())
+                .amplitudeRiseSample(this.amplitudeRiseSample.getText()).amplitudeRiseTime(this.amplitudeRiseTime
+                        .getText()).build().toRequest();
 
         ResolveSignalResponse response;
         try
         {
             response = signalService.processResolveSignalRequest(resolveSignalRequest);
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             this.resultProviderLabel.setText(exception.getMessage());
             exception.printStackTrace();
@@ -271,11 +272,11 @@ public class MainController implements Initializable
 
         this.averageSignalValueTextField.setText(Double.valueOf(response.getAverageSignalValue().getReal()).toString());
         this.absoluteAverageSignalValueTextField.setText(Double.valueOf(response.getAbsoluteAverageSignalValue()
-				.getReal()).toString());
+                .getReal()).toString());
         this.signalPowerTextField.setText(Double.valueOf(response.getSignalPower().getReal()).toString());
         this.signalVarianceTextField.setText(Double.valueOf(response.getSignalVariance().getReal()).toString());
         this.rootMeanSquareValueTextField.setText(Double.valueOf(response.getSignalRootMeanSquareValue().getReal())
-				.toString());
+                .toString());
 
         signalListView.getItems().add(response.getSignalParametersResponse().toString());
     }
@@ -297,7 +298,8 @@ public class MainController implements Initializable
         try
         {
             realSignalChart = chartService.renderRealSignalChart(signalId);
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             this.resultProviderLabel.setText(exception.getMessage());
             exception.printStackTrace();
@@ -326,7 +328,8 @@ public class MainController implements Initializable
         try
         {
             realSignalHistogram = chartService.renderRealSignalHistogram(signalId, interval);
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             this.resultProviderLabel.setText(exception.getMessage());
             exception.printStackTrace();
@@ -343,21 +346,21 @@ public class MainController implements Initializable
         if (StringUtils.isEmpty(this.signalOperationComboBox.getValue()))
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_OPERATION_NOT_GIVEN_BY_USER.name
-					() + ". Please select one of the available signals operations");
+                    () + ". Please select one of the available signals operations");
             return;
         }
 
         if (CollectionUtils.isEmpty(signalListView.getItems()))
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.NO_SIGNALS_PRESENT_ON_SIGNAL_LIST.name
-					() + ". Please generate signal or load if from file");
+                    () + ". Please generate signal or load if from file");
             return;
         }
 
         if (StringUtils.isAnyEmpty(this.firstSignalNumber.getText(), this.secondSignalNumber.getText()))
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.TWO_SIGNALS_NOT_SELECTED_FOR_OPERATION
-					.name() + ". Please select two signals");
+                    .name() + ". Please select two signals");
             return;
         }
 
@@ -367,23 +370,25 @@ public class MainController implements Initializable
         {
             firstSignalData = signalListView.getItems().get(Integer.valueOf(this.firstSignalNumber.getText()) - 1);
             secondSignalData = signalListView.getItems().get(Integer.valueOf(this.secondSignalNumber.getText()) - 1);
-        } catch (IndexOutOfBoundsException exception)
+        }
+        catch (IndexOutOfBoundsException exception)
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.SIGNAL_NOT_PRESENT_IN_REPOSITORY.name()
-					+ ". Please select id from the list");
+                    + ". Please select id from the list");
             return;
         }
 
         SignalsOperationRequest signalsOperationRequest = SignalOperationRequestBuilder.builder().firstSignalData
-				(firstSignalData).secondSignalData(secondSignalData).signalOperation(signalOperationComboBox.getValue
-				()).build().toRequest();
+                (firstSignalData).secondSignalData(secondSignalData).signalOperation(signalOperationComboBox.getValue
+                ()).build().toRequest();
 
         SignalsCalculationResponse signalsCalculationResponse;
 
         try
         {
             signalsCalculationResponse = signalService.processSignalOperationRequest(signalsOperationRequest);
-        } catch (Exception exception)
+        }
+        catch (Exception exception)
         {
             this.resultProviderLabel.setText(exception.getMessage());
             exception.printStackTrace();
@@ -400,7 +405,7 @@ public class MainController implements Initializable
         if (StringUtils.isEmpty(this.ioOperationComboBox.getValue()))
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.READ_WRITE_OPERATION_NOT_GIVEN_BY_USER
-					.name() + ". Please select one of the available signal I/O operations");
+                    .name() + ". Please select one of the available signal I/O operations");
             return;
         }
 
@@ -425,7 +430,7 @@ public class MainController implements Initializable
         if (StringUtils.isEmpty(this.quantizationTypeComboBox.getValue()))
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.QUANTIZATION_TYPE_NOT_GIVEN_BY_USER
-					.name() + ". Please select one of the available quantization types");
+                    .name() + ". Please select one of the available quantization types");
             return;
         }
 
@@ -440,8 +445,9 @@ public class MainController implements Initializable
         try
         {
             signalQuantizationResponse = signalService.performSignalQuantization(signalId, quantizationType,
-					quantLevel);
-        } catch (DigitalSignalProcessingException e)
+                    quantLevel);
+        }
+        catch (DigitalSignalProcessingException e)
         {
             e.printStackTrace();
             this.resultProviderLabel.setText(e.getMessage());
@@ -466,7 +472,7 @@ public class MainController implements Initializable
         if (StringUtils.isEmpty(this.signalReconstructionTypeComboBox.getValue()))
         {
             this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.RECONSTRUCTION_TYPE_NOT_GIVEN_BY_USER
-					.name() + ". Please select one of the available reconstruction types");
+                    .name() + ". Please select one of the available reconstruction types");
             return;
         }
 
@@ -478,7 +484,8 @@ public class MainController implements Initializable
         try
         {
             doubleDoubleSeries = chartService.reconstructQuantizationSignal(signalId, reconstructionType);
-        } catch (DigitalSignalProcessingException e)
+        }
+        catch (DigitalSignalProcessingException e)
         {
             e.printStackTrace();
             this.resultProviderLabel.setText(e.getMessage());
@@ -507,7 +514,8 @@ public class MainController implements Initializable
             try
             {
                 signals.add(signalService.findSignal(data.split("\\;")[0]));
-            } catch (SignalRepositoryException e)
+            }
+            catch (SignalRepositoryException e)
             {
                 this.resultProviderLabel.setText(e.getMessage());
                 e.printStackTrace();
@@ -516,12 +524,13 @@ public class MainController implements Initializable
         }
 
         List<Signal> signalsWithoutUnknowns = signals.stream().filter(signal -> !signal.getSignalType().equals
-				(SignalType.UNKNOWN)).collect(Collectors.toList());
+                (SignalType.UNKNOWN)).collect(Collectors.toList());
 
         try
         {
             signalService.saveListOfSignalsInFile(signalsWithoutUnknowns, "signals.json");
-        } catch (SignalIOException e)
+        }
+        catch (SignalIOException e)
         {
             this.resultProviderLabel.setText(e.getMessage());
             e.printStackTrace();
@@ -535,7 +544,8 @@ public class MainController implements Initializable
         try
         {
             signals = signalService.loadSignalsFromFile("signals.json");
-        } catch (SignalIOException e)
+        }
+        catch (SignalIOException e)
         {
             this.resultProviderLabel.setText(e.getMessage());
             return;
@@ -544,17 +554,18 @@ public class MainController implements Initializable
         for (Signal signal : signals)
         {
             ResolveSignalRequest resolveSignalRequest = ResolveSignalRequest.builder().signalType(signal
-					.getSignalType().name()).amplitude(signal.getAmplitude()).amplitudeRiseSample(signal
-					.getAmplitudeRiseSample()).amplitudeRiseTime(signal.getAmplitudeRiseTime()).duration(signal
-					.getDuration()).dutyCycle(signal.getDutyCycle()).initialTime(signal.getInitialTime()).period
-					(signal.getPeriod()).samplingRate(signal.getSamplingRate()).valuePresenceProbability(signal
-					.getValuePresenceProbability()).build();
+                    .getSignalType().name()).amplitude(signal.getAmplitude()).amplitudeRiseSample(signal
+                    .getAmplitudeRiseSample()).amplitudeRiseTime(signal.getAmplitudeRiseTime()).duration(signal
+                    .getDuration()).dutyCycle(signal.getDutyCycle()).initialTime(signal.getInitialTime()).period
+                    (signal.getPeriod()).samplingRate(signal.getSamplingRate()).valuePresenceProbability(signal
+                    .getValuePresenceProbability()).build();
 
             ResolveSignalResponse response;
             try
             {
                 response = signalService.processResolveSignalRequest(resolveSignalRequest);
-            } catch (Exception exception)
+            }
+            catch (Exception exception)
             {
                 this.resultProviderLabel.setText(exception.getMessage());
                 exception.printStackTrace();
@@ -562,12 +573,13 @@ public class MainController implements Initializable
             }
 
             this.averageSignalValueTextField.setText(Double.valueOf(response.getAverageSignalValue().getReal())
-					.toString());
+                    .toString());
             this.absoluteAverageSignalValueTextField.setText(Double.valueOf(response.getAbsoluteAverageSignalValue()
-					.getReal()).toString());
+                    .getReal()).toString());
             this.signalPowerTextField.setText(Double.valueOf(response.getSignalPower().getReal()).toString());
             this.signalVarianceTextField.setText(Double.valueOf(response.getSignalVariance().getReal()).toString());
-            this.rootMeanSquareValueTextField.setText(Double.valueOf(response.getSignalRootMeanSquareValue().getReal()).toString());
+            this.rootMeanSquareValueTextField.setText(Double.valueOf(response.getSignalRootMeanSquareValue().getReal
+                    ()).toString());
 
             signalListView.getItems().add(response.getSignalParametersResponse().toString());
         }
@@ -580,8 +592,10 @@ public class MainController implements Initializable
         SignalsCalculationResponse signalsCalculationResponse = null;
         try
         {
-            signalsCalculationResponse = signalService.performWindowFunctionOnSignal(getSignalIdFromListView(), new HammingWindowFunction());
-        } catch (DigitalSignalProcessingException e)
+            signalsCalculationResponse = signalService.performWindowFunctionOnSignal(getSignalIdFromListView(), new
+                    HammingWindowFunction());
+        }
+        catch (DigitalSignalProcessingException e)
         {
             e.printStackTrace();
             resultProviderLabel.setText(e.getMessage());
@@ -604,7 +618,8 @@ public class MainController implements Initializable
         try
         {
             signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.LOW_PASS);
-        } catch (DigitalSignalProcessingException e)
+        }
+        catch (DigitalSignalProcessingException e)
         {
             this.resultProviderLabel.setText(e.getMessage());
             e.printStackTrace();
@@ -620,7 +635,8 @@ public class MainController implements Initializable
         try
         {
             signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.HIGH_PASS);
-        } catch (DigitalSignalProcessingException e)
+        }
+        catch (DigitalSignalProcessingException e)
         {
             this.resultProviderLabel.setText(e.getMessage());
             e.printStackTrace();
