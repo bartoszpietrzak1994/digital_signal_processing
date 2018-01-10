@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class HighPassFilter
 {
-    public Complex calculate(int n, double k)
+    public Complex calculate(double lowPassFilterValue)
     {
-        return new Complex(Math.pow(-1.0D, n) * k, 0.0D);
+        return new Complex(lowPassFilterValue % 2 == 0 ? lowPassFilterValue * -1 : lowPassFilterValue, 0.0D);
     }
 }

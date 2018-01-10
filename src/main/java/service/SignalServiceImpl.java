@@ -11,9 +11,7 @@ import model.filter.LowPassFilter;
 import model.quantization.SignalQuantization;
 import model.signal.base.Signal;
 import model.window.HammingWindowFunction;
-import model.window.WindowFunction;
 import org.apache.commons.math.complex.Complex;
-import org.apache.commons.math.complex.ComplexField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import repository.SignalRepository;
@@ -250,10 +248,10 @@ public class SignalServiceImpl implements SignalService
 //    }
 
     @Override
-    public void performFilterOnSignal(String signalId, FilterType filterType, int m) throws SignalRepositoryException,
-			SignalParametersException
+    public SignalsCalculationResponse performFilterOnSignal(String orgSignalId, FilterType filterType, int m) throws
+            SignalRepositoryException, SignalParametersException
     {
-        Signal orgSignal = signalRepository.findOne(signalId);
+        Signal orgSignal = signalRepository.findOne(orgSignalId);
 
         double k = orgSignal.getSamplingRate().getReal() / (1.0 / orgSignal.getPeriod().getReal());
 
@@ -267,12 +265,28 @@ public class SignalServiceImpl implements SignalService
         {
             for (int n = 0; n < filterValues.size(); n++)
             {
-                filterValues.set(n, highPassFilter.calculate(n, filterValues.get(n).getReal()));
+                filterValues.set(n, highPassFilter.calculate(filterValues.get(n).getReal()));
             }
         }
 
         List<Complex> convolutedValues = convolutionService.calculateConvolution(orgSignal.getValues(), filterValues);
 
         Signal filteredSignal = signalTypeResolver.resolveSignalByType(orgSignal.getSignalType().name());
+        filteredSignal.setSamples(signalValuesCalculator.extendSampleList(orgSignal.getInitialTime(), orgSignal
+                .getSamples(), convolutedValues.size()));
+        filteredSignal.setValues(convolutedValues);
+        filteredSignal.setInitialTime(orgSignal.getInitialTime());
+        filteredSignal.setSamplingRate(orgSignal.getSamplingRate());
+        filteredSignal.setDuration(signalValuesCalculator.getSignalDurationBySamples(filteredSignal.getSamples()));
+        filteredSignal.setEndTime(filteredSignal.getInitialTime().add(filteredSignal.getDuration()));
+
+        String signalId = signalRepository.add(filteredSignal);
+
+        SignalsCalculationResponse signalsCalculationResponse = new SignalsCalculationResponse();
+        signalsCalculationResponse.setSignalParametersResponse(signalsCalculationResponse.new
+                SignalParametersResponse(signalId, filteredSignal.getSamplingRate(), filteredSignal.getInitialTime(),
+                filteredSignal.getDuration(), filteredSignal.getSignalType().name(), true));
+
+        return signalsCalculationResponse;
     }
 }

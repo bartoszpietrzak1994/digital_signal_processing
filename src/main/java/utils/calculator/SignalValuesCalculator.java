@@ -3,6 +3,7 @@ package utils.calculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Iterables;
 import org.apache.commons.math.complex.Complex;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -32,6 +33,25 @@ public class SignalValuesCalculator
 		return samples;
 	}
 
+	public List<Complex> extendSampleList(Complex initialTime, List<Complex> currentSamples, int newSampleListSize)
+	{
+		List<Complex> samples = new ArrayList<>();
+		samples.add(initialTime);
+
+		Complex offset = getSamplesOffset(currentSamples);
+		for (int i = 1; i < newSampleListSize; i++)
+		{
+			samples.add(samples.get(i - 1).add(offset));
+		}
+
+		return samples;
+	}
+
+	public Complex getSignalDurationBySamples(List<Complex> signalSamples)
+	{
+		return Iterables.getLast(signalSamples, null).subtract(Iterables.getFirst(signalSamples, null));
+	}
+
 	public List<Complex> calculateSignalValues(Signal signal) throws SignalParametersException
 	{
 		List<Complex> samples = signal.getSamples();
@@ -49,5 +69,10 @@ public class SignalValuesCalculator
 		}
 
 		return values;
+	}
+
+	private Complex getSamplesOffset(List<Complex> samplesList)
+	{
+		return samplesList.get(1).subtract(samplesList.get(0));
 	}
 }

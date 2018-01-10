@@ -4,7 +4,6 @@ import exception.*;
 import model.behaviour.QuantizationType;
 import model.filter.FilterType;
 import model.signal.base.Signal;
-import model.window.WindowFunction;
 import service.request.ResolveSignalRequest;
 import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
@@ -50,7 +49,6 @@ public interface SignalService
     /**
      * Filters
      */
-    // TODO
-    void performFilterOnSignal(String signalId, FilterType filterType, int m) throws SignalRepositoryException,
-            SignalParametersException;
+    SignalsCalculationResponse performFilterOnSignal(String signalId, FilterType filterType, int m) throws
+            SignalRepositoryException, SignalParametersException;
 }
