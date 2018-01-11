@@ -12,6 +12,7 @@ import org.apache.commons.math.complex.Complex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import repository.SignalRepository;
+import service.client.ChartService;
 import utils.quantization.SignalReconstructionTypeResolver;
 
 import java.util.*;

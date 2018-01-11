@@ -1,18 +1,14 @@
 package service.response;
 
+import lombok.*;
 import org.apache.commons.math.complex.Complex;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Created by bartoszpietrzak on 27/10/2017.
  */
 @Data
 @Builder
+@NoArgsConstructor
 public class ResolveSignalResponse
 {
     private SignalParametersResponse signalParametersResponse;

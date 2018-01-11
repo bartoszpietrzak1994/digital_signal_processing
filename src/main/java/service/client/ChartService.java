@@ -1,4 +1,4 @@
-package service;
+package service.client;
 
 import exception.ChartServiceException;
 import exception.QuantizationException;

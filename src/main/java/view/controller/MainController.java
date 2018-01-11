@@ -1,22 +1,10 @@
 package view.controller;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
-import exception.*;
-import model.filter.FilterType;
-import model.window.HammingWindowFunction;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
 import com.google.common.collect.Iterables;
-
+import exception.DigitalSignalProcessingErrorCode;
+import exception.DigitalSignalProcessingException;
+import exception.SignalIOException;
+import exception.SignalRepositoryException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,20 +12,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import model.behaviour.HistogramInvervalNumber;
-import model.behaviour.IOOperation;
-import model.behaviour.QuantizationType;
-import model.behaviour.SignalOperation;
-import model.behaviour.SignalReconstructionType;
+import javafx.scene.control.*;
+import model.behaviour.*;
+import model.filter.FilterType;
 import model.signal.SignalType;
 import model.signal.base.Signal;
-import service.ChartService;
-import service.SignalService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import service.client.ChartService;
+import service.client.FilterService;
+import service.client.QuantizationService;
+import service.client.SignalService;
 import service.request.ResolveSignalRequest;
 import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
@@ -45,6 +32,13 @@ import service.response.SignalQuantizationResponse;
 import service.response.SignalsCalculationResponse;
 import utils.request.ResolveSignalRequestBuilder;
 import utils.request.SignalOperationRequestBuilder;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Created by bartoszpietrzak on 21/10/2017.
@@ -192,6 +186,12 @@ public class MainController implements Initializable
 
     @Autowired
     private ChartService chartService;
+
+    @Autowired
+    private QuantizationService quantizationService;
+
+    @Autowired
+    private FilterService filterService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -449,7 +449,7 @@ public class MainController implements Initializable
         SignalQuantizationResponse signalQuantizationResponse;
         try
         {
-            signalQuantizationResponse = signalService.performSignalQuantization(signalId, quantizationType,
+            signalQuantizationResponse = quantizationService.performSignalQuantization(signalId, quantizationType,
                     quantLevel);
         }
         catch (DigitalSignalProcessingException e)
@@ -535,7 +535,7 @@ public class MainController implements Initializable
         this.resultProviderLabel.setText("");
         try
         {
-            signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.LOW_PASS, new Integer
+            filterService.performFilterOnSignal(getSignalIdFromListView(), FilterType.LOW_PASS, new Integer
                     (mTextField.getText()));
         }
         catch (DigitalSignalProcessingException e)
@@ -551,10 +551,12 @@ public class MainController implements Initializable
     private void performHighPassFilter()
     {
         this.resultProviderLabel.setText("");
+
+        SignalsCalculationResponse signalsCalculationResponse;
         try
         {
-            signalService.performFilterOnSignal(getSignalIdFromListView(), FilterType.HIGH_PASS, new Integer
-                    (mTextField.getText()));
+            signalsCalculationResponse = filterService.performFilterOnSignal(getSignalIdFromListView(), FilterType
+                    .HIGH_PASS, new Integer(mTextField.getText()));
         }
         catch (DigitalSignalProcessingException e)
         {

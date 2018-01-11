@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import exception.SignalParametersException;
+import service.client.ConvolutionService;
 import utils.signal.SignalTypeResolver;
 
 /**
