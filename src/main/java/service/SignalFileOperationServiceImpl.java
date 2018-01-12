@@ -6,13 +6,14 @@ import com.google.gson.reflect.TypeToken;
 import exception.SignalIOException;
 import model.signal.base.Signal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import service.client.SignalFileOperationService;
 import utils.file.SignalAdapter;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class SignalFileOperationServiceImpl implements SignalFileOperationService
 {
     @Autowired
@@ -43,7 +44,7 @@ public class SignalFileOperationServiceImpl implements SignalFileOperationServic
         {
         }.getType(), signalAdapter).create();
 
-        List<Signal> signals = new ArrayList<>();
+        List<Signal> signals;
         try (Reader reader = new FileReader(filePath))
         {
             signals = gson.fromJson(reader, new TypeToken<List<Signal>>()

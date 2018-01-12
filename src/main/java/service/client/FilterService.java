@@ -7,6 +7,6 @@ import service.response.ResolveSignalResponse;
 
 public interface FilterService
 {
-    ResolveSignalResponse performFilterOnSignal(String signalId, FilterType filterType, int m) throws
-            SignalRepositoryException, SignalParametersException;
+    ResolveSignalResponse performFilterOnSignal(String signalId, FilterType filterType, int m, boolean
+            additionalWindowFunction) throws SignalRepositoryException, SignalParametersException;
 }

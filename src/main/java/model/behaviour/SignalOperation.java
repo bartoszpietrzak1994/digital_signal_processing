@@ -8,5 +8,6 @@ public enum SignalOperation
 	ADD,
 	SUBTRACT,
 	MULTIPLY,
-	DIVIDE
+	DIVIDE,
+	CONVOLUTION
 }

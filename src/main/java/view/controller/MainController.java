@@ -21,10 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
-import service.client.ChartService;
-import service.client.FilterService;
-import service.client.QuantizationService;
-import service.client.SignalService;
+import service.client.*;
 import service.request.ResolveSignalRequest;
 import service.request.SignalsOperationRequest;
 import service.response.ResolveSignalResponse;
@@ -178,6 +175,9 @@ public class MainController implements Initializable
     @FXML
     private Button highPassFilterButton;
 
+    @FXML
+    private CheckBox hammingWindowCheckBox;
+
     /**
      * Services
      */
@@ -192,6 +192,9 @@ public class MainController implements Initializable
 
     @Autowired
     private FilterService filterService;
+
+    @Autowired
+    private SignalFileOperationService signalFileOperationService;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -533,10 +536,12 @@ public class MainController implements Initializable
     private void performLowPassFilter()
     {
         this.resultProviderLabel.setText("");
+
+        ResolveSignalResponse resolveSignalResponse;
         try
         {
-            filterService.performFilterOnSignal(getSignalIdFromListView(), FilterType.LOW_PASS, new Integer
-                    (mTextField.getText()));
+            resolveSignalResponse = filterService.performFilterOnSignal(getSignalIdFromListView(), FilterType
+                    .LOW_PASS, new Integer(mTextField.getText()), hammingWindowCheckBox.isSelected());
         }
         catch (DigitalSignalProcessingException e)
         {
@@ -544,6 +549,8 @@ public class MainController implements Initializable
             e.printStackTrace();
             return;
         }
+
+        signalListView.getItems().add(resolveSignalResponse.getSignalParametersResponse().toString());
     }
 
     // TODO
@@ -552,11 +559,11 @@ public class MainController implements Initializable
     {
         this.resultProviderLabel.setText("");
 
-        SignalsCalculationResponse signalsCalculationResponse;
+        ResolveSignalResponse resolveSignalResponse;
         try
         {
-            signalsCalculationResponse = filterService.performFilterOnSignal(getSignalIdFromListView(), FilterType
-                    .HIGH_PASS, new Integer(mTextField.getText()));
+            resolveSignalResponse = filterService.performFilterOnSignal(getSignalIdFromListView(), FilterType
+                    .HIGH_PASS, new Integer(mTextField.getText()), hammingWindowCheckBox.isSelected());
         }
         catch (DigitalSignalProcessingException e)
         {
@@ -564,6 +571,8 @@ public class MainController implements Initializable
             e.printStackTrace();
             return;
         }
+
+        signalListView.getItems().add(resolveSignalResponse.getSignalParametersResponse().toString());
     }
 
     private void exportSignalsToFile()
@@ -597,7 +606,7 @@ public class MainController implements Initializable
 
         try
         {
-            signalService.saveListOfSignalsInFile(signalsWithoutUnknowns, "signals.json");
+            signalFileOperationService.saveListOfSignalsInFile(signalsWithoutUnknowns, "signals.json");
         }
         catch (SignalIOException e)
         {
@@ -609,10 +618,10 @@ public class MainController implements Initializable
     private void loadSignalsFromFile()
     {
         this.resultProviderLabel.setText("");
-        List<Signal> signals = null;
+        List<Signal> signals;
         try
         {
-            signals = signalService.loadSignalsFromFile("signals.json");
+            signals = signalFileOperationService.loadSignalsFromFile("signals.json");
         }
         catch (SignalIOException e)
         {
@@ -622,12 +631,18 @@ public class MainController implements Initializable
 
         for (Signal signal : signals)
         {
-            ResolveSignalRequest resolveSignalRequest = ResolveSignalRequest.builder().signalType(signal
-                    .getSignalType().name()).amplitude(signal.getAmplitude()).amplitudeRiseSample(signal
-                    .getAmplitudeRiseSample()).amplitudeRiseTime(signal.getAmplitudeRiseTime()).duration(signal
-                    .getDuration()).dutyCycle(signal.getDutyCycle()).initialTime(signal.getInitialTime()).period
-                    (signal.getPeriod()).samplingRate(signal.getSamplingRate()).valuePresenceProbability(signal
-                    .getValuePresenceProbability()).build();
+            ResolveSignalRequest resolveSignalRequest = ResolveSignalRequest.builder()
+                    .signalType(signal
+                    .getSignalType().name())
+                    .amplitude(signal.getAmplitude())
+                    .amplitudeRiseSample(signal.getAmplitudeRiseSample())
+                    .amplitudeRiseTime(signal.getAmplitudeRiseTime())
+                    .duration(signal.getDuration())
+                    .dutyCycle(signal.getDutyCycle())
+                    .initialTime(signal.getInitialTime()).period(signal.getPeriod())
+                    .samplingRate(signal.getSamplingRate())
+                    .valuePresenceProbability(signal.getValuePresenceProbability())
+                    .build();
 
             ResolveSignalResponse response;
             try

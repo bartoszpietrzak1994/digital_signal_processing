@@ -8,9 +8,11 @@ import org.apache.commons.math.complex.Complex;
  */
 @Data
 @Builder
-@NoArgsConstructor
+@AllArgsConstructor
 public class ResolveSignalResponse
 {
+    public ResolveSignalResponse(){}
+
     private SignalParametersResponse signalParametersResponse;
 
     /**

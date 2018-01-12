@@ -4,7 +4,6 @@ import exception.DigitalSignalProcessingException;
 import exception.SignalParametersException;
 import exception.SignalRepositoryException;
 import model.signal.base.Signal;
-import model.window.HammingWindowFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import repository.SignalRepository;
@@ -19,7 +18,6 @@ import utils.calculator.SignalReconstructionParametersCalculator;
 import utils.calculator.SignalValuesCalculator;
 import utils.operation.SignalOperationResolver;
 import utils.operation.SignalsOperationsCalculator;
-import utils.quantization.SignalQuantizationResolver;
 import utils.signal.SignalTypeResolver;
 
 /**
@@ -47,13 +45,7 @@ public class SignalServiceImpl implements SignalService
     private SignalRepository signalRepository;
 
     @Autowired
-    private SignalQuantizationResolver signalQuantizationResolver;
-
-    @Autowired
     private SignalReconstructionParametersCalculator reconstructionParametersCalculator;
-
-    @Autowired
-    private HammingWindowFunction hammingWindowFunction;
 
     @Override
     public Signal findSignal(String signalId) throws SignalRepositoryException
@@ -123,41 +115,4 @@ public class SignalServiceImpl implements SignalService
 
         return signalsCalculationResponse;
     }
-
-//    private SignalsCalculationResponse performWindowFunctionOnValues(List<Complex> values, WindowFunction windowFunction)
-//			throws SignalRepositoryException, SignalParametersException
-//    {
-//        Signal orgSignal = signalRepository.findOne(signalId);
-//        Signal windowedSignal = signalTypeResolver.resolveSignalByType(orgSignal.getSignalType().name());
-//
-//        windowedSignal.setSamplingRate(orgSignal.getSamplingRate());
-//        windowedSignal.setInitialTime(orgSignal.getInitialTime());
-//        windowedSignal.setDuration(orgSignal.getDuration());
-//
-//        List<Complex> orgValues = orgSignal.getValues();
-//        int m = orgValues.size();
-//
-//        windowedSignal.setSamples(orgSignal.getSamples());
-//        List<Complex> windowedValues = new ArrayList<>();
-//
-//        Complex value;
-//        Complex windowedValue;
-//        for (int i = 0; i < orgValues.size(); i++)
-//        {
-//            value = orgValues.get(i);
-//            windowedValue = new Complex(windowFunction.calculate(value.getReal(), m), 0.0D);
-//            windowedValues.add(windowedValue);
-//        }
-//
-//        windowedSignal.setValues(windowedValues);
-//
-//        String windowedSignalId = signalRepository.add(orgSignal);
-//
-//        SignalsCalculationResponse signalsCalculationResponse = new SignalsCalculationResponse();
-//        signalsCalculationResponse.setSignalParametersResponse(signalsCalculationResponse.new
-//				SignalParametersResponse(windowedSignalId, orgSignal.getSamplingRate(), orgSignal.getInitialTime(),
-//				orgSignal.getDuration(), orgSignal.getSignalType().name(), true));
-//
-//        return signalsCalculationResponse;
-//    }
 }
