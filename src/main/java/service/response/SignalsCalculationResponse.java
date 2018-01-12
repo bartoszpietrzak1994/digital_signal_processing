@@ -18,9 +18,6 @@ public class SignalsCalculationResponse
 {
     private SignalParametersResponse signalParametersResponse;
 
-    /**
-     * TODO Move it to another, reusable structure
-     */
     @AllArgsConstructor
     @Getter
     @Setter

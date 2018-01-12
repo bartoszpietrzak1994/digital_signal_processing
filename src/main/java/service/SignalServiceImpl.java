@@ -102,12 +102,10 @@ public class SignalServiceImpl implements SignalService
         Signal result = signalTypeResolver.resolveSignalByType(signalsOperationsCalculator.resolveSignalType(first
 				.getSignalType(), second.getSignalType()).name());
 
-        // TODO
         result = signalsOperationsCalculator.calculate(first, second, result);
 
         String signalId = signalRepository.add(result);
 
-        // TODO
         SignalsCalculationResponse signalsCalculationResponse = new SignalsCalculationResponse();
         signalsCalculationResponse.setSignalParametersResponse(signalsCalculationResponse.new
 				SignalParametersResponse(signalId, result.getSamplingRate(), result.getInitialTime(), result

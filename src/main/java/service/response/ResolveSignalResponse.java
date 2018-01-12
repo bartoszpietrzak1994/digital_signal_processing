@@ -24,9 +24,6 @@ public class ResolveSignalResponse
     private Complex signalVariance;
     private Complex signalRootMeanSquareValue;
 
-    /**
-     * TODO Move it to another, reusable structure
-     */
     @AllArgsConstructor
     @Getter
     @Setter

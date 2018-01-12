@@ -505,37 +505,16 @@ public class MainController implements Initializable
         renderChartsForSignal();
     }
 
-
-//    @FXML
-//    private void performHammingWindowOnSignal()
-//    {
-//        resultProviderLabel.setText("");
-//        SignalsCalculationResponse signalsCalculationResponse = null;
-//        try
-//        {
-//            signalsCalculationResponse = signalService.performWindowFunctionOnSignal(getSignalIdFromListView(), new
-//                    HammingWindowFunction());
-//        }
-//        catch (DigitalSignalProcessingException e)
-//        {
-//            e.printStackTrace();
-//            resultProviderLabel.setText(e.getMessage());
-//        }
-//
-//        if (signalsCalculationResponse != null)
-//        {
-//            signalListView.getItems().add(signalsCalculationResponse.getSignalParametersResponse().toString());
-//        } else
-//        {
-//            resultProviderLabel.setText("Did not receive any valid response.");
-//        }
-//    }
-
-    // TODO
     @FXML
     private void performLowPassFilter()
     {
         this.resultProviderLabel.setText("");
+
+        if (StringUtils.isEmpty(mTextField.getText()))
+        {
+            this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.M_PARAMETER_NOT_PROVIDED.name());
+            return;
+        }
 
         ResolveSignalResponse resolveSignalResponse;
         try
@@ -553,11 +532,16 @@ public class MainController implements Initializable
         signalListView.getItems().add(resolveSignalResponse.getSignalParametersResponse().toString());
     }
 
-    // TODO
     @FXML
     private void performHighPassFilter()
     {
         this.resultProviderLabel.setText("");
+
+        if (StringUtils.isEmpty(mTextField.getText()))
+        {
+            this.resultProviderLabel.setText(DigitalSignalProcessingErrorCode.M_PARAMETER_NOT_PROVIDED.name());
+            return;
+        }
 
         ResolveSignalResponse resolveSignalResponse;
         try

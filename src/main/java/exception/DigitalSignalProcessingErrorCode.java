@@ -43,6 +43,7 @@ public enum DigitalSignalProcessingErrorCode
 	 * Filters
 	 */
 	FILTER_TYPE_NOT_FOUND,
+	M_PARAMETER_NOT_PROVIDED,
 
 	/**
 	 * Unknown error
