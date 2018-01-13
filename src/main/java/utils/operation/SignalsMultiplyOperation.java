@@ -16,47 +16,50 @@ import model.signal.base.Signal;
 @Component
 public class SignalsMultiplyOperation extends SignalsOperationsCalculator
 {
-	public SignalsMultiplyOperation()
-	{
-		this.signalOperation = SignalOperation.MULTIPLY;
-	}
+    public SignalsMultiplyOperation()
+    {
+        this.signalOperation = SignalOperation.MULTIPLY;
+    }
 
-	@Override
-	public Signal calculate(Signal first, Signal second, Signal result) throws SignalParametersException
-	{
-		Complex initialTime = new Complex(Math.min(first.getInitialTime().getReal(), second.getInitialTime().getReal()), 0.0D);
-		Complex endTime = new Complex(Math.max(first.getEndTime().getReal(), second.getInitialTime().getReal()), 0.0D);
+    @Override
+    public Signal calculate(Signal first, Signal second, Signal result) throws SignalParametersException
+    {
+        Complex initialTime = new Complex(Math.min(first.getInitialTime().getReal(), second.getInitialTime().getReal
+				()), 0.0D);
+        Complex endTime = new Complex(Math.max(first.getEndTime().getReal(), second.getInitialTime().getReal()), 0.0D);
 
-		result.setInitialTime(initialTime);
-		result.setEndTime(endTime);
-		result.setDuration(endTime.subtract(initialTime));
-		result.setSamplingRate(first.getSamplingRate());
-		result.setSamples(signalValuesCalculator.getSampleList(result.getSamplingRate(), result.getInitialTime(), result.getEndTime()));
+        result.setInitialTime(initialTime);
+        result.setEndTime(endTime);
+        result.setDuration(endTime.subtract(initialTime));
+        result.setSamplingRate(first.getSamplingRate());
+        result.setSamples(signalValuesCalculator.getSampleList(result.getSamplingRate(), result.getInitialTime(),
+				result.getEndTime()));
+        result.setPeriod(first.getPeriod());
 
-		Complex firstValue;
-		Complex secondValue;
-		List<Complex> values = new ArrayList<>();
-		for (int i = 0; i < result.getSamples().size(); i++)
-		{
-			firstValue = Complex.ZERO;
-			secondValue = Complex.ZERO;
+        Complex firstValue;
+        Complex secondValue;
+        List<Complex> values = new ArrayList<>();
+        for (int i = 0; i < result.getSamples().size(); i++)
+        {
+            firstValue = Complex.ZERO;
+            secondValue = Complex.ZERO;
 
-			if (first.getSamples().contains(result.getSamples().get(i)))
-			{
-				int indexOf = first.getSamples().indexOf(result.getSamples().get(i));
-				firstValue = first.getValues().get(indexOf);
-			}
-			if (second.getSamples().contains(result.getSamples().get(i)))
-			{
-				int indexOf = second.getSamples().indexOf(result.getSamples().get(i));
-				secondValue = second.getValues().get(indexOf);
-			}
+            if (first.getSamples().contains(result.getSamples().get(i)))
+            {
+                int indexOf = first.getSamples().indexOf(result.getSamples().get(i));
+                firstValue = first.getValues().get(indexOf);
+            }
+            if (second.getSamples().contains(result.getSamples().get(i)))
+            {
+                int indexOf = second.getSamples().indexOf(result.getSamples().get(i));
+                secondValue = second.getValues().get(indexOf);
+            }
 
-			values.add(firstValue.multiply(secondValue));
-		}
+            values.add(firstValue.multiply(secondValue));
+        }
 
-		result.setValues(values);
+        result.setValues(values);
 
-		return result;
-	}
+        return result;
+    }
 }
